@@ -140,15 +140,21 @@
       const canvas = document.getElementById("rive-canvas");
     
       const r = new rive.Rive({
-        src: "assets/someAnim.riv",
-        canvas: canvas,
-        autoplay: true,
-        stateMachines: "State Machine 1",
-        fit: rive.Fit.Cover,
-        alignment: rive.Alignment.Center,
+    src: "assets/someAnim.riv",
+    canvas: canvas,
+    autoplay: true,
+    stateMachines: "State Machine 1",
+    // CHANGE THIS: Contain ensures the whole animation fits without cropping
+    fit: rive.Fit.Contain, 
+    alignment: rive.Alignment.Center,
+    onLoad: () => {
 
           onLoad: () => {
               console.log("Damn still not working Blahhh!");
+                // High-DPI scaling fix: prevents the animation from looking blurry
+              r.resizeDrawingSurfaceToCanvas();
+              console.log("Rive loaded successfully!");
+             
             
               const inputs = r.stateMachineInputs("State Machine 1").filter(i => i.name.includes("Hover"));
             
