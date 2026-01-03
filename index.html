@@ -14,11 +14,7 @@
     <link rel="stylesheet" href="assets/vendors/themify-icons/css/themify-icons.css">
     <!-- Bootstrap + Meyawo main styles -->
     <link rel="stylesheet" href="assets/css/meyawo.css">
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.29/build/spline-viewer.js"></script>
-    
-
-    <script src="https://unpkg.com/rive-js@0.10.0/dist/rive.min.js"></script>
-
+ 
 
 </head>
 
@@ -106,8 +102,11 @@
                         research to create innovative, entrepreneurial solutions for positive social
                         impact and sustainable development.
                     </p>
-                    <a href="assets/CV.pdf" class="btn-rounded btn btn-outline-primary mt-4" target="_blank">
+                    <a href="cv.pdf" class="btn-rounded btn btn-outline-primary mt-4" target="_blank">
                         View CV
+                    </a>
+                    <a href="cv.pdf" class="btn-rounded btn btn-outline-primary mt-4" download>
+                        Download CV
                     </a>
                 </div>
             </div><!-- end of about wrapper -->
@@ -135,13 +134,17 @@
 
 
     <!-- Rive  -->
+    <script src="https://unpkg.com/@rive-app/canvas-lite"></script>
     <script>
-        const rive = new Rive({
-        src: "assets/someAnim.riv",  // updated file name
+    const r = new rive.Rive({
+        src: "assets/someAnim.riv",
         canvas: document.getElementById("rive-canvas"),
         autoplay: true,
-        fit: Rive.Fit.Contain,
-        alignment: Rive.Alignment.CenterRight
+        stateMachines: "bumpy",
+        onLoad: () => {
+          r.resizeDrawingSurfaceToCanvas();
+            },
+        console.log("Rive animation loaded!");
         });
     </script>
 
