@@ -413,6 +413,8 @@ h6, .h6 {
 }
 
 .header-animation {
+    background-color: transparent; 
+    border-radius: 10px; 
     flex: 1;
     display: flex;
     justify-content: flex-end; /* push canvas to right */
