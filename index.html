@@ -13,6 +13,19 @@
     <!-- Bootstrap + Meyawo main styles -->
     <link rel="stylesheet" href="assets/css/meyawo.css">
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.29/build/spline-viewer.js"></script>
+    
+
+    <script src="https://unpkg.com/rive-js@0.10.0/dist/rive.min.js"></script>
+    <script>
+      const rive = new Rive({
+        src: "assets/yourAnimation.riv", // update with your file path
+        canvas: document.getElementById("rive-canvas"),
+        autoplay: true,
+        fit: Rive.Fit.Contain,
+        alignment: Rive.Alignment.CenterRight
+      });
+    </script>
+
 
 </head>
 
@@ -53,35 +66,47 @@
         </div>
     </nav><!-- End of Page Navbar -->
 
+  <!-- page header -->
+    <header id="home" class="header">
+        <div class="overlay"></div>
+        <div class="header-content container">
+            <div class = "header-left">
+                <h1 class="header-title">
+                    <span class="up">HI!</span>
+                    <span class="down">I am John Doe</span>
+                </h1>
+                <p class="header-subtitle">FRONTEND WEB DESIGNER</p>
+                <button class="btn btn-primary">Visit My Works</button>
+            </div>
+
+            <div class="header-right">
+                <canvas id="riveCanvas"></canvas>
+            </div>
+        </div>
+    </header><!-- end of page header -->
 
 
 
     <!-- page header -->
     <header id="home" class="header">
-        <div class="main-container">
-            <div class="overlay"></div>
+        <div class="overlay"></div>
         
-            <div class="header-content container hero-text">
+        <div class="header-inner container" style="display: flex; align-items: center; justify-content: space-between;">
+            <!-- Left side: text content -->
+            <div class="header-content">
                 <h1 class="header-title">
                     <span class="up">HI!</span>
                     <span class="down">I am Zulqarnain Haider</span>
                 </h1>
-
                 <p class="header-subtitle">Umm.. DK What I Am Yet..!!</p>
                 <button class="btn btn-primary">Visit My Works</button>
             </div>
-
-            <!-- Floating Robot -->
-            <div class="hero-robot">
-                <spline-viewer
-                    id="robot"
-                    url="https://prod.spline.design/DR61Z6plSNaoprOa/scene.splinecode">
-                </spline-viewer>    
+    
+            <!-- Right side: Rive animation -->
+            <div class="header-animation">
+                <canvas id="rive-canvas" width="500" height="500"></canvas>
             </div>
-
         </div>
-
-        
     </header><!-- end of page header -->
 
     <!-- about section -->
@@ -131,6 +156,8 @@
         </footer>
     </div> <!-- end of page footer -->
 
+
+    
     <!-- core  -->
     <script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
     <script src="assets/vendors/bootstrap/bootstrap.bundle.js"></script>
