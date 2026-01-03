@@ -144,23 +144,29 @@
         canvas: canvas,
         autoplay: true,
         stateMachines: "State Machine 1",
-        onLoad: () => {
-          console.log("Rive loaded!");
-    
-          // Get all inputs in the state machine
-          const inputs = r.stateMachineInputs("State Machine 1");
-    
-          // Find a few "Hover" inputs to preview
-          const previewInputs = inputs.filter(i => i.name.includes("Hover")).slice(0, 3); // first 3
-    
-          // Trigger them for a brief preview
-          previewInputs.forEach(i => i.value = true);
-    
-          // Optional: reset after 2 seconds so hover works normally
-          setTimeout(() => {
-            previewInputs.forEach(i => i.value = false);
-          }, 2000);
-        }
+        fit: rive.Fit.Cover,
+        alignment: rive.Alignment.Center,
+
+          onLoad: () => {
+              console.log("Rive loaded!");
+            
+              const inputs = r.stateMachineInputs("State Machine 1").filter(i => i.name.includes("Hover"));
+            
+              // Preview animation on load
+              inputs.slice(0, 3).forEach(i => i.value = true);
+              setTimeout(() => { inputs.slice(0, 3).forEach(i => i.value = false); }, 2000);
+            
+              // Make hover work interactively
+              canvas.addEventListener("mouseenter", () => {
+                inputs.forEach(i => i.value = true);
+              });
+              canvas.addEventListener("mouseleave", () => {
+                inputs.forEach(i => i.value = false);
+              });
+            }
+
+
+          
       });
     });
     </script>
