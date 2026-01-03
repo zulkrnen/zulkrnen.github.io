@@ -134,23 +134,37 @@
 
 
     <!-- Rive  -->
-    <script src="https://unpkg.com/@rive-app/canvas"></script>
+    <script src="https://unpkg.com/@rive-app/canvas@2.24.0"></script>
     <script>
-    const riveCanvas = document.getElementById("rive-canvas") as HTMLCanvasElement;
-    const r = new rive.Rive({
+    document.addEventListener("DOMContentLoaded", () => {
+      const canvas = document.getElementById("rive-canvas");
+    
+      const r = new rive.Rive({
         src: "assets/someAnim.riv",
-        canvas: riveCanvas,
-        artboard: "Artboard 2",
-        stateMachines: "State Machine 1",
-        layout: layout,
+        canvas: canvas,
         autoplay: true,
-        autoBind: true,
-        onLoad: (): void => {
-            r.resizeDrawingSurfaceToCanvas();
-                },
-        console.log("Rive animation loaded!");
-        });
+        stateMachines: "State Machine 1",
+        onLoad: () => {
+          console.log("Rive loaded!");
+    
+          // Get all inputs in the state machine
+          const inputs = r.stateMachineInputs("State Machine 1");
+    
+          // Find a few "Hover" inputs to preview
+          const previewInputs = inputs.filter(i => i.name.includes("Hover")).slice(0, 3); // first 3
+    
+          // Trigger them for a brief preview
+          previewInputs.forEach(i => i.value = true);
+    
+          // Optional: reset after 2 seconds so hover works normally
+          setTimeout(() => {
+            previewInputs.forEach(i => i.value = false);
+          }, 2000);
+        }
+      });
+    });
     </script>
+
 
     <!-- core  -->
     <script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
