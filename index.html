@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="assets/vendors/themify-icons/css/themify-icons.css">
     <!-- Bootstrap + Meyawo main styles -->
     <link rel="stylesheet" href="assets/css/meyawo.css">
- 
+
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
 
 </head>
 
@@ -73,6 +74,16 @@
     
             <!-- Right side: Rive animation -->
             <div class="header-animation">
+                <dotlottie-player
+                    src="assets/Lego.lottie" 
+                    background="transparent" 
+                    speed="1" 
+                    style="width: 100%; max-width: 500px;" 
+                    direction="1" 
+                    playMode="normal" 
+                    loop 
+                    autoplay>
+                </dotlottie-player>
             <!--    <canvas id="rive-canvas" width="500" height="500" background = "transparent"></canvas>    -->
             </div>
         </div>
@@ -133,44 +144,7 @@
     </div> <!-- end of page footer -->
 
 
-    <!-- Rive  -->
-    <script src="https://unpkg.com/@rive-app/canvas@2.24.0"></script>
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const canvas = document.getElementById("rive-canvas");
-    
-      const r = new rive.Rive({
-    src: "assets/someAnim.riv",
-    canvas: canvas,
-    autoplay: true,
-    stateMachines: "State Machine 1",
-    // CHANGE THIS: Contain ensures the whole animation fits without cropping
-    fit: rive.Fit.Contain, 
-    alignment: rive.Alignment.Center,
-          onLoad: () => {
-              console.log("Damn still not working Blahhh!");
-                // High-DPI scaling fix: prevents the animation from looking blurry
-              r.resizeDrawingSurfaceToCanvas();
-              console.log("Rive loaded successfully!");
-             
-            
-              const inputs = r.stateMachineInputs("State Machine 1").filter(i => i.name.includes("Hover"));
-            
-              // Preview animation on load
-              inputs.slice(0, 3).forEach(i => i.value = true);
-              setTimeout(() => { inputs.slice(0, 3).forEach(i => i.value = false); }, 2000);
-            
-              // Make hover work interactively
-              canvas.addEventListener("mouseenter", () => {
-                inputs.forEach(i => i.value = true);
-              });
-              canvas.addEventListener("mouseleave", () => {
-                inputs.forEach(i => i.value = false);
-              });
-            }
-      });
-    });
-    </script>
+
 
 
     <!-- core  -->
