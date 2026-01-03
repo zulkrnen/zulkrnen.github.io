@@ -421,9 +421,11 @@ h6, .h6 {
 }
 
 #rive-canvas {
+    background-color: transparent; 
     width: 100%;
     max-width: 500px; /* optional: keep animation from growing too large */
     height: auto;
+    transform: rotate(-15deg);
 }
 
 
