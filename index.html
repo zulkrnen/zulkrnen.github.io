@@ -136,14 +136,18 @@
     <!-- Rive  -->
     <script src="https://unpkg.com/@rive-app/canvas-lite"></script>
     <script>
+    const riveCanvas = document.getElementById("rive-canvas") as HTMLCanvasElement;
     const r = new rive.Rive({
         src: "assets/someAnim.riv",
-        canvas: document.getElementById("rive-canvas"),
+        canvas: riveCanvas,
+        artboard: "Artboard 2",
+        stateMachines: "State Machine 1",
+        layout: layout,
         autoplay: true,
-        stateMachines: "bumpy",
-        onLoad: () => {
-          r.resizeDrawingSurfaceToCanvas();
-            },
+        autoBind: true,
+        onLoad: (): void => {
+            r.resizeDrawingSurfaceToCanvas();
+                },
         console.log("Rive animation loaded!");
         });
     </script>
