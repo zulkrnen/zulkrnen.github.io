@@ -399,6 +399,30 @@ h6, .h6 {
   font-size: 1rem;
 }
 
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh; /* optional: full viewport height */
+    gap: 2rem; /* spacing between text and canvas */
+}
+
+.header-content {
+    flex: 1;
+    max-width: 50%; /* left side takes up half */
+}
+
+.header-animation {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; /* push canvas to right */
+}
+
+#rive-canvas {
+    width: 100%;
+    max-width: 500px; /* optional: keep animation from growing too large */
+    height: auto;
+}
 
 
 .lead {
