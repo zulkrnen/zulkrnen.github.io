@@ -413,20 +413,24 @@ h6, .h6 {
 }
 
 .header-animation {
-    background-color: transparent; 
-    border-radius: 10px; 
     flex: 1;
     display: flex;
-    justify-content: flex-end; /* push canvas to right */
+    justify-content: center; /* justify-content: flex-end; */
+    align-items: center;
+    /* If you want the 'tilt' effect, it's often better to do it in the Rive Editor 
+       by rotating the main Group, rather than the CSS canvas */
 }
 
+
 #rive-canvas {
-    background-color: transparent; 
+    /* Ensure the canvas itself is transparent */
+    background-color: transparent !important; 
     width: 100%;
-    max-width: 500px; /* optional: keep animation from growing too large */
-    height: auto;
-    transform: rotate(-15deg);
+    max-width: 500px;
+    height: 500px; 
+    display: block;
 }
+
 
 
 .lead {
