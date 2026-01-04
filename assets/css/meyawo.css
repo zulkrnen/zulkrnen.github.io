@@ -11733,7 +11733,7 @@ pre .code {
   color: #695aa6;
 }
 
-.custom-navbar.affix {
+/*.custom-navbar.affix {
   background: #fff;
   border-bottom: 1px solid rgba(222, 226, 230, 0.34);
 }
@@ -11753,6 +11753,39 @@ pre .code {
 .custom-navbar.affix .hamburger-inner, .custom-navbar.affix .hamburger-inner::before, .custom-navbar.affix .hamburger-inner::after {
   background: #6c757d;
 }
+*/
+
+.custom-navbar.affix {
+  /* Glassmorphism background instead of solid white */
+  background: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  
+  border-bottom: 1px solid rgba(222, 226, 230, 0.34);
+}
+
+.custom-navbar.affix .logo {
+  color: #fff; /* Change logo color to white */
+}
+
+.custom-navbar.affix .container {
+  min-height: 65px;
+}
+
+.custom-navbar.affix .nav .item .link {
+  color: #fff; /* Change link colors to white */
+}
+
+.custom-navbar.affix .hamburger-inner, .custom-navbar.affix .hamburger-inner::before, .custom-navbar.affix .hamburger-inner::after {
+  background: #fff; /* Change hamburger icon color to white */
+}
+
+
+
+
+
+
+
 
 @media (min-width: 768px) {
   .custom-navbar .nav .item {
