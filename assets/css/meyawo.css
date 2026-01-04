@@ -11114,7 +11114,7 @@ p {
   font-size: calc(13px + (15 - 13) * ((100vw - 300px) / (1300 - 300)));
   font-weight: 100;
   opacity: 1;
-  color: #111;
+  color: #FFFFFF;
   letter-spacing: .6px;
 }
 
@@ -12117,7 +12117,7 @@ pre .code {
 .header .header-content .header-title .up {
   font-size: calc(30px + (60 - 30) * ((100vw - 300px) / (1300 - 300)));
   font-weight: 500;
-  color: #aaa;
+  color: #695aa6;
   margin-bottom: 5px;
   position: relative;
   display: block;
@@ -12149,7 +12149,7 @@ pre .code {
   font-size: 2.4rem;
   font-weight: bold;
   opacity: .8;
-  color: #ffffff ;/* #212529 */
+  color: #fff ;/* #212529 */
 }
 
 .header-mini {
