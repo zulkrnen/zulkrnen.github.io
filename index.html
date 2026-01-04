@@ -17,6 +17,40 @@
     <!--
     <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
     -->
+    <style>
+        .about-card {
+    /* Glassmorphism Core */
+    background: rgba(255, 255, 255, 0.1); /* Slightly transparent white background */
+    backdrop-filter: blur(10px);          /* The key frosted glass effect */
+    -webkit-backdrop-filter: blur(10px);  /* Safari compatibility */
+
+    /* Aesthetics and layout enhancements */
+    border-radius: 15px;                  /* Rounded corners */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    padding: 30px;                        /* Spacing around the content */
+    margin-top: 20px;                     /* Adjust spacing above the card */
+    margin-bottom: 20px;                  /* Adjust spacing below the card */
+    max-width: 600px;                     /* Constrain width within the container */
+    margin-left: auto;                    /* Center the card horizontally if needed */
+    margin-right: auto;
+}
+
+/* Ensure the text inside the card is readable on your dark background */
+.about-card p,
+.about-card h2 {
+    color: #fff !important; /* Forces white color for text */
+}
+
+/* Adjust the container wrapping the whole section for better spacing/alignment if necessary */
+.about-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the card and buttons within the flex container */
+    text-align: center;
+}
+
+    </style>
     
 </head>
 
