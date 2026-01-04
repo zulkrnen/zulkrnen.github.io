@@ -61,7 +61,7 @@
 
     }
 
-    &.affix {
+/*    &.affix {
         background: $white;
          
         border-bottom: 1px solid rgba($border-color,.34);;
@@ -83,6 +83,36 @@
             &::before,
             &::after {
                     background: $gray-600;
+            }
+        }
+    }
+*/
+        &.affix {
+        /* Apply the glassmorphic background instead of solid white */
+        background: rgba($white, 0.1); /* Semi-transparent white using your SCSS variable */
+        backdrop-filter: blur(10px);   /* Frosted glass effect */
+        -webkit-backdrop-filter: blur(10px); /* Safari support */
+         
+        border-bottom: 1px solid rgba($border-color,.34);;
+
+        .logo {
+            color: $white; /* Keep logo white for better contrast with the dark background */
+        }
+        .container {
+            min-height: 65px;
+        }       
+
+        .nav .item .link {
+            color: $white; /* Keep links white */
+            /* Ensure hover/active states still work as defined previously */
+        }
+
+
+        .hamburger-inner {
+            &,
+            &::before,
+            &::after {
+                    background: $white; /* Keep hamburger icon white */
             }
         }
     }
