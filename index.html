@@ -109,27 +109,27 @@
                 <span class="w-1 h-1 rounded-full bg-slate-500 group-hover:bg-white group-hover:shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-500"></span>
             </a>
 
-            <!-- Subtle Minimalist Status Indicator -->
-            <div class="hidden sm:flex items-center space-x-2 px-2.5 py-0.5 rounded-full glass-btn text-[8px] font-mono tracking-[0.2em] text-slate-400 uppercase">
-                <span class="w-1 h-1 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)] animate-pulse"></span>
+            <!-- Subtle Minimalist Status Indicator - Font size adjusted to match footer email (~11px-12px) -->
+            <div class="hidden sm:flex items-center space-x-2 px-3 py-1 rounded-full glass-btn text-[11px] font-mono tracking-[0.2em] text-slate-400 uppercase">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)] animate-pulse"></span>
                 <span>Private Preview</span>
             </div>
         </header>
 
         <!-- Main Headline Centerpiece -->
-        <main class="flex-1 flex flex-col items-center justify-center text-center px-2 sm:px-4 my-auto">
-            <div class="max-w-5xl mx-auto space-y-4 sm:space-y-6">
+        <main class="flex-1 flex flex-col items-center justify-center text-center px-1 sm:px-4 my-auto w-full">
+            <div class="w-full max-w-6xl mx-auto space-y-3 sm:space-y-6">
                 
-                <!-- Main Name Headline: 3-line stacked on mobile, single line on desktop -->
-                <h1 class="font-light tracking-tight font-outfit uppercase title-gradient leading-none sm:leading-tight">
-                    <span class="block sm:inline text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">Syed </span>
-                    <span class="block sm:inline text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">Zulqarnain </span>
-                    <span class="block sm:inline text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">Haider</span>
+                <!-- Main Name Headline: High-impact full-width mobile stacked text, responsive scaling -->
+                <h1 class="font-light tracking-tight font-outfit uppercase title-gradient leading-[0.9] sm:leading-tight w-full">
+                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light">Syed </span>
+                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light">Zulqarnain </span>
+                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light">Haider</span>
                 </h1>
 
                 <!-- Subtitle "Soon..." - Smaller & subtle -->
-                <div class="pt-1">
-                    <p class="font-cinzel text-xs sm:text-sm md:text-base font-light tracking-[0.75em] text-slate-400/80 uppercase animate-luxe-pulse">
+                <div class="pt-2 sm:pt-1">
+                    <p class="font-cinzel text-[10px] sm:text-xs md:text-sm font-light tracking-[0.75em] text-slate-400/70 uppercase animate-luxe-pulse">
                         Soon...
                     </p>
                 </div>
@@ -138,50 +138,41 @@
         </main>
 
         <!-- Footer Bar with Social Links -->
-        <footer class="w-full flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 pt-4 sm:pt-6 border-t border-white/[0.05]">
-            <!-- Left Side Minimal Email Contact -->
-            <a href="mailto:zulkrnenHaider@proton.me" class="text-[11px] sm:text-xs text-slate-400 hover:text-white font-mono tracking-wider transition-colors duration-300 flex items-center gap-2 group">
-                <span class="w-1.5 h-1.5 rounded-full bg-slate-500 group-hover:bg-cyan-400 group-hover:shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all duration-300"></span>
-                <span>zulkrnenHaider@proton.me</span>
-            </a>
-
-            <!-- Right Side Socials: Text on desktop, Icon buttons on mobile -->
-            <div class="flex items-center space-x-3 sm:space-x-6">
-                <!-- Mail -->
-                <a href="mailto:zulkrnenHaider@proton.me" target="_blank" rel="noopener noreferrer" aria-label="Mail"
-                   class="group flex items-center">
-                    <!-- Text for desktop -->
-                    <span class="hidden sm:inline text-[10px] md:text-xs font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">Mail</span>
-                    <!-- Icon for mobile -->
-                    <div class="sm:hidden glass-btn w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
-                        <i class="fa-solid fa-envelope text-[11px]"></i>
-                    </div>
+        <footer class="w-full flex items-end sm:items-center justify-between gap-4 pt-4 sm:pt-6 sm:border-t border-white/[0.05]">
+            <!-- Left Side Minimal Email Contact: Rotated 90 deg counter-clockwise on mobile, normal horizontal on sm+ -->
+            <div class="origin-bottom-left -rotate-90 translate-y-[-100%] translate-x-3 sm:rotate-0 sm:translate-y-0 sm:translate-x-0 mb-6 sm:mb-0">
+                <a href="mailto:zulkrnenHaider@proton.me" class="text-[11px] sm:text-[11px] md:text-xs text-slate-400 hover:text-white font-mono tracking-wider transition-colors duration-300 flex items-center gap-2 group whitespace-nowrap">
+                    <span class="w-1.5 h-1.5 rounded-full bg-slate-500 group-hover:bg-cyan-400 group-hover:shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all duration-300"></span>
+                    <span>zulkrnenHaider@proton.me</span>
                 </a>
+            </div>
 
+            <!-- Right Side Socials: Vertical stack of compact icons on mobile, horizontal uppercase text on desktop -->
+            <div class="flex flex-col sm:flex-row items-end sm:items-center space-y-2.5 sm:space-y-0 sm:space-x-6">
                 <!-- Instagram -->
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
                    class="group flex items-center">
-                    <span class="hidden sm:inline text-[10px] md:text-xs font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">Insta</span>
-                    <div class="sm:hidden glass-btn w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
-                        <i class="fa-brands fa-instagram text-[11px]"></i>
+                    <span class="hidden sm:inline text-[11px] md:text-xs font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">Insta</span>
+                    <div class="sm:hidden glass-btn w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
+                        <i class="fa-brands fa-instagram text-[10px]"></i>
                     </div>
                 </a>
 
                 <!-- WhatsApp -->
                 <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
                    class="group flex items-center">
-                    <span class="hidden sm:inline text-[10px] md:text-xs font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">Whatsapp</span>
-                    <div class="sm:hidden glass-btn w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
-                        <i class="fa-brands fa-whatsapp text-[11px]"></i>
+                    <span class="hidden sm:inline text-[11px] md:text-xs font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">Whatsapp</span>
+                    <div class="sm:hidden glass-btn w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
+                        <i class="fa-brands fa-whatsapp text-[10px]"></i>
                     </div>
                 </a>
 
                 <!-- LinkedIn -->
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
                    class="group flex items-center">
-                    <span class="hidden sm:inline text-[10px] md:text-xs font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">LinkedIn</span>
-                    <div class="sm:hidden glass-btn w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
-                        <i class="fa-brands fa-linkedin-in text-[11px]"></i>
+                    <span class="hidden sm:inline text-[11px] md:text-xs font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">LinkedIn</span>
+                    <div class="sm:hidden glass-btn w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
+                        <i class="fa-brands fa-linkedin-in text-[10px]"></i>
                     </div>
                 </a>
             </div>
