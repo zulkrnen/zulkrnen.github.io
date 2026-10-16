@@ -97,20 +97,20 @@
     <div class="fixed inset-0 grain-bg pointer-events-none -z-10"></div>
 
     <!-- Fullscreen Minimal Content Wrapper -->
-    <div class="relative z-10 h-full w-full flex flex-col justify-between p-8 sm:p-12 md:p-16">
+    <div class="relative z-10 h-full w-full flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10">
 
         <!-- Header Navigation -->
         <header class="w-full flex items-center justify-between">
             <!-- Signature / Brand Logo on Top Left -->
-            <a href="#" class="group flex items-center space-x-2.5 text-white focus:outline-none" aria-label="Zulkrnen Home">
-                <span class="font-signature text-lg sm:text-xl font-normal tracking-[0.15em] text-slate-300 group-hover:text-white transition-colors duration-500">
+            <a href="#" class="group flex items-center space-x-2 text-white focus:outline-none" aria-label="Zulkrnen Home">
+                <span class="font-signature text-base sm:text-lg font-normal tracking-[0.2em] text-slate-300 group-hover:text-white transition-colors duration-500">
                     Zulkrnen
                 </span>
                 <span class="w-1 h-1 rounded-full bg-slate-500 group-hover:bg-white group-hover:shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-500"></span>
             </a>
 
             <!-- Subtle Minimalist Status Indicator -->
-            <div class="hidden sm:flex items-center space-x-2 px-3 py-1 rounded-full glass-btn text-[9px] font-mono tracking-[0.2em] text-slate-400 uppercase">
+            <div class="hidden sm:flex items-center space-x-2 px-2.5 py-0.5 rounded-full glass-btn text-[8px] font-mono tracking-[0.2em] text-slate-400 uppercase">
                 <span class="w-1 h-1 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)] animate-pulse"></span>
                 <span>Private Preview</span>
             </div>
@@ -118,10 +118,10 @@
 
         <!-- Main Headline Centerpiece -->
         <main class="flex-1 flex flex-col items-center justify-center text-center px-4 my-auto">
-            <div class="max-w-4xl mx-auto space-y-6 sm:space-y-8">
+            <div class="max-w-5xl mx-auto space-y-6 sm:space-y-8">
                 
                 <!-- Main Name Headline -->
-                <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight font-outfit uppercase title-gradient leading-tight sm:leading-none">
+                <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light tracking-tight font-outfit uppercase title-gradient leading-tight sm:leading-none">
                     Syed Zulqarnain Haider
                 </h1>
 
@@ -137,35 +137,35 @@
 
         <!-- Footer Bar with Social Links Bottom Right -->
         <footer class="w-full flex flex-col sm:flex-row items-center justify-between gap-6 pt-6 border-t border-white/[0.05]">
-            <!-- Left Side Minimal Text -->
-            <div class="text-[10px] text-slate-500 font-mono tracking-widest uppercase">
-                &copy; <span id="year"></span> HJC
-            </div>
+            <!-- Left Side Minimal Text / Contact Email -->
+            <a href="mailto:zulkrnenHaider@proton.me" class="text-xs text-slate-400 hover:text-white font-mono tracking-wider transition-colors duration-300 flex items-center gap-2 group">
+                <span class="w-1.5 h-1.5 rounded-full bg-slate-500 group-hover:bg-cyan-400 group-hover:shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all duration-300"></span>
+                <span>zulkrnenHaider@proton.me</span>
+            </a>
 
             <!-- Bottom Right Social Icons -->
             <div class="flex items-center space-x-2.5">
-                <!-- Mail -->
                 <a href="mailto:contact@example.com" target="_blank" rel="noopener noreferrer" aria-label="Mail"
-                   class="glass-btn w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
-                    <i class="fa-solid fa-envelope text-xs"></i>
+                   class="glass-btn w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-envelope text-[11px]"></i>
                 </a>
 
                 <!-- Instagram -->
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-                   class="glass-btn w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
-                    <i class="fa-brands fa-instagram text-xs"></i>
+                   class="glass-btn w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
+                    <i class="fa-brands fa-instagram text-[11px]"></i>
                 </a>
 
                 <!-- WhatsApp -->
                 <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
-                   class="glass-btn w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
-                    <i class="fa-brands fa-whatsapp text-xs"></i>
+                   class="glass-btn w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
+                    <i class="fa-brands fa-whatsapp text-[11px]"></i>
                 </a>
 
                 <!-- LinkedIn -->
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
-                   class="glass-btn w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
-                    <i class="fa-brands fa-linkedin-in text-xs"></i>
+                   class="glass-btn w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
+                    <i class="fa-brands fa-linkedin-in text-[11px]"></i>
                 </a>
             </div>
         </footer>
@@ -174,8 +174,6 @@
 
     <!-- Smooth Interactive Ambient Glow Script -->
     <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-
         const canvas = document.getElementById('ambient-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -242,13 +240,14 @@
             });
 
             // Draw subtle mouse-following ambient highlight
-            const mouseGrad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 350);
-            mouseGrad.addColorStop(0, 'rgba(40, 50, 75, 0.35)'); /* Extremely subtle dark blue spotlight */
+            const mouseGrad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 400);
+            mouseGrad.addColorStop(0, 'rgba(56, 85, 128, 0.65)'); /* Brighter & richer ambient mouse backlight */
+            mouseGrad.addColorStop(0.5, 'rgba(25, 45, 75, 0.30)');
             mouseGrad.addColorStop(1, 'rgba(5, 6, 8, 0)');
 
             ctx.fillStyle = mouseGrad;
             ctx.beginPath();
-            ctx.arc(mouse.x, mouse.y, 350, 0, Math.PI * 2);
+            ctx.arc(mouse.x, mouse.y, 400, 0, Math.PI * 2);
             ctx.fill();
 
             requestAnimationFrame(animate);
