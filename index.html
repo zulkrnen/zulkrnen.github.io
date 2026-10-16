@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syed Zulqarnain Haider</title>
+    <!-- Font Awesome for Social Icons -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <!-- Google Fonts for Clean Typography -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="family">
+
+    <style>
+        :root {
+            --bg-color: #0a0a0c;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a5;
+            --neon-cyan: rgba(0, 242, 254, 0.4);
+            --neon-pink: rgba(253, 56, 161, 0.4);
+            --neon-purple: rgba(186, 85, 211, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--bg-color);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-main);
+        }
+
+        /* Ambient Neon Blobs Background */
+        .background-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            filter: blur(120px);
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            background: mix(var(--neon-cyan), transparent);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .blob-1 {
+            top: 20%;
+            left: 25%;
+            width: 300px;
+            height: 300px;
+            background: var(--neon-cyan);
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            bottom: 20%;
+            right: 25%;
+            width: 350px;
+            height: 350px;
+            background: var(--neon-pink);
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            top: 40%;
+            left: 50%;
+            width: 250px;
+            height: 250px;
+            background: var(--neon-purple);
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        /* Content Overlay Base */
+        .layer {
+            position: absolute;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px;
+        }
+
+        /* Top Left Signature / Home Button */
+        .signature-home {
+            align-self: flex-start;
+        }
+
+        .signature-link {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: opacity 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .signature-link:hover {
+            opacity: 0.8;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Main Center Text */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .name {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #ffffff, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .status {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            padding-left: 6px; /* Balance out letter-spacing shift */
+        }
+
+        /* Bottom Right Social Icons */
+        .social-container {
+            align-self: flex-end;
+            display: flex;
+            gap: 25px;
+        }
+
+        .social-icon {
+            color: var(--text-muted);
+            font-size: 1.3rem;
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-icon:hover {
+            color: var(--text-main);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .layer {
+                padding: 30px;
+                align-items: center;
+            }
+            .signature-home {
+                align-self: center;
+            }
+            .social-container {
+                align-self: center;
+            }
+            .name {
+                font-size: 2.2rem;
+            }
+            .status {
+                font-size: 1rem;
+                letter-spacing: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Blurred Neon Blobs Structure -->
+    <div class="background-glow">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Interface Layer -->
+    <div class="layer">
+        
+        <!-- Top Left: Signature Home Button -->
+        <div class="signature-home">
+            <a href="#" class="signature-link" id="homeBtn">Zulkarnaen</a>
+        </div>
+
+        
+        <div class="main-content">
+            <h1 class="name">Syed Zulqarnain Haider</h1>
+            <p class="status">Soon...</p>
+        </div>
+
+        <!-- Bottom Right: Social Shortcuts -->
+        <div class="social-container">
+            <!-- Replace # with your actual links or email addresses -->
+            <a href="mailto:your-email@example.com" class="social-icon" title="Mail" target="_blank">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+            <a href="https://instagram.com" class="social-icon" title="Instagram" target="_blank">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://wa.me" class="social-icon" title="WhatsApp" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+            <a href="https://linkedin.com" class="social-icon" title="LinkedIn" target="_blank">
+                <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Optional JS Interactivity -->
+    <script>
+        // Simple click interaction for the home signature button
+        document.getElementById('homeBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            // Smoothly refresh page layout or trigger action
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Visual tap feedback logic if desired
+            console.log("Home signature clicked.");
+        });
+    </script>
+</body>
+</html>
