@@ -1,250 +1,260 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syed Zulqarnain Haider</title>
-    <!-- Font Awesome for Social Icons -->
-    <link rel="stylesheet" href="https://cloudflare.com">
-    <!-- Google Fonts for Clean Typography -->
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="family">
-
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome 6 for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Cormorant Garamond, Plus Jakarta Sans, Outfit, Cinzel -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Outfit:wght@200;300;400;500;600;700&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0a0a0c;
-            --text-main: #ffffff;
-            --text-muted: #a0a0a5;
-            --neon-cyan: rgba(0, 242, 254, 0.4);
-            --neon-pink: rgba(253, 56, 161, 0.4);
-            --neon-purple: rgba(186, 85, 211, 0.3);
+            --bg-deep: #050608;
+            --bg-card: rgba(12, 15, 22, 0.45);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-deep);
+            color: #f1f5f9;
         }
 
-        body, html {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: var(--bg-color);
-            font-family: 'Montserrat', sans-serif;
-            color: var(--text-main);
+        .font-signature {
+            font-family: 'Cormorant Garamond', serif;
         }
 
-        /* Ambient Neon Blobs Background */
-        .background-glow {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            filter: blur(120px);
-            pointer-events: none;
+        .font-cinzel {
+            font-family: 'Cinzel', serif;
         }
 
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            background: mix(var(--neon-cyan), transparent);
-            animation: float 20s infinite ease-in-out;
+        .font-outfit {
+            font-family: 'Outfit', sans-serif;
         }
 
-        .blob-1 {
-            top: 20%;
-            left: 25%;
-            width: 300px;
-            height: 300px;
-            background: var(--neon-cyan);
-            animation-delay: 0s;
+        /* Subtle Luxury Grain Layer */
+        .grain-bg {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
         }
 
-        .blob-2 {
-            bottom: 20%;
-            right: 25%;
-            width: 350px;
-            height: 350px;
-            background: var(--neon-pink);
-            animation-delay: -5s;
+        /* Smooth Radial Vignette */
+        .vignette-overlay {
+            background: radial-gradient(circle at center, transparent 30%, rgba(3, 4, 6, 0.85) 100%);
         }
 
-        .blob-3 {
-            top: 40%;
-            left: 50%;
-            width: 250px;
-            height: 250px;
-            background: var(--neon-purple);
-            animation-delay: -10s;
+        /* Soft Luxe Pulsing Opacity */
+        @keyframes subtlePulse {
+            0%, 100% { opacity: 0.35; transform: scale(1); }
+            50% { opacity: 0.85; transform: scale(1.02); }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.95); }
+        .animate-luxe-pulse {
+            animation: subtlePulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        /* Content Overlay Base */
-        .layer {
-            position: absolute;
-            z-index: 2;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 40px;
+        /* Ultra-refined Glass Icon Buttons */
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.025);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
         }
 
-        /* Top Left Signature / Home Button */
-        .signature-home {
-            align-self: flex-start;
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.22);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px -5px rgba(255, 255, 255, 0.08);
+            color: #ffffff;
         }
 
-        .signature-link {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-main);
-            text-decoration: none;
-            letter-spacing: 1px;
-            transition: opacity 0.3s ease, text-shadow 0.3s ease;
-        }
-
-        .signature-link:hover {
-            opacity: 0.8;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        /* Main Center Text */
-        .main-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .name {
-            font-size: 3.5rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            background: linear-gradient(45deg, #ffffff, #e0e0e0);
+        /* Sophisticated Text Shimmer for Main Heading */
+        .title-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #94a3b8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .status {
-            font-size: 1.2rem;
-            font-weight: 300;
-            color: var(--text-muted);
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            padding-left: 6px; /* Balance out letter-spacing shift */
-        }
-
-        /* Bottom Right Social Icons */
-        .social-container {
-            align-self: flex-end;
-            display: flex;
-            gap: 25px;
-        }
-
-        .social-icon {
-            color: var(--text-muted);
-            font-size: 1.3rem;
-            text-decoration: none;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .social-icon:hover {
-            color: var(--text-main);
-            transform: translateY(-3px);
-        }
-
-        /* Responsive adjustments for smaller screens */
-        @media (max-width: 768px) {
-            .layer {
-                padding: 30px;
-                align-items: center;
-            }
-            .signature-home {
-                align-self: center;
-            }
-            .social-container {
-                align-self: center;
-            }
-            .name {
-                font-size: 2.2rem;
-            }
-            .status {
-                font-size: 1rem;
-                letter-spacing: 4px;
-            }
+        /* Elegant Ambient Canvas */
+        #ambient-canvas {
+            filter: blur(80px);
+            opacity: 0.65;
+            transition: opacity 1s ease;
         }
     </style>
 </head>
-<body>
+<body class="h-full w-full overflow-hidden relative select-none selection:bg-slate-700 selection:text-white">
 
-    <!-- Blurred Neon Blobs Structure -->
-    <div class="background-glow">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
+    <!-- Deep Ambient Dynamic Canvas Background -->
+    <canvas id="ambient-canvas" class="fixed inset-0 w-full h-full pointer-events-none -z-30"></canvas>
+
+    <!-- Dark Vignette and Fine Noise Grain Layer -->
+    <div class="fixed inset-0 vignette-overlay pointer-events-none -z-20"></div>
+    <div class="fixed inset-0 grain-bg pointer-events-none -z-10"></div>
+
+    <!-- Fullscreen Minimal Content Wrapper -->
+    <div class="relative z-10 h-full w-full flex flex-col justify-between p-8 sm:p-12 md:p-16">
+
+        <!-- Header Navigation -->
+        <header class="w-full flex items-center justify-between">
+            <!-- Signature / Brand Logo on Top Left -->
+            <a href="#" class="group flex items-center space-x-2.5 text-white focus:outline-none" aria-label="Zulkrnen Home">
+                <span class="font-signature text-lg sm:text-xl font-normal tracking-[0.15em] text-slate-300 group-hover:text-white transition-colors duration-500">
+                    Zulkrnen
+                </span>
+                <span class="w-1 h-1 rounded-full bg-slate-500 group-hover:bg-white group-hover:shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-500"></span>
+            </a>
+
+            <!-- Subtle Minimalist Status Indicator -->
+            <div class="hidden sm:flex items-center space-x-2 px-3 py-1 rounded-full glass-btn text-[9px] font-mono tracking-[0.2em] text-slate-400 uppercase">
+                <span class="w-1 h-1 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)] animate-pulse"></span>
+                <span>Private Preview</span>
+            </div>
+        </header>
+
+        <!-- Main Headline Centerpiece -->
+        <main class="flex-1 flex flex-col items-center justify-center text-center px-4 my-auto">
+            <div class="max-w-4xl mx-auto space-y-6 sm:space-y-8">
+                
+                <!-- Main Name Headline -->
+                <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight font-outfit uppercase title-gradient leading-tight sm:leading-none">
+                    Syed Zulqarnain Haider
+                </h1>
+
+                <!-- Subtitle "Soon..." with Subtle Luxury Pulse -->
+                <div class="pt-1">
+                    <p class="font-cinzel text-base sm:text-xl md:text-2xl font-light tracking-[0.6em] text-slate-300 uppercase animate-luxe-pulse">
+                        Soon...
+                    </p>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Footer Bar with Social Links Bottom Right -->
+        <footer class="w-full flex flex-col sm:flex-row items-center justify-between gap-6 pt-6 border-t border-white/[0.05]">
+            <!-- Left Side Minimal Text -->
+            <div class="text-[10px] text-slate-500 font-mono tracking-widest uppercase">
+                &copy; <span id="year"></span> HJC
+            </div>
+
+            <!-- Bottom Right Social Icons -->
+            <div class="flex items-center space-x-2.5">
+                <!-- Mail -->
+                <a href="mailto:contact@example.com" target="_blank" rel="noopener noreferrer" aria-label="Mail"
+                   class="glass-btn w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-envelope text-xs"></i>
+                </a>
+
+                <!-- Instagram -->
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+                   class="glass-btn w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
+                    <i class="fa-brands fa-instagram text-xs"></i>
+                </a>
+
+                <!-- WhatsApp -->
+                <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
+                   class="glass-btn w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
+                    <i class="fa-brands fa-whatsapp text-xs"></i>
+                </a>
+
+                <!-- LinkedIn -->
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+                   class="glass-btn w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
+                    <i class="fa-brands fa-linkedin-in text-xs"></i>
+                </a>
+            </div>
+        </footer>
+
     </div>
 
-    <!-- Interface Layer -->
-    <div class="layer">
-        
-        <!-- Top Left: Signature Home Button -->
-        <div class="signature-home">
-            <a href="#" class="signature-link" id="homeBtn">Zulkrnen</a>
-        </div>
-
-        
-        <div class="main-content">
-            <h1 class="name">Syed Zulqarnain Haider</h1>
-            <p class="status">Soon..</p>
-        </div>
-
-        <!-- Bottom Right: Social Shortcuts -->
-        <div class="social-container">
-            <!-- Replace # with your actual links or email addresses -->
-            <a href="mailto:your-email@example.com" class="social-icon" title="Mail" target="_blank">
-                <i class="fa-solid fa-envelope"></i>
-            </a>
-            <a href="https://instagram.com" class="social-icon" title="Instagram" target="_blank">
-                <i class="fa-brands fa-instagram"></i>
-            </a>
-            <a href="https://wa.me" class="social-icon" title="WhatsApp" target="_blank">
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
-            <a href="https://linkedin.com" class="social-icon" title="LinkedIn" target="_blank">
-                <i class="fa-brands fa-linkedin-in"></i>
-            </a>
-        </div>
-
-    </div>
-
-    <!-- Optional JS Interactivity -->
+    <!-- Smooth Interactive Ambient Glow Script -->
     <script>
-        // Simple click interaction for the home signature button
-        document.getElementById('homeBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            // Smoothly refresh page layout or trigger action
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            // Visual tap feedback logic if desired
-            console.log("Home signature clicked.");
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const canvas = document.getElementById('ambient-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            mouse.targetX = width / 2;
+            mouse.targetY = height / 2;
+            mouse.x = width / 2;
+            mouse.y = height / 2;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.targetX = e.clientX;
+            mouse.targetY = e.clientY;
         });
+
+        // Touch support
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                mouse.targetX = e.touches[0].clientX;
+                mouse.targetY = e.touches[0].clientY;
+            }
+        });
+
+        // Deep moody ambient color Orbs (Understated Moody Tones)
+        const orbs = [
+            { x: width * 0.3, y: height * 0.4, vx: 0.3, vy: 0.2, radius: 450, color: 'rgba(20, 28, 45, 0.9)' },  /* Deep Indigo Slate */
+            { x: width * 0.7, y: height * 0.6, vx: -0.2, vy: 0.3, radius: 500, color: 'rgba(12, 35, 40, 0.7)' }, /* Moody Midnight Emerald */
+            { x: width * 0.5, y: height * 0.5, vx: 0.1, vy: -0.2, radius: 400, color: 'rgba(25, 20, 35, 0.8)' }  /* Dark Charcoal Purple */
+        ];
+
+        function animate() {
+            // Smooth mouse interpolation (lerp)
+            mouse.x += (mouse.targetX - mouse.x) * 0.03;
+            mouse.y += (mouse.targetY - mouse.y) * 0.03;
+
+            // Clear with deep base dark color #050608
+            ctx.fillStyle = '#050608';
+            ctx.fillRect(0, 0, width, height);
+
+            // Draw drifting ambient background orbs
+            orbs.forEach((orb, i) => {
+                orb.x += orb.vx;
+                orb.y += orb.vy;
+
+                if (orb.x < -100 || orb.x > width + 100) orb.vx *= -1;
+                if (orb.y < -100 || orb.y > height + 100) orb.vy *= -1;
+
+                const grad = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.radius);
+                grad.addColorStop(0, orb.color);
+                grad.addColorStop(1, 'rgba(5, 6, 8, 0)');
+
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(orb.x, orb.y, orb.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Draw subtle mouse-following ambient highlight
+            const mouseGrad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 350);
+            mouseGrad.addColorStop(0, 'rgba(40, 50, 75, 0.35)'); /* Extremely subtle dark blue spotlight */
+            mouseGrad.addColorStop(1, 'rgba(5, 6, 8, 0)');
+
+            ctx.fillStyle = mouseGrad;
+            ctx.beginPath();
+            ctx.arc(mouse.x, mouse.y, 350, 0, Math.PI * 2);
+            ctx.fill();
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
     </script>
 </body>
 </html>
