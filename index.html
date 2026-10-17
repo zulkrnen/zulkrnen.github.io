@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syed Zulqarnain Haider</title>
-    <link rel="icon" type="image/x-icon" href="zh_Icon.png">
+    <link rel="icon" type="image/x-icon" href="zh_bluegold.png">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome 6 for Icons -->
@@ -534,7 +534,7 @@
                 </a>
             </div>
 
-            <!-- Right Side Socials -->
+           <!-- Right Side Socials -->
             <div class="relative flex items-center">
                 <!-- Desktop Social Links -->
                 <div class="hidden sm:flex items-center space-x-6">
@@ -553,13 +553,13 @@
                 </div>
 
                 <!-- Mobile Social Toggle Button & Overlapping Upward Drawer -->
-                <div class="sm:hidden relative">
-                    <button id="mobile-social-toggle" onclick="toggleMobileSocial()" aria-label="Toggle Social Links" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white relative z-50">
+                <div class="sm:hidden relative w-9 h-9">
+                    <button id="mobile-social-toggle" onclick="toggleMobileSocial()" aria-label="Toggle Social Links" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white absolute inset-0 z-50">
                         <i id="mobile-social-icon" class="fa-solid fa-share-nodes text-xs transition-transform duration-300"></i>
                     </button>
 
-                    <!-- Mobile Collapsible Social Dropdown -->
-                    <div id="mobile-social-menu" class="collapsible-bottom-right collapsible-closed absolute bottom-0 right-0 pb-11 bg-[#0a0d14]/95 border border-white/10 rounded-xl p-2.5 shadow-2xl backdrop-blur-xl z-40 flex flex-col space-y-2">
+                    <!-- Mobile Collapsible Social Dropdown (Clean Stacked Icons without Outer Container) -->
+                    <div id="mobile-social-menu" class="collapsible-bottom-right collapsible-closed absolute bottom-0 right-0 z-40 flex flex-col space-y-2">
                         <a href="mailto:zulkrnenHaider@proton.me" onclick="toggleMobileSocial()" aria-label="Email" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
                             <i class="fa-solid fa-envelope text-xs"></i>
                         </a>
