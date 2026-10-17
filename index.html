@@ -80,12 +80,16 @@
         }
 
         /* Animated Mobile Collapsible Triggers & Drawer Containers */
-        /* Ultra-Smooth Luxury Collapsible Drawers */
-        .collapsible-container,
-        .collapsible-bottom-right,
-        .collapsible-bottom-left {
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            transform-origin: top right;
+        /* Base Closed State & Reverse Stagger (Last item collapses first) */
+        .collapsible-container > *,
+        .collapsible-bottom-right > *,
+        .collapsible-bottom-left > * {
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            /* Reverse delay: last item has 0s delay, going backwards */
+            transition-delay: calc((var(--total, 4) - 1 - var(--i, 0)) * 0.04s);
+            opacity: 0;
+            transform: translateY(-8px) scale(0.95);
         }
 
         .collapsible-closed {
@@ -102,9 +106,10 @@
             transform: translateX(-8px) scale(0.95);
         }
 
-        .collapsible-open {
+        /* Open State & Forward Stagger (First item expands first) */
+        .collapsible-open > * {
+            transition-delay: calc(var(--i, 0) * 0.04s);
             opacity: 1;
-            pointer-events: auto;
             transform: translateY(0) scale(1);
         }
         
@@ -1020,6 +1025,14 @@
             }
         });
 
+        // Auto-index drawer children for staggered cascade animations
+        document.querySelectorAll('#mobile-nav-menu, #social-nav-menu').forEach(menu => {
+            const items = menu.children;
+            Array.from(items).forEach((item, index) => {
+                item.style.setProperty('--i', index);
+                item.style.setProperty('--total', items.length);
+            });
+        });
         
         // View Switcher logic
         const views = ['home', 'projects', 'skills', 'education', 'research', 'experience', 'interests'];
