@@ -156,7 +156,7 @@
 
         /* Ultra-refined Glass Icon Buttons */
         .glass-credit {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.01);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -896,7 +896,7 @@
                     <button id="mobile-credit-toggle" onclick="toggleMobileCredit()" aria-label="Toggle Credits" class="glass-credit w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white relative z-50">
                         <i id="mobile-credit-icon" class="fa-solid fa-wand-magic-sparkles text-xs transition-transform duration-300"></i>
                     </button> 
-                   <div id="mobile-credit-menu" class="collapsible-bottom-left collapsible-closed absolute bottom-0 left-0 pl-11 bg-[#0a0d14]/30 rounded-xl px-3 py-2 shadow-2xl backdrop-blur-xl z-40 flex items-center whitespace-nowrap">
+                   <div id="mobile-credit-menu" class="collapsible-bottom-left collapsible-closed absolute bottom-0 left-0 pl-11 bg-[#0a0d14]/10 rounded-xl px-3 py-2 shadow-2xl backdrop-blur-xl z-40 flex items-center whitespace-nowrap">
                        <a href="https://instagram.com/theexorios" target="_blank" rel="noopener noreferrer" class="text-[11px] font-mono text-slate-300 hover:text-white">
                             Made w/ 🧠 and ✨ by Ex'Orios
                         </a>
@@ -964,11 +964,12 @@
 
         let width, height;
         let mouse = { 
-            x: window.innerWidth * 0.85, 
-            y: window.innerHeight * 0.15, 
-            targetX: window.innerWidth * 0.85, 
-            targetY: window.innerHeight * 0.15 
+            x: window.innerWidth / 2, 
+            y: window.innerHeight / 2, 
+            targetX: window.innerWidth / 2, 
+            targetY: window.innerHeight / 2
         };
+        
         let activeViewName = 'home';
         let homeColorHue = 0; // Dynamic hue shifter for Home landing view
 
@@ -1026,28 +1027,37 @@
         
         let currentThemeColor = { r: 56, g: 85, b: 128 }; // Default blue-slate glow
 
-        /*
         function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            
-            if (!mouse.hasMoved) {
-                mouse.targetX = width * 0.85;
-                mouse.targetY = height * 0.15;
-                mouse.x = width * 0.85;
-                mouse.y = height * 0.15;
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+}
 
-                // Set initial text light position to match the top-right corner on load
-                if (heroTitle) {
-                    const rect = heroTitle.getBoundingClientRect();
-                    const initialX = (width * 0.85) - rect.left;
-                    const initialY = (height * 0.15) - rect.top;
-                    heroTitle.style.setProperty('--x', `${initialX}px`);
-                    heroTitle.style.setProperty('--y', `${initialY}px`);
-                }
-            }
-        }
-        */
+window.addEventListener('resize', resize);
+resize();
+
+// Touch support
+window.addEventListener('touchmove', (e) => {
+    if (e.touches.length > 0) {
+        mouse.targetX = e.touches[0].clientX;
+        mouse.targetY = e.touches[0].clientY;
+    }
+});
+
+// Mouse movement tracking
+window.addEventListener('mousemove', (e) => {
+    // Update canvas target coords so the orb follows the cursor smoothly
+    mouse.targetX = e.clientX;
+    mouse.targetY = e.clientY;
+
+    // Update the CSS variables directly for the text gradient
+    const heroTitle = document.getElementById('hero-title');
+    if (heroTitle) {
+        const rect = heroTitle.getBoundingClientRect();
+        heroTitle.style.setProperty('--x', `${e.clientX - rect.left}px`);
+        heroTitle.style.setProperty('--y', `${e.clientY - rect.top}px`);
+    }
+});
+        /*
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
@@ -1068,6 +1078,7 @@
                 }
             }
         }
+        */
 
         window.addEventListener('resize', resize);
         resize();
