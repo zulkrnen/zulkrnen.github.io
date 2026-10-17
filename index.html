@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts: Syne, Plus Jakarta Sans, Outfit, Cinzel --> 
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Syne:wght@700&family=Outfit:wght@200;300;400;500;600;700&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Clash Display Font -->
-    <Link href="https://fontshare.com[]=clash-display@200&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-deep: #050608;
@@ -42,13 +40,18 @@
         .font-outfit {
             font-family: 'Outfit', sans-serif;
         }
-        
+
+        @font-face {
+            font-family: 'Clash Display';
+            src: url('ClashDisplay-Extralight.otf') format('opentype');
+            font-weight: 200; /* Extralight */
+            font-display: swap;
+        }
+
         .font-clashdisplay {
             font-family: 'Clash Display', sans-serif;
-            font-weight: 200;               /* Forces the Extra Light weight */
-            font-size: 8.5vw;               /* Makes it scale beautifully to full screen */
-            letter-spacing: 0.02em;         /* Slightly opens up the letters for breathing room */
         }
+        
         .font-syne {
             font-family: 'Syne', sans-serif;
             font-weight: 700;               /* Forces the thick display weight */ 
@@ -248,10 +251,10 @@
             
             <!-- HOME VIEW -->
             <div id="view-home" class="w-full max-w-6xl mx-auto space-y-3 sm:space-y-6 page-transition">
-                <h1 class="font-light tracking-tight font-clashdisplay title-gradient leading-[0.95] sm:leading-tight w-full">
-                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light">Syed </span>
-                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light">Zulqarnain </span>
-                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light">Haider</span>
+                <h1 class="font-light tracking-tight font-clashdisplay title-gradient uppercase leading-[0.95] sm:leading-tight w-full">
+                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extralight">Syed </span>
+                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extralight">Zulqarnain </span>
+                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extralight">Haider</span>
                 </h1>
 
                 <div class="pt-2 sm:pt-1">
