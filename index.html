@@ -947,6 +947,7 @@ comment out             Drop shadow ensures high contrast against background can
 
         let currentThemeColor = { r: 56, g: 85, b: 128 }; // Default blue-slate glow
 
+        /*
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
@@ -956,6 +957,27 @@ comment out             Drop shadow ensures high contrast against background can
                 mouse.targetY = height * 0.15;
                 mouse.x = width * 0.85;
                 mouse.y = height * 0.15;
+            }
+        }
+        */
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            
+            if (!mouse.hasMoved) {
+                mouse.targetX = width * 0.85;
+                mouse.targetY = height * 0.15;
+                mouse.x = width * 0.85;
+                mouse.y = height * 0.15;
+
+                // Set initial text light position to match the top-right corner on load
+                if (heroTitle) {
+                    const rect = heroTitle.getBoundingClientRect();
+                    const initialX = (width * 0.85) - rect.left;
+                    const initialY = (height * 0.15) - rect.top;
+                    heroTitle.style.setProperty('--x', `${initialX}px`);
+                    heroTitle.style.setProperty('--y', `${initialY}px`);
+                }
             }
         }
 
