@@ -80,41 +80,62 @@
         }
 
         /* Animated Mobile Collapsible Triggers & Drawer Containers */
-        .collapsible-container {
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            transform-origin: top right;
-        }
-
-        .collapsible-bottom-right {
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            transform-origin: bottom right;
-        }
-
+        /* 1. Container-level toggle (handles the glass box visibility, fade, and scale) */
+        .collapsible-container,
+        .collapsible-bottom-right,
         .collapsible-bottom-left {
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            transform-origin: bottom left;
-        }
-
-        .collapsible-closed {
             opacity: 0;
+            visibility: hidden;
             pointer-events: none;
-            transform: scale(0.8) translateY(-10px);
+            transform: translateY(-8px) scale(0.95);
+            transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
+            isolation: isolate;
         }
 
-        .collapsible-bottom-right.collapsible-closed {
-            transform: scale(0.8) translateY(10px);
-        }
-
-        .collapsible-bottom-left.collapsible-closed {
-            transform: scale(0.8) translateX(-10px);
-        }
-
-        .collapsible-open {
+        .collapsible-container.collapsible-open,
+        .collapsible-bottom-right.collapsible-open,
+        .collapsible-bottom-left.collapsible-open {
             opacity: 1;
+            visibility: visible;
             pointer-events: auto;
-            transform: scale(1) translateY(0) translateX(0);
+            transform: translateY(0) scale(1);
         }
 
+        /* Directional adjustments for closed states if needed */
+        .collapsible-bottom-right {
+            transform: translateY(8px) scale(0.95);
+        }
+        .collapsible-bottom-left {
+            transform: translateX(-8px) scale(0.95);
+        }
+        .collapsible-bottom-right.collapsible-open,
+        .collapsible-bottom-left.collapsible-open {
+            transform: translateY(0) translateX(0) scale(1);
+        }
+
+        /* 2. Staggered children animation (One-by-one in and out) */
+        .collapsible-container > *,
+        .collapsible-bottom-right > *,
+        .collapsible-bottom-left > * {
+            opacity: 0;
+            transform: translateY(-6px);
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+            /* Reverse stagger on close: last item hides first */
+            transition-delay: calc((var(--total, 4) - 1 - var(--i, 0)) * 0.03s);
+        }
+
+        /* Forward stagger on open: first item appears first */
+        .collapsible-container.collapsible-open > *,
+        .collapsible-bottom-right.collapsible-open > *,
+        .collapsible-bottom-left.collapsible-open > * {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: calc(var(--i, 0) * 0.04s);
+        }
+
+
+
+        
         /* Ultra-refined Glass Icon Buttons */
         .glass-btn {
             background: rgba(255, 255, 255, 0.025);
@@ -133,8 +154,18 @@
             color: #ffffff;
         }
 
+        /* Ultra-refined Glass Icon Buttons */
+        .glass-credit {
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
         .glass-card {
-            background: rgba(12, 15, 22, 0.65);
+            background: rgba(12, 15, 22, 0.40);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -243,7 +274,10 @@
                     </button>
 
                     <!-- Mobile Collapsible Navigation Dropdown -->
-                    <div id="mobile-nav-menu" class="collapsible-container collapsible-closed absolute top-0 right-0 border-white/10 rounded-xl z-40 flex flex-col space-y-2">                      
+                    <div id="mobile-nav-menu" class="collapsible-container collapsible-closed absolute top-0 right-0 border-white/10 rounded-xl z-50 flex flex-col space-y-2">                      
+                        <button onclick="switchView('home'); toggleMobileNav();" class="nav-block-home glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-solid fa-compass text-xs"></i>
+                        </button>
                         <button onclick="switchView('home'); toggleMobileNav();" class="nav-block-home glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
                             <i class="fa-solid fa-house text-xs"></i>
                         </button>
@@ -263,7 +297,10 @@
                             <i class="fa-solid fa-briefcase text-xs"></i>
                         </button>
                         <button onclick="switchView('interests'); toggleMobileNav();" class="nav-block-interests glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
-                            <i class="fa-solid fa-compass text-xs"></i>
+                            <i class="fa-solid fa-heart text-xs"></i>
+                        </button>
+                        <button onclick="switchView('experience'); toggleMobileNav();" class="nav-block-experience glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-solid fa-briefcase text-xs"></i>
                         </button>
                     </div>
                 </div>
@@ -846,7 +883,7 @@
                 <span class="absolute right-full mr-3 px-2 py-1 bg-[#0c0f16] text-white text-[10px] font-mono uppercase tracking-widest rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">Experience</span>
             </button>
             <button id="nav-interests" onclick="switchView('interests')" title="Interests" class="nav-block-interests glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white group relative">
-                <i class="fa-solid fa-compass text-xs"></i>
+                <i class="fa-solid fa-heart text-xs"></i>
                 <span class="absolute right-full mr-3 px-2 py-1 bg-[#0c0f16] text-white text-[10px] font-mono uppercase tracking-widest rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">Interests</span>
             </button>
         </div>
@@ -856,18 +893,18 @@
             <div class="relative">
                 <!-- Mobile Expandable Credit Drawer Trigger & Container -->
                 <div class="sm:hidden relative">
-                    <button id="mobile-credit-toggle" onclick="toggleMobileCredit()" aria-label="Toggle Credits" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white relative z-50">
+                    <button id="mobile-credit-toggle" onclick="toggleMobileCredit()" aria-label="Toggle Credits" class="glass-credit w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white relative z-50">
                         <i id="mobile-credit-icon" class="fa-solid fa-wand-magic-sparkles text-xs transition-transform duration-300"></i>
                     </button> 
-                    <div id="mobile-credit-menu" class="collapsible-bottom-left collapsible-closed absolute bottom-0 left-0 pl-11 bg-[#0a0d14]/95 border border-white/10 rounded-xl px-3 py-2 shadow-2xl backdrop-blur-xl z-40 flex items-center whitespace-nowrap">
-                        <a href="https://instagram.com/exorios" target="_blank" rel="noopener noreferrer" class="text-[11px] font-mono text-slate-300 hover:text-white">
+                   <div id="mobile-credit-menu" class="collapsible-bottom-left collapsible-closed absolute bottom-0 left-0 pl-11 bg-[#0a0d14]/10 rounded-xl px-3 py-2 shadow-2xl backdrop-blur-xl z-40 flex items-center whitespace-nowrap">
+                       <a href="https://instagram.com/theexorios" target="_blank" rel="noopener noreferrer" class="text-[11px] font-mono text-slate-300 hover:text-white">
                             Made w/ 🧠 and ✨ by Ex'Orios
                         </a>
                     </div>
                 </div>
 
                 <!-- Desktop Full Text Credit Link -->
-                <a href="https://instagram.com/exorios" target="_blank" rel="noopener noreferrer" class="hidden sm:flex text-[11px] text-slate-400 hover:text-white font-mono tracking-wider transition-colors duration-300 items-center gap-1.5 whitespace-nowrap">
+                <a href="https://instagram.com/theexorios" target="_blank" rel="noopener noreferrer" class="hidden sm:flex text-[11px] text-slate-400 hover:text-white font-mono tracking-wider transition-colors duration-300 items-center gap-1.5 whitespace-nowrap">
                     <span>Made w/ 🧠 and ✨ by Ex'Orios</span>
                 </a>
             </div>
@@ -879,12 +916,17 @@
                     <a href="mailto:zulkrnenHaider@proton.me" class="group flex items-center">
                         <span class="text-[11px] font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">Mail</span>
                     </a>
-                    <a href="https://zulkrnen.github.io" target="_blank" rel="noopener noreferrer" class="group flex items-center">
-                        <span class="text-[11px] font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">GitHub</span>
+                    </a>
+                    <a href="https://wa.me/923114520259" target="_blank" rel="noopener noreferrer" class="group flex items-center">
+                        <span class="text-[11px] font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">Whatsapp</span>
+                    </a>
+                    <a href="https://instagram.com/zulkrnen" target="_blank" rel="noopener noreferrer" class="group flex items-center">
+                        <span class="text-[11px] font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">Instagram</span>
                     </a>
                     <a href="https://linkedin.com/in/zulkrnen" target="_blank" rel="noopener noreferrer" class="group flex items-center">
                         <span class="text-[11px] font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">LinkedIn</span>
                     </a>
+                    
                 </div>
 
                 <!-- Mobile Social Toggle Button & Overlapping Upward Drawer -->
@@ -898,11 +940,16 @@
                         <a href="mailto:zulkrnenHaider@proton.me" onclick="toggleMobileSocial()" aria-label="Email" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
                             <i class="fa-solid fa-envelope text-xs"></i>
                         </a>
-                        <a href="https://zulkrnen.github.io" target="_blank" rel="noopener noreferrer" onclick="toggleMobileSocial()" aria-label="GitHub" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
-                            <i class="fa-brands fa-github text-xs"></i>
+                        <a href="https://wa.me/923114520259" target="_blank" rel="noopener noreferrer" onclick="toggleMobileSocial()" aria-label="GitHub" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-brands fa-whatsapp text-xs"></i>
                         </a>
+                        <a href="https://instagram.com/zulkrnen" target="_blank" rel="noopener noreferrer" onclick="toggleMobileSocial()" aria-label="GitHub" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-brands fa-instagram text-xs"></i>
                         <a href="https://linkedin.com/in/zulkrnen" target="_blank" rel="noopener noreferrer" onclick="toggleMobileSocial()" aria-label="LinkedIn" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
                             <i class="fa-brands fa-linkedin-in text-xs"></i>
+                        </a>
+                        <a href="https://zulkrnen.github.io/#" target="_blank" rel="noopener noreferrer" onclick="toggleMobileSocial()" aria-label="LinkedIn" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-solid fa-share-nodes"></i>
                         </a>
                     </div>
                 </div>
@@ -917,11 +964,12 @@
 
         let width, height;
         let mouse = { 
-            x: window.innerWidth * 0.85, 
-            y: window.innerHeight * 0.15, 
-            targetX: window.innerWidth * 0.85, 
-            targetY: window.innerHeight * 0.15 
+            x: window.innerWidth / 2, 
+            y: window.innerHeight / 2, 
+            targetX: window.innerWidth / 2, 
+            targetY: window.innerHeight / 2
         };
+        
         let activeViewName = 'home';
         let homeColorHue = 0; // Dynamic hue shifter for Home landing view
 
@@ -931,30 +979,85 @@
 
         const heroTitle = document.getElementById('hero-title');
 
+        
+        // Auto-index all drawer children for staggered cascade animations with proper direction handling
+        document.querySelectorAll('#mobile-nav-menu').forEach(menu => {
+            const items = menu.children;
+            Array.from(items).forEach((item, index) => {
+                // Nav menu opens downward: normal order (0, 1, 2...)
+                item.style.setProperty('--i', index);
+                item.style.setProperty('--total', items.length);
+            });
+        });
+
+        document.querySelectorAll('#mobile-social-menu, #mobile-credit-menu').forEach(menu => {
+            const items = menu.children;
+            Array.from(items).forEach((item, index) => {
+                // Bottom-anchored menus open upward: reverse order so the top item goes first
+                const invertedIndex = items.length - 1 - index;
+                item.style.setProperty('--i', invertedIndex);
+                item.style.setProperty('--total', items.length);
+            });
+        });
+
+        // Auto-collapse mobile drawers when tapping outside
+        document.addEventListener('click', (e) => {
+            // Collect all drawer elements and toggle buttons
+            const drawers = document.querySelectorAll(
+                '#mobile-nav-menu, #mobile-social-menu, #mobile-credit-menu'
+            );
+            const toggles = document.querySelectorAll(
+                '#mobile-nav-toggle, #mobile-social-toggle, #mobile-credit-toggle'
+            );
+            
+            // Check if the click was inside any drawer or any toggle button
+            const isClickInsideDrawer = Array.from(drawers).some(drawer => drawer.contains(e.target));
+            const isClickOnToggle = Array.from(toggles).some(toggle => toggle.contains(e.target));
+
+            // If tapped outside both the drawer content and the toggle buttons, close all drawers
+            if (!isClickInsideDrawer && !isClickOnToggle) {
+                drawers.forEach(drawer => {
+                    if (drawer.classList.contains('collapsible-open')) {
+                        drawer.classList.remove('collapsible-open');
+                        drawer.classList.add('collapsible-closed');
+                    }
+                });
+            }
+        });
+        
         let currentThemeColor = { r: 56, g: 85, b: 128 }; // Default blue-slate glow
 
-        /*
         function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            
-            if (!mouse.hasMoved) {
-                mouse.targetX = width * 0.85;
-                mouse.targetY = height * 0.15;
-                mouse.x = width * 0.85;
-                mouse.y = height * 0.15;
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+}
 
-                // Set initial text light position to match the top-right corner on load
-                if (heroTitle) {
-                    const rect = heroTitle.getBoundingClientRect();
-                    const initialX = (width * 0.85) - rect.left;
-                    const initialY = (height * 0.15) - rect.top;
-                    heroTitle.style.setProperty('--x', `${initialX}px`);
-                    heroTitle.style.setProperty('--y', `${initialY}px`);
-                }
-            }
-        }
-        */
+window.addEventListener('resize', resize);
+resize();
+
+// Touch support
+window.addEventListener('touchmove', (e) => {
+    if (e.touches.length > 0) {
+        mouse.targetX = e.touches[0].clientX;
+        mouse.targetY = e.touches[0].clientY;
+    }
+});
+
+// Mouse movement tracking
+window.addEventListener('mousemove', (e) => {
+    // Update canvas target coords so the orb follows the cursor smoothly
+    mouse.targetX = e.clientX;
+    mouse.targetY = e.clientY;
+
+    // Update the CSS variables directly for the text gradient
+    const heroTitle = document.getElementById('hero-title');
+    if (heroTitle) {
+        const rect = heroTitle.getBoundingClientRect();
+        heroTitle.style.setProperty('--x', `${e.clientX - rect.left}px`);
+        heroTitle.style.setProperty('--y', `${e.clientY - rect.top}px`);
+    }
+});
+        /*
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
@@ -975,6 +1078,7 @@
                 }
             }
         }
+        */
 
         window.addEventListener('resize', resize);
         resize();
