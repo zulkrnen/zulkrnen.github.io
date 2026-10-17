@@ -80,41 +80,34 @@
         }
 
         /* Animated Mobile Collapsible Triggers & Drawer Containers */
-        .collapsible-container {
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            transform-origin: top right;
-        }
-
-        .collapsible-bottom-right {
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            transform-origin: bottom right;
-        }
-
+        /* Ultra-Smooth Luxury Collapsible Drawers */
+        .collapsible-container,
+        .collapsible-bottom-right,
         .collapsible-bottom-left {
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            transform-origin: bottom left;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: top right;
         }
 
         .collapsible-closed {
             opacity: 0;
             pointer-events: none;
-            transform: scale(0.8) translateY(-10px);
+            transform: translateY(-8px) scale(0.95);
         }
 
         .collapsible-bottom-right.collapsible-closed {
-            transform: scale(0.8) translateY(10px);
+            transform: translateY(8px) scale(0.95);
         }
 
         .collapsible-bottom-left.collapsible-closed {
-            transform: scale(0.8) translateX(-10px);
+            transform: translateX(-8px) scale(0.95);
         }
 
         .collapsible-open {
             opacity: 1;
             pointer-events: auto;
-            transform: scale(1) translateY(0) translateX(0);
+            transform: translateY(0) scale(1);
         }
-
+        
         /* Ultra-refined Glass Icon Buttons */
         .glass-btn {
             background: rgba(255, 255, 255, 0.025);
@@ -131,6 +124,11 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 30px -5px rgba(255, 255, 255, 0.08);
             color: #ffffff;
+        }
+
+        /* Ensure mobile buttons and drawers maintain clean isolation */
+        .glass-btn, .collapsible-container {
+            isolation: isolate;
         }
 
         .glass-card {
@@ -243,7 +241,7 @@
                     </button>
 
                     <!-- Mobile Collapsible Navigation Dropdown -->
-                    <div id="mobile-nav-menu" class="collapsible-container collapsible-closed absolute top-0 right-0 border-white/10 rounded-xl z-40 flex flex-col space-y-2">                      
+                    <div id="mobile-nav-menu" class="collapsible-container collapsible-closed absolute top-0 right-0 border-white/10 rounded-xl z-50 flex flex-col space-y-2">                      
                         <button onclick="switchView('home'); toggleMobileNav();" class="nav-block-home glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
                             <i class="fa-solid fa-compass text-xs"></i>
                         </button>
