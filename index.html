@@ -983,6 +983,31 @@
                 });
             }
         });
+
+        // Auto-collapse mobile drawers when tapping outside
+document.addEventListener('click', (e) => {
+    // Collect all drawer elements and toggle buttons
+    const drawers = document.querySelectorAll(
+        '#mobile-nav-menu, #social-nav-menu, #mobile-credit-menu'
+    );
+    const toggles = document.querySelectorAll(
+        '#mobile-nav-toggle, #social-toggle, #mobile-credit-toggle'
+    );
+
+    // Check if the click was inside any drawer or any toggle button
+    const isClickInsideDrawer = Array.from(drawers).some(drawer => drawer.contains(e.target));
+    const isClickOnToggle = Array.from(toggles).some(toggle => toggle.contains(e.target));
+
+    // If tapped outside both the drawer content and the toggle buttons, close all drawers
+    if (!isClickInsideDrawer && !isClickOnToggle) {
+        drawers.forEach(drawer => {
+            if (drawer.classList.contains('collapsible-open')) {
+                drawer.classList.remove('collapsible-open');
+                drawer.classList.add('collapsible-closed');
+            }
+        });
+    }
+});
         
         let currentThemeColor = { r: 56, g: 85, b: 128 }; // Default blue-slate glow
 
