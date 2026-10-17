@@ -252,13 +252,21 @@
         <!-- Header Navigation -->
         <header class="w-full flex items-center justify-between relative">
             <!-- Signature / Brand Logo on Top Left -->
-            <a href="#" onclick="switchView('home')" class="group flex items-center space-x-2 text-white focus:outline-none" aria-label="Zulkrnen Home">
+<!--            <a href="#" onclick="switchView('home')" class="group flex items-center space-x-2 text-white focus:outline-none" aria-label="Zulkrnen Home">
                 <span class="font-signature text-xs sm:text-sm md:text-base font-normal tracking-[0.25em] text-slate-300 group-hover:text-white transition-colors duration-500">
                     haider
                 </span>
                 <span class="w-1 h-1 rounded-full bg-slate-500 group-hover:bg-white group-hover:shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-500"></span>
             </a>
 
+ -->
+            <a href="#" onclick="event.preventDefault(); switchView('home'); toggleStatementModal();" class="group flex items-center space-x-2 text-white focus:outline-none" aria-label="Zulkrnen Home">
+                <span class="font-signature text-xs sm:text-sm md:text-base font-normal tracking-[0.25em] text-slate-300 group-hover:text-white transition-colors duration-500">
+                    haider
+                </span>
+                <span class="w-1 h-1 rounded-full bg-slate-500 group-hover:bg-white group-hover:shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-500"></span>
+            </a>
+            
             <!-- Right Controls: Status + Mobile Collapsible Nav Button -->
             <div class="flex items-center space-x-3">
                 <!-- Status Indicator (Hidden on Mobile) -->
@@ -1318,6 +1326,38 @@ window.addEventListener('mousemove', (e) => {
         };
 
 
+        // Personal statament modal
+
+        function toggleStatementModal() {
+    const modal = document.getElementById('statement-modal');
+    const card = document.getElementById('statement-card');
+    
+    const isOpen = modal.classList.contains('opacity-100');
+
+    if (!isOpen) {
+        // Open Modal
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modal.classList.add('opacity-100', 'pointer-events-auto');
+        card.classList.remove('scale-95');
+        card.classList.add('scale-100');
+    } else {
+        // Close Modal
+        modal.classList.remove('opacity-100', 'pointer-events-auto');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        card.classList.remove('scale-100');
+        card.classList.add('scale-95');
+    }
+}
+/*
+// Optional: Close modal when clicking outside the glass card on the backdrop blur
+document.getElementById('statement-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'statement-modal') {
+        toggleStatementModal();
+    }
+}); */
+
+        
+
         
         // Mobile Typewriter Effect
         
@@ -1362,5 +1402,43 @@ window.addEventListener('DOMContentLoaded', () => {
     typeWriter();
 });
     </script>
+
+<!-- Personal Statement Full-Screen Glass Modal -->
+<div id="statement-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-950/80 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-500 ease-out">
+    
+    <!-- Pinned Top-Right Viewport Close Button -->
+    <button onclick="toggleStatementModal()" aria-label="Close Statement" class="absolute top-6 right-6 sm:top-8 sm:right-8 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all duration-300 z-50">
+        <i class="fa-solid fa-xmark text-sm"></i>
+    </button>
+
+    <div id="statement-card" class="relative max-w-xl w-full bg-neutral-900/70 border border-white/10 rounded-2xl p-8 shadow-2xl backdrop-blur-2xl transform scale-95 transition-transform duration-500 ease-out">
+        
+        <!-- Header / Badge -->
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-slate-300 mb-4">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            A little about me
+        </div>
+
+        <!-- Statement Text (Styled in luxury typography) -->
+        <p class="text-slate-200 font-sans text-base sm:text-lg leading-relaxed font-light">
+            "
+I'm an Electrical Engineering graduate specializing in Telecommunications, with a broad technical foundation and an interest in how ideas can be turned into practical, meaningful solutions.
+
+My experience spans technical projects, applied research, and software and hardware development. Through this work, I've developed an interest not only in how things work, but also in how problems are understood, solutions are conceptualized, and different pieces come together to form a functioning system. I enjoy exploring unfamiliar problems, investigating possible approaches, and working through the technical and practical considerations involved in bringing an idea to life.
+
+I'm particularly drawn to the space where technology meets people, products, and the systems around them. I'm interested in understanding needs, identifying opportunities for improvement, and connecting technical possibilities with practical requirements. This has led me to explore areas beyond my engineering specialization, including product development, business analysis, operations, and project execution.
+
+I'm still building experience and refining where I can contribute most effectively. At this stage, I'm focused on broadening my perspective, strengthening my ability to translate ideas into clear plans and tangible outcomes, and learning how to take solutions from initial conception through development, implementation, and continuous improvement.
+
+Ultimately, I want to bring together technical understanding, structured problem-solving, and a broader view of how things work to help develop useful products, improve systems, and pursue ideas that create meaningful value. This space is a reflection of that journey: what I've worked on, what I'm exploring, what I'm learning, and what I hope to build next."
+        </p>
+
+        <!-- Footer signature or closing note -->
+        <div class="mt-6 pt-6 border-t border-white/10 flex items-center justify-between text-xs font-mono text-slate-400">
+            <span>Ex'Orios</span>
+            <span>Est. 2026</span>
+        </div>
+    </div>
+</div>
 </body>
 </html>
