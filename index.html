@@ -154,10 +154,6 @@
             color: #ffffff;
         }
 
-        /* Ensure mobile buttons and drawers maintain clean isolation */
-        .glass-btn, .collapsible-container {
-            isolation: isolate;
-        }
 
         .glass-card {
             background: rgba(12, 15, 22, 0.65);
@@ -974,7 +970,7 @@
         const heroTitle = document.getElementById('hero-title');
 
         // Auto-index all drawer children for staggered cascade animations
-        document.querySelectorAll('#mobile-nav-menu, #social-nav-menu, #mobile-credit-menu').forEach(menu => {
+        document.querySelectorAll('#mobile-nav-menu, #mobile-social-menu, #mobile-credit-menu').forEach(menu => {
             if (menu) {
                 const items = menu.children;
                 Array.from(items).forEach((item, index) => {
@@ -988,10 +984,10 @@
 document.addEventListener('click', (e) => {
     // Collect all drawer elements and toggle buttons
     const drawers = document.querySelectorAll(
-        '#mobile-nav-menu, #social-nav-menu, #mobile-credit-menu'
+        '#mobile-nav-menu, #mobile-social-menu, #mobile-credit-menu'
     );
     const toggles = document.querySelectorAll(
-        '#mobile-nav-toggle, #social-toggle, #mobile-credit-toggle'
+        '#mobile-nav-toggle, #mobile-social-toggle, #mobile-credit-toggle'
     );
 
     // Check if the click was inside any drawer or any toggle button
