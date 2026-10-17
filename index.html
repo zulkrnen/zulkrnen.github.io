@@ -891,15 +891,15 @@
                     <button id="mobile-credit-toggle" onclick="toggleMobileCredit()" aria-label="Toggle Credits" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white relative z-50">
                         <i id="mobile-credit-icon" class="fa-solid fa-wand-magic-sparkles text-xs transition-transform duration-300"></i>
                     </button> 
-                    <div id="mobile-credit-menu" class="collapsible-bottom-left collapsible-closed absolute bottom-0 left-0 pl-11 bg-[#0a0d14]/95 border border-white/10 rounded-xl px-3 py-2 shadow-2xl backdrop-blur-xl z-40 flex items-center whitespace-nowrap">
-                        <a href="https://instagram.com/exorios" target="_blank" rel="noopener noreferrer" class="text-[11px] font-mono text-slate-300 hover:text-white">
+                   <div id="mobile-credit-menu" class="collapsible-bottom-left collapsible-closed absolute bottom-0 left-0 pl-11 bg-[#0a0d14]/60 border border-white/10 rounded-xl px-3 py-2 shadow-2xl backdrop-blur-xl z-40 flex items-center whitespace-nowrap">
+                       <a href="https://instagram.com/theexorios" target="_blank" rel="noopener noreferrer" class="text-[11px] font-mono text-slate-300 hover:text-white">
                             Made w/ 🧠 and ✨ by Ex'Orios
                         </a>
                     </div>
                 </div>
 
                 <!-- Desktop Full Text Credit Link -->
-                <a href="https://instagram.com/exorios" target="_blank" rel="noopener noreferrer" class="hidden sm:flex text-[11px] text-slate-400 hover:text-white font-mono tracking-wider transition-colors duration-300 items-center gap-1.5 whitespace-nowrap">
+                <a href="https://instagram.com/theexorios" target="_blank" rel="noopener noreferrer" class="hidden sm:flex text-[11px] text-slate-400 hover:text-white font-mono tracking-wider transition-colors duration-300 items-center gap-1.5 whitespace-nowrap">
                     <span>Made w/ 🧠 and ✨ by Ex'Orios</span>
                 </a>
             </div>
@@ -973,6 +973,17 @@
 
         const heroTitle = document.getElementById('hero-title');
 
+        // Auto-index all drawer children for staggered cascade animations
+        document.querySelectorAll('#mobile-nav-menu, #social-nav-menu, #mobile-credit-menu').forEach(menu => {
+            if (menu) {
+                const items = menu.children;
+                Array.from(items).forEach((item, index) => {
+                    item.style.setProperty('--i', index);
+                    item.style.setProperty('--total', items.length);
+                });
+            }
+        });
+        
         let currentThemeColor = { r: 56, g: 85, b: 128 }; // Default blue-slate glow
 
         /*
@@ -1048,14 +1059,6 @@
             }
         });
 
-        // Auto-index drawer children for staggered cascade animations
-        document.querySelectorAll('#mobile-nav-menu, #social-nav-menu').forEach(menu => {
-            const items = menu.children;
-            Array.from(items).forEach((item, index) => {
-                item.style.setProperty('--i', index);
-                item.style.setProperty('--total', items.length);
-            });
-        });
         
         // View Switcher logic
         const views = ['home', 'projects', 'skills', 'education', 'research', 'experience', 'interests'];
