@@ -140,35 +140,21 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
         
-        /* Luminous Metallic Gradient with Deep Shadow Buffer */
+        /* Interactive Spotlight Gradient with Deep Legibility Shadow */
         .title-interactive-light {
-            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 50%, #cbd5e1 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            /* Multi-layered shadow buffer prevents background orbs from washing out the text */
-            filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.95)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
-        }
-
-        /* Interactive Spotlight Gradient for Title */
-
-        /*
-        .title-interactive-light {
-          
             background: radial-gradient(
                 circle 350px at var(--x, 50%) var(--y, 50%), 
                 #ffffff 0%, 
-                #cbd5e1 35%,
-                #475569 80%
+                #f1f5f9 40%, 
+                #cbd5e1 80%
             );
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-comment out             Drop shadow ensures high contrast against background canvas orbs 
-            filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.85));
+            /* Heavy drop shadow ensures absolute contrast against background orbs */
+            filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.95)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
         }
-        */
-        
+
         /* Subtitle Idle & Hover Transition with Drop-Shadow for Readability */
         .subtitle-hover {
             opacity: 0.5; /* Dim when idle */
