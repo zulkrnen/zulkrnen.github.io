@@ -154,9 +154,17 @@
             color: #ffffff;
         }
 
+        /* Ultra-refined Glass Icon Buttons */
+        .glass-credit {
+            background: rgba(255, 255, 255, 0.025);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
 
         .glass-card {
-            background: rgba(12, 15, 22, 0.65);
+            background: rgba(12, 15, 22, 0.40);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -884,7 +892,7 @@
             <div class="relative">
                 <!-- Mobile Expandable Credit Drawer Trigger & Container -->
                 <div class="sm:hidden relative">
-                    <button id="mobile-credit-toggle" onclick="toggleMobileCredit()" aria-label="Toggle Credits" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white relative z-50">
+                    <button id="mobile-credit-toggle" onclick="toggleMobileCredit()" aria-label="Toggle Credits" class="glass-credit w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white relative z-50">
                         <i id="mobile-credit-icon" class="fa-solid fa-wand-magic-sparkles text-xs transition-transform duration-300"></i>
                     </button> 
                    <div id="mobile-credit-menu" class="collapsible-bottom-left collapsible-closed absolute bottom-0 left-0 pl-11 bg-[#0a0d14]/30 border border-white/10 rounded-xl px-3 py-2 shadow-2xl backdrop-blur-xl z-40 flex items-center whitespace-nowrap">
@@ -969,41 +977,51 @@
 
         const heroTitle = document.getElementById('hero-title');
 
-        // Auto-index all drawer children for staggered cascade animations
-        document.querySelectorAll('#mobile-nav-menu, #mobile-social-menu, #mobile-credit-menu').forEach(menu => {
-            if (menu) {
-                const items = menu.children;
-                Array.from(items).forEach((item, index) => {
-                    item.style.setProperty('--i', index);
-                    item.style.setProperty('--total', items.length);
-                });
-            }
+        
+        // Auto-index all drawer children for staggered cascade animations with proper direction handling
+        document.querySelectorAll('#mobile-nav-menu').forEach(menu => {
+            const items = menu.children;
+            Array.from(items).forEach((item, index) => {
+                // Nav menu opens downward: normal order (0, 1, 2...)
+                item.style.setProperty('--i', index);
+                item.style.setProperty('--total', items.length);
+            });
+        });
+
+        document.querySelectorAll('#mobile-social-menu, #mobile-credit-menu').forEach(menu => {
+            const items = menu.children;
+            Array.from(items).forEach((item, index) => {
+                // Bottom-anchored menus open upward: reverse order so the top item goes first
+                const invertedIndex = items.length - 1 - index;
+                item.style.setProperty('--i', invertedIndex);
+                item.style.setProperty('--total', items.length);
+            });
         });
 
         // Auto-collapse mobile drawers when tapping outside
-document.addEventListener('click', (e) => {
-    // Collect all drawer elements and toggle buttons
-    const drawers = document.querySelectorAll(
-        '#mobile-nav-menu, #mobile-social-menu, #mobile-credit-menu'
-    );
-    const toggles = document.querySelectorAll(
-        '#mobile-nav-toggle, #mobile-social-toggle, #mobile-credit-toggle'
-    );
+        document.addEventListener('click', (e) => {
+            // Collect all drawer elements and toggle buttons
+            const drawers = document.querySelectorAll(
+                '#mobile-nav-menu, #mobile-social-menu, #mobile-credit-menu'
+            );
+            const toggles = document.querySelectorAll(
+                '#mobile-nav-toggle, #mobile-social-toggle, #mobile-credit-toggle'
+            );
+            
+            // Check if the click was inside any drawer or any toggle button
+            const isClickInsideDrawer = Array.from(drawers).some(drawer => drawer.contains(e.target));
+            const isClickOnToggle = Array.from(toggles).some(toggle => toggle.contains(e.target));
 
-    // Check if the click was inside any drawer or any toggle button
-    const isClickInsideDrawer = Array.from(drawers).some(drawer => drawer.contains(e.target));
-    const isClickOnToggle = Array.from(toggles).some(toggle => toggle.contains(e.target));
-
-    // If tapped outside both the drawer content and the toggle buttons, close all drawers
-    if (!isClickInsideDrawer && !isClickOnToggle) {
-        drawers.forEach(drawer => {
-            if (drawer.classList.contains('collapsible-open')) {
-                drawer.classList.remove('collapsible-open');
-                drawer.classList.add('collapsible-closed');
+            // If tapped outside both the drawer content and the toggle buttons, close all drawers
+            if (!isClickInsideDrawer && !isClickOnToggle) {
+                drawers.forEach(drawer => {
+                    if (drawer.classList.contains('collapsible-open')) {
+                        drawer.classList.remove('collapsible-open');
+                        drawer.classList.add('collapsible-closed');
+                    }
+                });
             }
         });
-    }
-});
         
         let currentThemeColor = { r: 56, g: 85, b: 128 }; // Default blue-slate glow
 
