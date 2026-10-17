@@ -147,6 +147,22 @@
             -webkit-text-fill-color: transparent;
         }
 
+        /* Interactive Spotlight Gradient for Title */
+        .title-interactive-light {
+            /* Uses --x and --y custom CSS variables provided by JavaScript */
+            background: radial-gradient(
+                circle 350px at var(--x, 50%) var(--y, 50%), 
+                #ffffff 0%, 
+                #cbd5e1 35%,
+                #475569 80%
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            /* Drop shadow ensures high contrast against background canvas orbs */
+            filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.85));
+        }
+
         /* Subtitle Idle & Hover Transition with Drop-Shadow for Readability */
         .subtitle-hover {
             opacity: 0.5; /* Dim when idle */
@@ -266,11 +282,11 @@
             
             <!-- HOME VIEW -->
             <div id="view-home" class="w-full max-w-6xl mx-auto space-y-3 sm:space-y-6 page-transition">
-                <h1 class="font-light tracking-tight font-clashdisplay title-gradient uppercase leading-[0.95] sm:leading-tight w-full">
-                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold">Syed </span>
-                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold">Zulqarnain </span>
-                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold">Haider</span>
-                </h1>
+               <h1 id="hero-title" class="font-clash uppercase leading-[0.95] sm:leading-tight w-full max-w-5xl mx-auto text-center cursor-default">
+                   <span class="block text-[10vw] sm:text-5xl md:text-6xl lg:text-7xl font-semibold title-interactive-light tracking-tight">
+                       Syed Zulqarnain Haider
+                   </span>
+               </h1>
 
                 <div class="pt-2 sm:pt-1 subtitle-hover cursor-default inline-block relative z-20">
                     <p class="hidden sm:block font-syne text-[10px] md:text-xs font-light tracking-[0.75em] text-slate-300 hover:text-white hover:drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] transition-all duration-300">
@@ -905,6 +921,12 @@
         let activeViewName = 'home';
         let homeColorHue = 0; // Dynamic hue shifter for Home landing view
 
+        // Initial orb position off-center (e.g., top-right corner)
+        let mouseX = window.innerWidth * 0.85;
+        let mouseY = window.innerHeight * 0.15;
+
+        const heroTitle = document.getElementById('hero-title');
+
         let currentThemeColor = { r: 56, g: 85, b: 128 }; // Default blue-slate glow
 
         function resize() {
@@ -919,11 +941,6 @@
         window.addEventListener('resize', resize);
         resize();
 
-        window.addEventListener('mousemove', (e) => {
-            mouse.targetX = e.clientX;
-            mouse.targetY = e.clientY;
-        });
-
         window.addEventListener('touchmove', (e) => {
             if (e.touches.length > 0) {
                 mouse.targetX = e.touches[0].clientX;
@@ -931,6 +948,26 @@
             }
         });
 
+        // Interactive Light Highlight on Hero Name
+        window.addEventListener('mousemove', (e) => {
+            // 1. Update Canvas Orb target coordinates (if your existing mousemove doesn't already)
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            // 2. Calculate mouse position relative to hero title bounding box
+            if (heroTitle) {
+                const rect = heroTitle.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+        
+                // Pass pixel relative positions into CSS custom variables
+                heroTitle.style.setProperty('--x', `${x}px`);
+                heroTitle.style.setProperty('--y', `${y}px`);
+            }
+        });
+
+
+        
         // View Switcher logic
         const views = ['home', 'projects', 'skills', 'education', 'research', 'experience', 'interests'];
         const viewThemes = {
