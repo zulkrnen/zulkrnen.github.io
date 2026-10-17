@@ -149,7 +149,7 @@
 
         /* Subtitle Idle & Hover Transition with Drop-Shadow for Readability */
         .subtitle-hover {
-            opacity: 0.8; /* Dim when idle */
+            opacity: 0.5; /* Dim when idle */
             transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             z-index: 20; /* Ensures it sits safely above background canvas orbs */
@@ -279,7 +279,7 @@
                     
                     <!-- Mobile Subtitle (Typewriter Loop) -->
                     <p class="block sm:hidden font-syne text-[10px] font-light tracking-[0.5em] text-slate-300 uppercase">
-                        <span id="typewriter-text"></span>
+                        <span id="typewriter-text"></span><span>|</span></span>
                     </p>
                 </div>
             </div>
