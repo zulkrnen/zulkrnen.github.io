@@ -80,39 +80,44 @@
         }
 
         /* Animated Mobile Collapsible Triggers & Drawer Containers */
-        /* Base Closed State & Reverse Stagger (Last item collapses first) */
+        /* Container-level state (manages clickability and visibility for the whole drawer) */
+        .collapsible-container,
+        .collapsible-bottom-right,
+        .collapsible-bottom-left {
+            pointer-events: none; /* disables clicks when closed */
+        }
+
+        .collapsible-container.collapsible-open,
+        .collapsible-bottom-right.collapsible-open,
+        .collapsible-bottom-left.collapsible-open {
+            pointer-events: auto; /* enables clicks when open */
+        }
+
+        /* Keep the children transitions we set up for the staggered effect */
         .collapsible-container > *,
         .collapsible-bottom-right > *,
         .collapsible-bottom-left > * {
             transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
                         opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            /* Reverse delay: last item has 0s delay, going backwards */
             transition-delay: calc((var(--total, 4) - 1 - var(--i, 0)) * 0.04s);
             opacity: 0;
             transform: translateY(-8px) scale(0.95);
         }
 
-        .collapsible-closed {
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(-8px) scale(0.95);
-        }
-
-        .collapsible-bottom-right.collapsible-closed {
+        .collapsible-bottom-right > * {
             transform: translateY(8px) scale(0.95);
         }
 
-        .collapsible-bottom-left.collapsible-closed {
+        .collapsible-bottom-left > * {
             transform: translateX(-8px) scale(0.95);
         }
 
-        /* Open State & Forward Stagger (First item expands first) */
+        /* Forward Stagger on Open */
         .collapsible-open > * {
             transition-delay: calc(var(--i, 0) * 0.04s);
             opacity: 1;
             transform: translateY(0) scale(1);
-        }
-        
+        }        
         /* Ultra-refined Glass Icon Buttons */
         .glass-btn {
             background: rgba(255, 255, 255, 0.025);
