@@ -43,8 +43,8 @@
 
         @font-face {
             font-family: 'Clash Display';
-            src: url('ClashDisplay-Extralight.otf') format('opentype');
-            font-weight: 200; /* Extralight */
+            src: url('ClashDisplay-Semibold.otf') format('opentype');
+            font-weight: 600;
             font-display: swap;
         }
 
@@ -147,15 +147,19 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Subtitle Idle & Hover Transition */
+        /* Subtitle Idle & Hover Transition with Drop-Shadow for Readability */
         .subtitle-hover {
-            opacity: 0.45; /* Darker/dimmer when idle */
+            opacity: 0.8; /* Dim when idle */
             transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            z-index: 20; /* Ensures it sits safely above background canvas orbs */
         }
 
         .subtitle-hover:hover {
-            opacity: 1; /* Normal/bright on hover */
+            opacity: 1; /* Full brightness on hover */
             transform: scale(1.02);
+            /* Adds a dark shadow buffer behind the text so glowing orbs can't wash it out */
+            filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.9)); 
         }
 
         /* Elegant Ambient Canvas */
@@ -263,18 +267,19 @@
             <!-- HOME VIEW -->
             <div id="view-home" class="w-full max-w-6xl mx-auto space-y-3 sm:space-y-6 page-transition">
                 <h1 class="font-light tracking-tight font-clashdisplay title-gradient uppercase leading-[0.95] sm:leading-tight w-full">
-                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extralight">Syed </span>
-                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light">Zulqarnain </span>
-                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extralight">Haider</span>
+                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold">Syed </span>
+                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold">Zulqarnain </span>
+                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold">Haider</span>
                 </h1>
 
-                <div class="pt-2 sm:pt-1 subtitle-hover cursor-default inline-block">
-                    <p class="font-syne text-[10px] md:text-xs font-light tracking-[0.75em] text-slate-400/70 animate-luxe-pulse">
+                <div class="pt-2 sm:pt-1 subtitle-hover cursor-default inline-block relative z-20">
+                    <p class="hidden sm:block font-syne text-[10px] md:text-xs font-light tracking-[0.75em] text-slate-300 hover:text-white hover:drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] transition-all duration-300">
                         Designer | Thinker | Engineer
                     </p>
-                <!-- Mobile Subtitle (Typewriter Loop) -->
-                    <p class="sm:hidden font-cinzel text-[10px] font-light tracking-[0.5em] text-slate-300 uppercase">
-                        <span id="typewriter-text"></span><span class="animate-pulse">|</span>
+                    
+                    <!-- Mobile Subtitle (Typewriter Loop) -->
+                    <p class="block sm:hidden font-syne text-[10px] font-light tracking-[0.5em] text-slate-300 uppercase">
+                        <span id="typewriter-text"></span>
                     </p>
                 </div>
             </div>
