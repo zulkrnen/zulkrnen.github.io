@@ -917,7 +917,12 @@
         const ctx = canvas.getContext('2d');
 
         let width, height;
-        let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+        let mouse = { 
+            x: window.innerWidth * 0.85, 
+            y: window.innerHeight * 0.15, 
+            targetX: window.innerWidth * 0.85, 
+            targetY: window.innerHeight * 0.15 
+        };
         let activeViewName = 'home';
         let homeColorHue = 0; // Dynamic hue shifter for Home landing view
 
@@ -932,10 +937,13 @@
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
-            mouse.targetX = width / 2;
-            mouse.targetY = height / 2;
-            mouse.x = width / 2;
-            mouse.y = height / 2;
+            // Keep initial load position in the top-right corner instead of forcing center
+            if (!mouse.hasMoved) {
+                mouse.targetX = width * 0.85;
+                mouse.targetY = height * 0.15;
+                mouse.x = width * 0.85;
+                mouse.y = height * 0.15;
+            }
         }
 
         window.addEventListener('resize', resize);
@@ -943,6 +951,7 @@
 
         window.addEventListener('touchmove', (e) => {
             if (e.touches.length > 0) {
+                mouse.hasMoved = true; // Added
                 mouse.targetX = e.touches[0].clientX;
                 mouse.targetY = e.touches[0].clientY;
             }
@@ -950,26 +959,22 @@
 
         // Interactive Light Highlight on Hero Name
         window.addEventListener('mousemove', (e) => {
-    // 1. Update BOTH raw mouse coords and target coords for the canvas
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    
-    // If your canvas uses targetX/targetY for smooth trailing, update them here too:
-    if (typeof targetX !== 'undefined') targetX = e.clientX;
-    if (typeof targetY !== 'undefined') targetY = e.clientY;
+            mouse.hasMoved = true;
+            // Update canvas target coords so the orb follows the cursor smoothly
+            mouse.targetX = e.clientX;
+            mouse.targetY = e.clientY;
 
-    // 2. Calculate mouse position relative to hero title bounding box
-    const heroTitle = document.getElementById('hero-title');
-    if (heroTitle) {
-        const rect = heroTitle.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        heroTitle.style.setProperty('--x', `${x}px`);
-        heroTitle.style.setProperty('--y', `${y}px`);
-    }
-});
-
+            // Calculate mouse position relative to hero title bounding box for the light gradient
+            const heroTitle = document.getElementById('hero-title');
+            if (heroTitle) {
+                const rect = heroTitle.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                heroTitle.style.setProperty('--x', `${x}px`);
+                heroTitle.style.setProperty('--y', `${y}px`);
+            }
+        });
 
         
         // View Switcher logic
