@@ -147,6 +147,17 @@
             -webkit-text-fill-color: transparent;
         }
 
+        /* Subtitle Idle & Hover Transition */
+        .subtitle-hover {
+            opacity: 0.45; /* Darker/dimmer when idle */
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .subtitle-hover:hover {
+            opacity: 1; /* Normal/bright on hover */
+            transform: scale(1.02);
+        }
+
         /* Elegant Ambient Canvas */
         #ambient-canvas {
             filter: blur(80px);
@@ -253,13 +264,17 @@
             <div id="view-home" class="w-full max-w-6xl mx-auto space-y-3 sm:space-y-6 page-transition">
                 <h1 class="font-light tracking-tight font-clashdisplay title-gradient uppercase leading-[0.95] sm:leading-tight w-full">
                     <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extralight">Syed </span>
-                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extralight">Zulqarnain </span>
+                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light">Zulqarnain </span>
                     <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extralight">Haider</span>
                 </h1>
 
-                <div class="pt-2 sm:pt-1">
+                <div class="pt-2 sm:pt-1 subtitle-hover cursor-default inline-block">
                     <p class="font-syne text-[10px] md:text-xs font-light tracking-[0.75em] text-slate-400/70 animate-luxe-pulse">
                         Designer | Thinker | Engineer
+                    </p>
+                <!-- Mobile Subtitle (Typewriter Loop) -->
+                    <p class="sm:hidden font-cinzel text-[10px] font-light tracking-[0.5em] text-slate-300 uppercase">
+                        <span id="typewriter-text"></span><span class="animate-pulse">|</span>
                     </p>
                 </div>
             </div>
@@ -1116,6 +1131,51 @@
         window.onload = function () {
             animate();
         };
+
+
+        
+        // Mobile Typewriter Effect
+        
+const words = ["Designer", "Thinker", "Engineer"];
+let wordIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+const typingSpeed = 120;
+const deletingSpeed = 80;
+const pauseTime = 2000;
+
+function typeWriter() {
+    const currentWord = words[wordIndex];
+    const targetElement = document.getElementById('typewriter-text');
+    
+    if (!targetElement) return;
+
+    if (isDeleting) {
+        targetElement.textContent = currentWord.substring(0, charIndex - 1);
+        charIndex--;
+    } else {
+        targetElement.textContent = currentWord.substring(0, charIndex + 1);
+        charIndex++;
+    }
+
+    let typeSpeed = isDeleting ? deletingSpeed : typingSpeed;
+
+    if (!isDeleting && charIndex === currentWord.length) {
+        typeSpeed = pauseTime;
+        isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+        typeSpeed = 500;
+    }
+
+    setTimeout(typeWriter, typeSpeed);
+}
+
+// Start the typewriter loop when page loads
+window.addEventListener('DOMContentLoaded', () => {
+    typeWriter();
+});
     </script>
 </body>
 </html>
