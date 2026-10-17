@@ -9,8 +9,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome 6 for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Cormorant Garamond, Plus Jakarta Sans, Outfit, Cinzel -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Outfit:wght@200;300;400;500;600;700&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Syne, Plus Jakarta Sans, Outfit, Cinzel --> 
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Syne:wght@700&family=Outfit:wght@200;300;400;500;600;700&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-deep: #050608;
@@ -40,6 +40,24 @@
         .font-outfit {
             font-family: 'Outfit', sans-serif;
         }
+
+        @font-face {
+            font-family: 'Clash Display';
+            src: url('ClashDisplay-Semibold.otf') format('opentype');
+            font-weight: 600;
+            font-display: swap;
+        }
+
+        .font-clashdisplay {
+            font-family: 'Clash Display', sans-serif;
+        }
+        
+        .font-syne {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;               /* Forces the thick display weight */ 
+            letter-spacing: 4px;            /* Spreads the words wide across the layout anchor */
+        }
+
 
         /* Subtle Luxury Grain Layer */
         .grain-bg {
@@ -129,6 +147,21 @@
             -webkit-text-fill-color: transparent;
         }
 
+        /* Subtitle Idle & Hover Transition with Drop-Shadow for Readability */
+        .subtitle-hover {
+            opacity: 0.5; /* Dim when idle */
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            z-index: 20; /* Ensures it sits safely above background canvas orbs */
+        }
+
+        .subtitle-hover:hover {
+            opacity: 1; /* Full brightness on hover */
+            transform: scale(1.02);
+            /* Adds a dark shadow buffer behind the text so glowing orbs can't wash it out */
+            filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.9)); 
+        }
+
         /* Elegant Ambient Canvas */
         #ambient-canvas {
             filter: blur(80px);
@@ -175,7 +208,6 @@
     <div class="fixed inset-0 vignette-overlay pointer-events-none -z-20"></div>
     <div class="fixed inset-0 grain-bg pointer-events-none -z-10"></div>
 
-    <!-- Fullscreen Minimal Content Wrapper with relaxed top spacing for mobile -->
     <div class="relative z-10 h-full w-full flex flex-col justify-between p-5 pt-8 sm:p-6 md:p-8 lg:p-10">
 
         <!-- Header Navigation -->
@@ -196,17 +228,14 @@
                     <span id="status-text">Home</span>
                 </div>
 
-                <!-- Mobile Navigation Toggle Wrapper (Overlapping Alignment) -->
+                <!-- Mobile Navigation Toggle Wrapper -->
                 <div class="relative md:hidden">
                     <button id="mobile-nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Navigation" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white z-50 relative">
                         <i id="mobile-nav-icon" class="fa-solid fa-compass text-xs transition-transform duration-300"></i>
                     </button>
 
                     <!-- Mobile Collapsible Navigation Dropdown -->
-                    <!--<div id="mobile-nav-menu" class="collapsible-container collapsible-closed absolute top-0 right-0 pt-11 bg-[#0a0d14]/95 border border-white/10 rounded-xl p-2.5 shadow-2xl backdrop-blur-xl z-40 flex flex-col space-y-2">
--->
                     <div id="mobile-nav-menu" class="collapsible-container collapsible-closed absolute top-0 right-0 border-white/10 rounded-xl z-40 flex flex-col space-y-2">                      
-                        
                         <button onclick="switchView('home'); toggleMobileNav();" class="nav-block-home glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
                             <i class="fa-solid fa-house text-xs"></i>
                         </button>
@@ -233,263 +262,549 @@
             </div>
         </header>
 
-        <!-- Main Viewport Area -->
         <main id="main-viewport" class="flex-1 flex flex-col items-center justify-center text-center px-1 sm:px-4 my-auto w-full relative overflow-hidden pt-4 sm:pt-0">
             
             <!-- HOME VIEW -->
             <div id="view-home" class="w-full max-w-6xl mx-auto space-y-3 sm:space-y-6 page-transition">
-                <h1 class="font-light tracking-tight font-outfit uppercase title-gradient leading-[0.95] sm:leading-tight w-full">
-                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light">Syed </span>
-                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light">Zulqarnain </span>
-                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light">Haider</span>
+                <h1 class="font-light tracking-tight font-clashdisplay title-gradient uppercase leading-[0.95] sm:leading-tight w-full">
+                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold">Syed </span>
+                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold">Zulqarnain </span>
+                    <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold">Haider</span>
                 </h1>
 
-                <div class="pt-2 sm:pt-1">
-                <!--    <p class="font-cinzel text-[10px] sm:text-xs md:text-sm font-light tracking-[0.75em] text-slate-400/70 uppercase animate-luxe-pulse">
+                <div class="pt-2 sm:pt-1 subtitle-hover cursor-default inline-block relative z-20">
+                    <p class="hidden sm:block font-syne text-[10px] md:text-xs font-light tracking-[0.75em] text-slate-300 hover:text-white hover:drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] transition-all duration-300">
                         Designer | Thinker | Engineer
                     </p>
-                    -->
-                    <p class="font-cinzel text-[10px] md:text-xs font-light tracking-[0.75em] text-slate-400/70 uppercase animate-luxe-pulse">
-                        Designer | Thinker | Engineer
+                    
+                    <!-- Mobile Subtitle (Typewriter Loop) -->
+                    <p class="block sm:hidden font-syne text-[10px] font-light tracking-[0.5em] text-slate-300 uppercase">
+                        <span id="typewriter-text"></span><span>|</span></span>
                     </p>
                 </div>
             </div>
 
             <!-- PROJECTS VIEW -->
             <div id="view-projects" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[68vh] flex flex-col">
-                <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
                     <div>
                         <h2 class="font-cinzel text-xl sm:text-2xl font-light tracking-widest text-white uppercase">Selected Projects</h2>
-                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">NeuroSense, Web applications, and Embedded Systems.</p>
+                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Deep Learning, Full-Stack Web, Embedded Systems & Communication Models.</p>
                     </div>
                 </div>
                 <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyan-400/30 transition-all">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">FYDP / Deep Learning</span>
-                            <span class="text-[10px] font-mono text-slate-500">2024 - 2025</span>
+                    
+                    <!-- NeuroSense -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyan-400/40 transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">FYDP / Deep Learning</span>
+                                <span class="text-[10px] font-mono text-slate-500">2024 - 2025</span>
+                            </div>
+                            <h3 class="font-outfit text-lg font-medium text-white mb-2">NeuroSense: The Brain IMDb</h3>
+                            <p class="text-xs text-slate-400 font-light leading-relaxed mb-3">EEG-based cognitive & emotional signal analysis system evaluating children aged 2-7. Primary responsibility for data processing, timeline annotation, ML/DL models (RNNs/LSTMs), and hyperparameter tuning. Deployed demo app on Hugging Face.</p>
                         </div>
-                        <h3 class="font-outfit text-lg font-medium text-white mb-2">NeuroSense: The Brain IMDb</h3>
-                        <p class="text-xs text-slate-400 font-light leading-relaxed">EEG-based cognitive and emotional signal analysis web app & deep learning pipeline evaluating auditory/visual responses in children.</p>
-                    </div>
-                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyan-400/30 transition-all">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">Software / Web</span>
-                            <span class="text-[10px] font-mono text-slate-500">2024</span>
+                        <div class="flex flex-wrap gap-1.5 pt-2 border-t border-white/5">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">Python</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">EEG Signal Processing</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">PyTorch / DL</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">Hugging Face</span>
                         </div>
-                        <h3 class="font-outfit text-lg font-medium text-white mb-2">Multi-Campus School Management System</h3>
-                        <p class="text-xs text-slate-400 font-light leading-relaxed">Full-stack web application constructed to simplify administrative and academic operations across multiple campus branches.</p>
                     </div>
-                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyan-400/30 transition-all">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">IoT & Hardware</span>
-                            <span class="text-[10px] font-mono text-slate-500">2023</span>
+
+                    <!-- Multi-Campus School Management System -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyan-400/40 transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">Full-Stack Web</span>
+                                <span class="text-[10px] font-mono text-slate-500">Hobby Project</span>
+                            </div>
+                            <h3 class="font-outfit text-lg font-medium text-white mb-2">Multi-Campus School Management System</h3>
+                            <p class="text-xs text-slate-400 font-light leading-relaxed mb-3">Designed, built, and deployed a full-stack web application supporting administrative & academic operations across multiple school branches. Translated end-to-end system requirements into scalable web modules.</p>
                         </div>
-                        <h3 class="font-outfit text-lg font-medium text-white mb-2">Air Quality Management System</h3>
-                        <p class="text-xs text-slate-400 font-light leading-relaxed">Industrial IoT 8051 & ESP-based hardware prototype integrating smoke sensors, Multisim simulation, and assembly language code.</p>
+                        <div class="flex flex-wrap gap-1.5 pt-2 border-t border-white/5">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">React</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">TailwindCSS</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">Supabase</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">JavaScript</span>
+                        </div>
                     </div>
+
+                    <!-- Mechatronic Aero-Pendulum -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyan-400/40 transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">Control Systems</span>
+                                <span class="text-[10px] font-mono text-slate-500">Academic Engineering</span>
+                            </div>
+                            <h3 class="font-outfit text-lg font-medium text-white mb-2">Modeling & Control of Aero-Pendulum</h3>
+                            <p class="text-xs text-slate-400 font-light leading-relaxed mb-3">Designed conceptual state-feedback controls and fabricated frame assembly using local metalworking & carpentry. Investigated feedback sensor alignment limits and precision potentiometer feedback integration.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 pt-2 border-t border-white/5">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">MATLAB / Simulink</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">State Feedback</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">Fabrication</span>
+                        </div>
+                    </div>
+
+                    <!-- Air Quality Management System -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyan-400/40 transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">Industrial IoT / Microcontrollers</span>
+                                <span class="text-[10px] font-mono text-slate-500">Academic Project</span>
+                            </div>
+                            <h3 class="font-outfit text-lg font-medium text-white mb-2">Air Quality Management System</h3>
+                            <p class="text-xs text-slate-400 font-light leading-relaxed mb-3">Individually designed an 8051-based system in Assembly language & NI Multisim. Collaborated on a physical ESP-based hardware prototype incorporating smoke sensors and automated alert mechanisms.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 pt-2 border-t border-white/5">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">8051 Assembly</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">ESP Microcontroller</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">NI Multisim</span>
+                        </div>
+                    </div>
+
+                    <!-- Simplified Network Design -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyan-400/40 transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">Computer Networks</span>
+                                <span class="text-[10px] font-mono text-slate-500">Academic Project</span>
+                            </div>
+                            <h3 class="font-outfit text-lg font-medium text-white mb-2">Corporate Network Infrastructure Design</h3>
+                            <p class="text-xs text-slate-400 font-light leading-relaxed mb-3">Engineered simulated enterprise network topologies in Cisco Packet Tracer. Configured IP allocation schemes, VLAN segmentation, and dedicated Web, DNS, and Email servers.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 pt-2 border-t border-white/5">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">Cisco Packet Tracer</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">Subnetting / IP Schemes</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">DNS & Mail Services</span>
+                        </div>
+                    </div>
+
+                    <!-- RF Wireless Data Transmission Model -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyan-400/40 transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">Digital Communications</span>
+                                <span class="text-[10px] font-mono text-slate-500">Academic Project</span>
+                            </div>
+                            <h3 class="font-outfit text-lg font-medium text-white mb-2">RF Wireless Data Transmission Model</h3>
+                            <p class="text-xs text-slate-400 font-light leading-relaxed mb-3">Designed and constructed a functional miniature RF transmission model utilizing Arduino microcontrollers and 433-MHz wireless modules for point-to-point data packets.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 pt-2 border-t border-white/5">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">Arduino</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">433-MHz RF Modules</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">C++ / Embedded</span>
+                        </div>
+                    </div>
+
+                    <!-- Diagnostic FSM Model -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyan-400/40 transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">Digital Logic Design</span>
+                                <span class="text-[10px] font-mono text-slate-500">Lab & Research Project</span>
+                            </div>
+                            <h3 class="font-outfit text-lg font-medium text-white mb-2">Diagnostic Model of Computer Systems (FSM)</h3>
+                            <p class="text-xs text-slate-400 font-light leading-relaxed mb-3">Utilized Finite State Machine (FSM) methodology to model, map, and simulate system diagnostic states, transition logic, and failure handling modes in digital systems.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 pt-2 border-t border-white/5">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">Finite State Machines</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">Digital Logic</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">System Diagnostics</span>
+                        </div>
+                    </div>
+
+                    <!-- Online Attendance System -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyan-400/40 transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">Data Structures & Algo</span>
+                                <span class="text-[10px] font-mono text-slate-500">Academic Project</span>
+                            </div>
+                            <h3 class="font-outfit text-lg font-medium text-white mb-2">Online Attendance System</h3>
+                            <p class="text-xs text-slate-400 font-light leading-relaxed mb-3">Designed and built a web application allowing students, instructors, and coordinators to efficiently log, manage, and audit academic attendance records.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 pt-2 border-t border-white/5">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">JavaScript</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">Data Structures</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">Web Management</span>
+                        </div>
+                    </div>
+
+                    <!-- Wireless Voltage Detector PCB -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyan-400/40 transition-all flex flex-col justify-between md:col-span-2">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">PCB Design & Hardware Fabrication</span>
+                                <span class="text-[10px] font-mono text-slate-500">Collaborative Lab Project</span>
+                            </div>
+                            <h3 class="font-outfit text-lg font-medium text-white mb-2">Non-Contact Wireless Voltage Detector</h3>
+                            <p class="text-xs text-slate-400 font-light leading-relaxed mb-3">Co-developed conceptual non-contact voltage detection circuit, simulated amplification and frequency behavior, and executed physical PCB fabrication, soldering, and hardware testing.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 pt-2 border-t border-white/5">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">PCB Design</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">Circuit Simulation</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">Soldering & Hardware</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
             <!-- SKILLS VIEW -->
             <div id="view-skills" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[68vh] flex flex-col">
-                <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
                     <div>
                         <h2 class="font-cinzel text-xl sm:text-2xl font-light tracking-widest text-white uppercase">Technical Expertise</h2>
-                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Core proficiencies, engineering & technical capabilities.</p>
+                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Core proficiencies, software architecture, circuit design, and frameworks.</p>
                     </div>
                 </div>
-                <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <h3 class="font-mono text-xs text-emerald-400 uppercase tracking-widest mb-3 pb-2 border-b border-white/5">Programming & Web</h3>
+                <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                    <!-- Web Development -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-emerald-400/30 transition-all">
+                        <div class="flex items-center space-x-2 mb-3 pb-2 border-b border-white/5">
+                            <i class="fa-solid fa-laptop-code text-emerald-400 text-sm"></i>
+                            <h3 class="font-mono text-xs text-emerald-400 uppercase tracking-widest">Web Development</h3>
+                        </div>
                         <ul class="space-y-2 text-xs text-slate-300 font-light">
-                            <li class="flex justify-between"><span>JavaScript / React</span><span class="text-slate-500 font-mono">Core</span></li>
-                            <li class="flex justify-between"><span>Python / Deep Learning</span><span class="text-slate-500 font-mono">Advanced</span></li>
-                            <li class="flex justify-between"><span>C++ / Assembly</span><span class="text-slate-500 font-mono">Proficient</span></li>
-                            <li class="flex justify-between"><span>TailwindCSS / Supabase</span><span class="text-slate-500 font-mono">Advanced</span></li>
+                            <li><strong class="text-white font-medium">Frontend:</strong> React, HTML5/CSS3, JavaScript (ES6+), TailwindCSS, Shadcn/ui</li>
+                            <li><strong class="text-white font-medium">Motion Mechanics:</strong> Framer Motion, Anime.js, tsParticles, GSAP</li>
+                            <li><strong class="text-white font-medium">Cloud & Backend:</strong> Supabase (PostgreSQL), Node.js, Express, MongoDB</li>
+                            <li><strong class="text-white font-medium">Design & Workflows:</strong> Figma, Google Stitch (Design-First Workflow)</li>
                         </ul>
                     </div>
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <h3 class="font-mono text-xs text-emerald-400 uppercase tracking-widest mb-3 pb-2 border-b border-white/5">Circuit & Embedded</h3>
+
+                    <!-- Circuit Design & Hardware -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-emerald-400/30 transition-all">
+                        <div class="flex items-center space-x-2 mb-3 pb-2 border-b border-white/5">
+                            <i class="fa-solid fa-microchip text-emerald-400 text-sm"></i>
+                            <h3 class="font-mono text-xs text-emerald-400 uppercase tracking-widest">Circuits & Embedded</h3>
+                        </div>
                         <ul class="space-y-2 text-xs text-slate-300 font-light">
-                            <li class="flex justify-between"><span>Multisim & Proteus</span><span class="text-slate-500 font-mono">Expert</span></li>
-                            <li class="flex justify-between"><span>MATLAB & Simulink</span><span class="text-slate-500 font-mono">Advanced</span></li>
-                            <li class="flex justify-between"><span>Arduino / ESP Hardware</span><span class="text-slate-500 font-mono">Core</span></li>
-                            <li class="flex justify-between"><span>AutoCAD / FreeCAD</span><span class="text-slate-500 font-mono">Basic</span></li>
+                            <li><strong class="text-white font-medium">Simulation:</strong> NI Multisim, Proteus, MATLAB & Simulink</li>
+                            <li><strong class="text-white font-medium">Embedded Hardware:</strong> Arduino, ESP8266/ESP32, Microcontrollers, Sensors</li>
+                            <li><strong class="text-white font-medium">CAD Design:</strong> AutoCAD, FreeCAD (Foundational 3D Layouts)</li>
+                            <li><strong class="text-white font-medium">Prototyping:</strong> Breadboarding, Soldering, PCB Assembly & Debugging</li>
                         </ul>
                     </div>
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <h3 class="font-mono text-xs text-emerald-400 uppercase tracking-widest mb-3 pb-2 border-b border-white/5">Networks & Mgmt</h3>
+
+                    <!-- Programming Languages -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-emerald-400/30 transition-all">
+                        <div class="flex items-center space-x-2 mb-3 pb-2 border-b border-white/5">
+                            <i class="fa-solid fa-terminal text-emerald-400 text-sm"></i>
+                            <h3 class="font-mono text-xs text-emerald-400 uppercase tracking-widest">Programming</h3>
+                        </div>
                         <ul class="space-y-2 text-xs text-slate-300 font-light">
-                            <li class="flex justify-between"><span>Cisco Packet Tracer</span><span class="text-slate-500 font-mono">Advanced</span></li>
-                            <li class="flex justify-between"><span>Technical Writing / LaTeX</span><span class="text-slate-500 font-mono">Expert</span></li>
-                            <li class="flex justify-between"><span>PMI Agile / Predictive</span><span class="text-slate-500 font-mono">Certified</span></li>
-                            <li class="flex justify-between"><span>Product Strategy</span><span class="text-slate-500 font-mono">Certified</span></li>
+                            <li class="flex justify-between"><span>JavaScript (ES6+)</span><span class="text-emerald-400 font-mono">Advanced</span></li>
+                            <li class="flex justify-between"><span>Python (DL / ML)</span><span class="text-emerald-400 font-mono">Advanced</span></li>
+                            <li class="flex justify-between"><span>C++</span><span class="text-emerald-400 font-mono">Proficient</span></li>
+                            <li class="flex justify-between"><span>Assembly (.asm)</span><span class="text-emerald-400 font-mono">Core</span></li>
+                            <li class="flex justify-between"><span>MATLAB Scripting</span><span class="text-emerald-400 font-mono">Proficient</span></li>
                         </ul>
                     </div>
+
+                    <!-- Networks & Systems -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-emerald-400/30 transition-all">
+                        <div class="flex items-center space-x-2 mb-3 pb-2 border-b border-white/5">
+                            <i class="fa-solid fa-network-wired text-emerald-400 text-sm"></i>
+                            <h3 class="font-mono text-xs text-emerald-400 uppercase tracking-widest">Network Systems</h3>
+                        </div>
+                        <ul class="space-y-2 text-xs text-slate-300 font-light">
+                            <li><strong class="text-white font-medium">Network Architecture:</strong> Cisco Packet Tracer topology & IP schemes</li>
+                            <li><strong class="text-white font-medium">Traffic Diagnostics:</strong> Packet capture and network analysis with Wireshark</li>
+                            <li><strong class="text-white font-medium">Field Testing:</strong> Mobile network drive-testing & signal optimization</li>
+                        </ul>
+                    </div>
+
+                    <!-- Technical Writing & Project Coordination -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-emerald-400/30 transition-all md:col-span-2 lg:col-span-2">
+                        <div class="flex items-center space-x-2 mb-3 pb-2 border-b border-white/5">
+                            <i class="fa-solid fa-file-lines text-emerald-400 text-sm"></i>
+                            <h3 class="font-mono text-xs text-emerald-400 uppercase tracking-widest">Documentation & Leadership</h3>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-300 font-light">
+                            <div>
+                                <h4 class="text-white font-medium mb-1">Technical Documentation</h4>
+                                <p class="text-slate-400">Research manuscripts, engineering reports, proposals, Overleaf / LaTeX manuscript formatting, and presentation slide design.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-medium mb-1">Project Coordination</h4>
+                                <p class="text-slate-400">Agile sprint management, predictive milestone tracking, cross-functional academic coordination, and event operations.</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
             <!-- EDUCATION VIEW -->
             <div id="view-education" class="w-full max-w-5xl mx-auto hidden page-transition h-[68vh] text-left flex flex-col">
-                <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
                     <div>
                         <h2 class="font-cinzel text-xl sm:text-2xl font-light tracking-widest text-white uppercase">Education & Credentials</h2>
-                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Academics, micro-certifications and self-directed learning.</p>
+                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Academic degrees, certifications, and core engineering coursework.</p>
                     </div>
                 </div>
                 <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-4">
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
+                    
+                    <!-- BS Electrical Engineering -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-purple-400/40 transition-all">
                         <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-outfit text-base font-medium text-white">BS Electrical Engineering</h3>
-                            <span class="text-xs font-mono text-slate-400">2021 – 2025</span>
+                            <div>
+                                <h3 class="font-outfit text-base font-medium text-white">BS Electrical Engineering</h3>
+                                <p class="text-xs font-mono text-purple-400">Institute of Electrical Electronics and Computer Engineering (IEECE) - University of the Punjab</p>
+                            </div>
+                            <span class="text-xs font-mono text-slate-400">12/2021 – 12/2025</span>
                         </div>
-                        <p class="text-xs font-mono text-purple-400 mb-1">University of the Punjab (IEECE) | CGPA: 3.36/4.00</p>
-                        <p class="text-xs text-slate-400 font-light">Specialized in Control Systems, Brainwave Signal Analysis (NeuroSense), and Embedded Circuit Design.</p>
+                        <p class="text-xs text-slate-300 font-light mb-2"><strong class="text-purple-300">CGPA:</strong> 3.36 / 4.00 | Lahore, Pakistan</p>
+                        <p class="text-xs text-slate-400 font-light leading-relaxed"><strong class="text-white">FYDP Thesis:</strong> Brainwave Signal Analysis Using AI to Evaluate Cognitive and Emotional Responses in Children Aged 2-7 to Visual and Auditory Stimuli (Project: NeuroSense).</p>
                     </div>
+
+                    <!-- Secondary Education -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="glass-card p-5 rounded-xl border border-white/10">
+                            <div class="flex justify-between items-start mb-1">
+                                <h3 class="font-outfit text-sm font-medium text-white">FSC Pre-Engineering</h3>
+                                <span class="text-xs font-mono text-slate-400">2019 – 2020</span>
+                            </div>
+                            <p class="text-xs font-mono text-purple-400 mb-1">Federal Board (FBISE) | Skardu, GB</p>
+                            <p class="text-xs text-slate-400 font-light">Score: <strong class="text-white">87.9%</strong></p>
+                        </div>
+                        <div class="glass-card p-5 rounded-xl border border-white/10">
+                            <div class="flex justify-between items-start mb-1">
+                                <h3 class="font-outfit text-sm font-medium text-white">Matriculation</h3>
+                                <span class="text-xs font-mono text-slate-400">2017 – 2018</span>
+                            </div>
+                            <p class="text-xs font-mono text-purple-400 mb-1">Federal Board (FBISE) | Skardu, GB</p>
+                            <p class="text-xs text-slate-400 font-light">Score: <strong class="text-white">94.9%</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Courses & Certifications -->
                     <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-outfit text-base font-medium text-white">Product School Micro-Certifications</h3>
-                            <span class="text-xs font-mono text-slate-400">2026</span>
+                        <h3 class="font-outfit text-base font-medium text-white mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-certificate text-purple-400 text-xs"></i>
+                            <span>Professional Micro-Certifications & Courses</span>
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
+                            <div class="bg-white/[0.02] p-3 rounded-lg border border-white/5">
+                                <span class="text-purple-400 font-mono block text-[10px] uppercase">Product School (2026)</span>
+                                <p class="text-slate-300 font-medium mt-1">7 Micro-Certifications:</p>
+                                <p class="text-[11px] text-slate-400 font-light mt-0.5">Product Discovery, Strategy, Roadmapping, Launches, Experimentation, Analytics & Prioritization.</p>
+                            </div>
+                            <div class="bg-white/[0.02] p-3 rounded-lg border border-white/5">
+                                <span class="text-purple-400 font-mono block text-[10px] uppercase">Project Management Institute (2025)</span>
+                                <p class="text-slate-300 font-medium mt-1">PMI Kickoff™ Frameworks:</p>
+                                <p class="text-[11px] text-slate-400 font-light mt-0.5">PMI Kickoff™ Agile Path & PMI Kickoff™ Predictive Path.</p>
+                            </div>
+                            <div class="bg-white/[0.02] p-3 rounded-lg border border-white/5">
+                                <span class="text-purple-400 font-mono block text-[10px] uppercase">HP LIFE & Alison (2026)</span>
+                                <p class="text-slate-300 font-medium mt-1">Design & Management:</p>
+                                <p class="text-[11px] text-slate-400 font-light mt-0.5">HP LIFE Design Thinking & Alison Digital Project Management.</p>
+                            </div>
                         </div>
-                        <p class="text-xs text-slate-400 font-light">Completed 7 Certifications in Product Strategy, Discovery, Roadmapping, Launches, Analytics & Prioritization.</p>
                     </div>
+
+                    <!-- Relevant Coursework Grid -->
                     <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-outfit text-base font-medium text-white">PMI Kickoff™ Agile & Predictive Paths</h3>
-                            <span class="text-xs font-mono text-slate-400">2025</span>
+                        <h3 class="font-outfit text-sm font-medium text-white mb-3 text-purple-300">Relevant Engineering Coursework</h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 text-[11px] font-mono text-slate-400">
+                            <div class="bg-white/[0.02] p-2 rounded border border-white/5">• Linear Control Systems</div>
+                            <div class="bg-white/[0.02] p-2 rounded border border-white/5">• Embedded Systems</div>
+                            <div class="bg-white/[0.02] p-2 rounded border border-white/5">• Digital Signal Processing</div>
+                            <div class="bg-white/[0.02] p-2 rounded border border-white/5">• Digital Logic Design</div>
+                            <div class="bg-white/[0.02] p-2 rounded border border-white/5">• Data Structures & Algo</div>
+                            <div class="bg-white/[0.02] p-2 rounded border border-white/5">• Computer Communication Nets</div>
+                            <div class="bg-white/[0.02] p-2 rounded border border-white/5">• Electrical Network Analysis</div>
+                            <div class="bg-white/[0.02] p-2 rounded border border-white/5">• Wireless & Mobile Comm</div>
+                            <div class="bg-white/[0.02] p-2 rounded border border-white/5">• Digital Communications</div>
+                            <div class="bg-white/[0.02] p-2 rounded border border-white/5">• Transducers & Inst.</div>
+                            <div class="bg-white/[0.02] p-2 rounded border border-white/5">• Technical Writing</div>
+                            <div class="bg-white/[0.02] p-2 rounded border border-white/5">• Engineering Management</div>
                         </div>
-                        <p class="text-xs text-slate-400 font-light">Project Management Institute accredited frameworks for agile sprint cycles and predictive project planning.</p>
                     </div>
-                    <!-- Doubled Here -->
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-outfit text-base font-medium text-white">BS Electrical Engineering</h3>
-                            <span class="text-xs font-mono text-slate-400">2021 – 2025</span>
-                        </div>
-                        <p class="text-xs font-mono text-purple-400 mb-1">University of the Punjab (IEECE) | CGPA: 3.36/4.00</p>
-                        <p class="text-xs text-slate-400 font-light">Specialized in Control Systems, Brainwave Signal Analysis (NeuroSense), and Embedded Circuit Design.</p>
-                    </div>
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-outfit text-base font-medium text-white">Product School Micro-Certifications</h3>
-                            <span class="text-xs font-mono text-slate-400">2026</span>
-                        </div>
-                        <p class="text-xs text-slate-400 font-light">Completed 7 Certifications in Product Strategy, Discovery, Roadmapping, Launches, Analytics & Prioritization.</p>
-                    </div>
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-outfit text-base font-medium text-white">PMI Kickoff™ Agile & Predictive Paths</h3>
-                            <span class="text-xs font-mono text-slate-400">2025</span>
-                        </div>
-                        <p class="text-xs text-slate-400 font-light">Project Management Institute accredited frameworks for agile sprint cycles and predictive project planning.</p>
-                    </div>
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-outfit text-base font-medium text-white">BS Electrical Engineering</h3>
-                            <span class="text-xs font-mono text-slate-400">2021 – 2025</span>
-                        </div>
-                        <p class="text-xs font-mono text-purple-400 mb-1">University of the Punjab (IEECE) | CGPA: 3.36/4.00</p>
-                        <p class="text-xs text-slate-400 font-light">Specialized in Control Systems, Brainwave Signal Analysis (NeuroSense), and Embedded Circuit Design.</p>
-                    </div>
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-outfit text-base font-medium text-white">Product School Micro-Certifications</h3>
-                            <span class="text-xs font-mono text-slate-400">2026</span>
-                        </div>
-                        <p class="text-xs text-slate-400 font-light">Completed 7 Certifications in Product Strategy, Discovery, Roadmapping, Launches, Analytics & Prioritization.</p>
-                    </div>
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-outfit text-base font-medium text-white">PMI Kickoff™ Agile & Predictive Paths</h3>
-                            <span class="text-xs font-mono text-slate-400">2025</span>
-                        </div>
-                        <p class="text-xs text-slate-400 font-light">Project Management Institute accredited frameworks for agile sprint cycles and predictive project planning.</p>
-                    </div>
+
                 </div>
             </div>
 
             <!-- RESEARCH VIEW -->
             <div id="view-research" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[68vh] flex flex-col">
-                <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
                     <div>
                         <h2 class="font-cinzel text-xl sm:text-2xl font-light tracking-widest text-white uppercase">Research & Publications</h2>
-                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Peer-reviewed publications and control studies.</p>
+                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Peer-reviewed publications, IEEE conference proceedings, and control study breakthroughs.</p>
                     </div>
                 </div>
                 <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-4">
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-outfit text-base font-medium text-white">Design & Analog Implementation of Synchronization Controllers for Feedback Instruments' Servo Trainer Modules</h3>
-                            <span class="text-xs font-mono text-rose-400">IEEE ICIT 2024</span>
+                    
+                    <div class="glass-card p-6 rounded-xl border border-white/10 hover:border-rose-400/40 transition-all">
+                        <div class="flex flex-col sm:flex-row justify-between items-start gap-2 mb-3">
+                            <div>
+                                <span class="text-xs font-mono text-rose-400 tracking-widest uppercase block mb-1">IEEE International Conference (ICIT 2024)</span>
+                                <h3 class="font-outfit text-lg font-medium text-white">Design & Analog Implementation of Synchronization Controllers for Feedback Instruments' Servo Trainer Modules</h3>
+                            </div>
+                            <span class="text-xs font-mono text-slate-400 bg-white/5 px-2.5 py-1 rounded">2024</span>
                         </div>
-                        <p class="text-xs text-slate-400 font-light leading-relaxed mb-2">Investigated synchronization of dual servo systems using Op-Amp 741 analog state-feedback controllers. Contributed end-to-end MATLAB calculations, Multisim circuit design, breadboard testing, and LaTeX manuscript preparation.</p>
-                        <a href="https://doi.org/10.1109/ICIT63607.2024.10860018" target="_blank" rel="noopener noreferrer" class="text-[11px] font-mono text-rose-400 underline hover:text-white transition-colors">DOI: 10.1109/ICIT63607.2024.10860018</a>
+                        
+                        <p class="text-xs text-slate-400 font-mono mb-3">
+                            <strong class="text-slate-300">Authors:</strong> Syed Zulqarnain Haider, Muhammad Shafran, Dr. Umar Farooq, Khurram Karim Qureshi, Muhammad Usman Asad, Jason Gu.
+                        </p>
+
+                        <div class="space-y-2 text-xs text-slate-300 font-light leading-relaxed bg-white/[0.02] p-4 rounded-lg border border-white/5 mb-4">
+                            <p><strong class="text-white">Paper Overview:</strong> Investigated synchronization of two motor servo systems using analog proportional, proportional-integral, and state-feedback controllers built using Op-Amp 741 circuits and breadboard hardware.</p>
+                            <p><strong class="text-white">My Direct Contributions:</strong> Handled end-to-end research execution including system modeling, control calculations, MATLAB analysis, Multisim circuit design, breadboard wiring, and physical testing. Authored main manuscript, poster, learned LaTeX to format in Overleaf, and revised under faculty supervision.</p>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-2 border-t border-white/5">
+                            <a href="https://doi.org/10.1109/ICIT63607.2024.10860018" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-1.5 text-xs font-mono text-rose-400 hover:text-white transition-colors">
+                                <i class="fa-solid fa-link text-[10px]"></i>
+                                <span>DOI: 10.1109/ICIT63607.2024.10860018</span>
+                            </a>
+                            <span class="text-[10px] font-mono text-slate-500 uppercase">Peer Reviewed</span>
+                        </div>
                     </div>
+
+                    <!-- Poster & Presentation Competitions -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10">
+                        <h3 class="font-outfit text-base font-medium text-white mb-2">ICECE 2024 Idea Presentation Competition</h3>
+                        <p class="text-xs text-slate-400 font-light leading-relaxed">Presented an engineered concept for a smart, sustainable kitchen & miniature garden ecosystem featuring integrated energy recovery, food-waste reuse, water recirculation, and home cultivation systems.</p>
+                    </div>
+
                 </div>
             </div>
 
             <!-- EXPERIENCE VIEW -->
             <div id="view-experience" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[68vh] flex flex-col">
-                <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
                     <div>
-                        <h2 class="font-cinzel text-xl sm:text-2xl font-light tracking-widest text-white uppercase">Work Experience</h2>
-                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Lab research and industry network operations.</p>
+                        <h2 class="font-cinzel text-xl sm:text-2xl font-light tracking-widest text-white uppercase">Work & Research Experience</h2>
+                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Laboratory control research, telecom network testing, and event operations.</p>
                     </div>
                 </div>
                 <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-4">
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
+                    
+                    <!-- Control Systems Researcher -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-amber-400/40 transition-all">
                         <div class="flex justify-between items-start mb-2">
                             <div>
                                 <h3 class="font-outfit text-base font-medium text-white">Control System Researcher</h3>
-                                <p class="text-xs text-amber-400 font-mono">ISLAF - Intelligent Systems Lab, PU</p>
+                                <p class="text-xs text-amber-400 font-mono">Intelligent Systems Lab & Automation Facility (ISLAF), PU | Lahore</p>
                             </div>
                             <span class="text-xs font-mono text-slate-400">03/2024 – 07/2024</span>
                         </div>
-                        <p class="text-xs text-slate-400 font-light mt-2">Modeled state-feedback control in MATLAB, constructed analog op-amp circuits, conducted physical testing on servo trainers, and co-authored the IEEE paper.</p>
+                        <ul class="space-y-1.5 text-xs text-slate-300 font-light list-disc list-inside mt-3">
+                            <li>Extended Control Systems project into a research study on state-feedback control for motor synchronization aimed at aero-pendulum stabilization.</li>
+                            <li>Executed MATLAB state-feedback calculations, designed Op-Amp 741 analog circuits in NI Multisim, wired breadboard hardware, and tested on laboratory servo trainers.</li>
+                            <li>Troubleshot physical prototypes under fabrication constraints, turning local machining limitations into validation strategies on lab instruments.</li>
+                            <li>Co-authored IEEE research paper, created technical posters, and learned Overleaf/LaTeX to format paper under faculty guidance.</li>
+                        </ul>
                     </div>
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
+
+                    <!-- Network Testing Intern -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-amber-400/40 transition-all">
                         <div class="flex justify-between items-start mb-2">
                             <div>
                                 <h3 class="font-outfit text-base font-medium text-white">Network Testing Intern</h3>
-                                <p class="text-xs text-amber-400 font-mono">LCC Pakistan</p>
+                                <p class="text-xs text-amber-400 font-mono">LCC Pakistan | Lahore</p>
                             </div>
                             <span class="text-xs font-mono text-slate-400">06/2024 – 08/2024</span>
                         </div>
-                        <p class="text-xs text-slate-400 font-light mt-2">Optimized drive-testing routes, operated network analysis software for voice/data performance, and diagnosed client-reported connectivity anomalies.</p>
+                        <ul class="space-y-1.5 text-xs text-slate-300 font-light list-disc list-inside mt-3">
+                            <li>Optimized field drive-testing routes across coverage areas, improving team travel efficiency and minimizing fuel consumption.</li>
+                            <li>Operated cellular drive-testing tools to gather, format, and document performance metrics for voice calls, messaging, and data services.</li>
+                            <li>Participated in client connectivity anomaly investigations, identifying an antenna orientation defect and relaying findings to technical leads.</li>
+                        </ul>
                     </div>
+
+                    <!-- Event Operations -->
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-amber-400/40 transition-all">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="font-outfit text-base font-medium text-white">Sports Event Operations & Initiative</h3>
+                                <p class="text-xs text-amber-400 font-mono">IEECE - University of the Punjab | Lahore</p>
+                            </div>
+                            <span class="text-xs font-mono text-slate-400">2025</span>
+                        </div>
+                        <p class="text-xs text-slate-300 font-light mt-2 leading-relaxed">Co-organized a 4-day annual sports event managing scheduling across football & eSports. Authored a multi-month intercollegiate league proposal incorporating RC engineering challenges and media workflows.</p>
+                    </div>
+
                 </div>
             </div>
 
             <!-- INTERESTS VIEW -->
             <div id="view-interests" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[68vh] flex flex-col"> 
-                <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
                     <div>
                         <h2 class="font-cinzel text-xl sm:text-2xl font-light tracking-widest text-white uppercase">Interests & Pursuits</h2>
-                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Passions, traits & personal pursuits.</p>
+                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Achievements, personal hobbies, traits, and multi-language fluency.</p>
                     </div>
                 </div>
-                <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-4">
+                    
+                    <!-- Achievements Grid -->
                     <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="text-blue-400 text-lg mb-2"><i class="fa-solid fa-lightbulb"></i></div>
-                        <h3 class="font-outfit text-sm font-medium text-white mb-1">Ideation & Philosophy</h3>
-                        <p class="text-xs text-slate-400 font-light">Connecting technical logic with practical design. Reading self-dev classics like <i>Laws of Success</i>.</p>
+                        <h3 class="font-outfit text-sm font-medium text-blue-400 uppercase tracking-wider mb-3">Honors & Competition Awards</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-300">
+                            <div class="bg-white/[0.02] p-3 rounded-lg border border-white/5 flex items-start space-x-3">
+                                <i class="fa-solid fa-trophy text-amber-400 text-sm mt-0.5"></i>
+                                <div>
+                                    <strong class="text-white block font-medium">Winner - SEECON '23</strong>
+                                    <span class="text-slate-400 text-[11px]">MATLAB Programming Competition</span>
+                                </div>
+                            </div>
+                            <div class="bg-white/[0.02] p-3 rounded-lg border border-white/5 flex items-start space-x-3">
+                                <i class="fa-solid fa-award text-slate-300 text-sm mt-0.5"></i>
+                                <div>
+                                    <strong class="text-white block font-medium">Runner Up - SEECON '23 & '24</strong>
+                                    <span class="text-slate-400 text-[11px]">Circuit Design & Simulink Design Competitions</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="text-blue-400 text-lg mb-2"><i class="fa-solid fa-dumbbell"></i></div>
-                        <h3 class="font-outfit text-sm font-medium text-white mb-1">Martial Arts & Piano</h3>
-                        <p class="text-xs text-slate-400 font-light">Physical conditioning, martial arts, and exploring musical notes on the piano.</p>
+
+                    <!-- Personal Pursuits & Hobbies -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="glass-card p-4 rounded-xl border border-white/10">
+                            <div class="text-blue-400 text-lg mb-2"><i class="fa-solid fa-brain"></i></div>
+                            <h3 class="font-outfit text-sm font-medium text-white mb-1">Ideation & Philosophy</h3>
+                            <p class="text-xs text-slate-400 font-light">Exploring real & conceptual system architectures. Self-dev reading: <i>Laws of Success</i> by Napoleon Hill.</p>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl border border-white/10">
+                            <div class="text-blue-400 text-lg mb-2"><i class="fa-solid fa-drumstick-bite"></i></div>
+                            <h3 class="font-outfit text-sm font-medium text-white mb-1">Martial Arts & Piano</h3>
+                            <p class="text-xs text-slate-400 font-light">Physical workout & martial arts conditioning combined with learning classical melodies on the piano.</p>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl border border-white/10">
+                            <div class="text-blue-400 text-lg mb-2"><i class="fa-solid fa-gamepad"></i></div>
+                            <h3 class="font-outfit text-sm font-medium text-white mb-1">Anime, Gaming & Music</h3>
+                            <p class="text-xs text-slate-400 font-light">Analyzing narrative political twists in anime, strategic high-rank FreeFire gaming, and songwriting.</p>
+                        </div>
                     </div>
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="text-blue-400 text-lg mb-2"><i class="fa-solid fa-language"></i></div>
-                        <h3 class="font-outfit text-sm font-medium text-white mb-1">Languages</h3>
-                        <p class="text-xs text-slate-400 font-light">Multilingual proficiency in English, Urdu, Balti, and conversational Chinese.</p>
+
+                    <!-- Personality & Languages -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="glass-card p-5 rounded-xl border border-white/10">
+                            <h3 class="font-outfit text-sm font-medium text-blue-300 mb-2">Systems-Oriented Mindset</h3>
+                            <p class="text-xs text-slate-400 font-light leading-relaxed">Planning-focused, fast learner connecting technical logic with practical design. Instinctively synthesizes empathetic design and engineering structure for holistic problem-solving.</p>
+                        </div>
+                        <div class="glass-card p-5 rounded-xl border border-white/10">
+                            <h3 class="font-outfit text-sm font-medium text-blue-300 mb-2">Multilingual Fluency</h3>
+                            <div class="flex flex-wrap gap-2 text-xs font-mono">
+                                <span class="px-3 py-1 rounded bg-blue-950/50 text-blue-300 border border-blue-800/40">English (Professional)</span>
+                                <span class="px-3 py-1 rounded bg-blue-950/50 text-blue-300 border border-blue-800/40">Urdu (Native)</span>
+                                <span class="px-3 py-1 rounded bg-blue-950/50 text-blue-300 border border-blue-800/40">Balti (Native)</span>
+                                <span class="px-3 py-1 rounded bg-blue-950/50 text-blue-300 border border-blue-800/40">Chinese (Conversational)</span>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </main>
 
-        <!-- Right Side Vertical Square Navigation Blocks (Desktop Sidebar) -->
+        <!-- Right Side Vertical Navigation Sidebar (Desktop) -->
         <div class="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col space-y-3 z-30">
             <button id="nav-home" onclick="switchView('home')" title="Home" class="nav-block-home glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white group relative active">
                 <i class="fa-solid fa-house text-xs"></i>
@@ -521,7 +836,6 @@
             </button>
         </div>
 
-        <!-- Footer Bar -->
         <footer class="w-full flex items-center justify-between gap-4 pt-4 sm:pt-6 sm:border-t border-white/[0.05] relative z-20">
             <!-- Left Side Credit Link -->
             <div class="relative">
@@ -530,9 +844,9 @@
                     <button id="mobile-credit-toggle" onclick="toggleMobileCredit()" aria-label="Toggle Credits" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white relative z-50">
                         <i id="mobile-credit-icon" class="fa-solid fa-wand-magic-sparkles text-xs transition-transform duration-300"></i>
                     </button> 
-                        <div id="mobile-credit-menu" class="collapsible-bottom-left collapsible-closed absolute bottom-0 left-0 pl-11 bg-[#0a0d14]/95 border border-white/10 rounded-xl px-3 py-2 shadow-2xl backdrop-blur-xl z-40 flex items-center whitespace-nowrap">
+                    <div id="mobile-credit-menu" class="collapsible-bottom-left collapsible-closed absolute bottom-0 left-0 pl-11 bg-[#0a0d14]/95 border border-white/10 rounded-xl px-3 py-2 shadow-2xl backdrop-blur-xl z-40 flex items-center whitespace-nowrap">
                         <a href="https://instagram.com/exorios" target="_blank" rel="noopener noreferrer" class="text-[11px] font-mono text-slate-300 hover:text-white">
-                            Made w/ 🧠 and ✨ by ExOrios
+                            Made w/ 🧠 and ✨ by Ex'Orios
                         </a>
                     </div>
                 </div>
@@ -543,20 +857,17 @@
                 </a>
             </div>
 
-           <!-- Right Side Socials -->
+            <!-- Right Side Socials -->
             <div class="relative flex items-center">
                 <!-- Desktop Social Links -->
                 <div class="hidden sm:flex items-center space-x-6">
                     <a href="mailto:zulkrnenHaider@proton.me" class="group flex items-center">
                         <span class="text-[11px] font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">Mail</span>
                     </a>
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="group flex items-center">
-                        <span class="text-[11px] font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">Insta</span>
+                    <a href="https://zulkrnen.github.io" target="_blank" rel="noopener noreferrer" class="group flex items-center">
+                        <span class="text-[11px] font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">GitHub</span>
                     </a>
-                    <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" class="group flex items-center">
-                        <span class="text-[11px] font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">Whatsapp</span>
-                    </a>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="group flex items-center">
+                    <a href="https://linkedin.com/in/zulkrnen" target="_blank" rel="noopener noreferrer" class="group flex items-center">
                         <span class="text-[11px] font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">LinkedIn</span>
                     </a>
                 </div>
@@ -567,18 +878,15 @@
                         <i id="mobile-social-icon" class="fa-solid fa-share-nodes text-xs transition-transform duration-300"></i>
                     </button>
 
-                    <!-- Mobile Collapsible Social Dropdown (Clean Stacked Icons without Outer Container) -->
+                    <!-- Mobile Collapsible Social Dropdown -->
                     <div id="mobile-social-menu" class="collapsible-bottom-right collapsible-closed absolute bottom-0 right-0 z-40 flex flex-col space-y-2">
                         <a href="mailto:zulkrnenHaider@proton.me" onclick="toggleMobileSocial()" aria-label="Email" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
                             <i class="fa-solid fa-envelope text-xs"></i>
                         </a>
-                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" onclick="toggleMobileSocial()" aria-label="Instagram" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
-                            <i class="fa-brands fa-instagram text-xs"></i>
+                        <a href="https://zulkrnen.github.io" target="_blank" rel="noopener noreferrer" onclick="toggleMobileSocial()" aria-label="GitHub" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-brands fa-github text-xs"></i>
                         </a>
-                        <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" onclick="toggleMobileSocial()" aria-label="WhatsApp" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
-                            <i class="fa-brands fa-whatsapp text-xs"></i>
-                        </a>
-                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" onclick="toggleMobileSocial()" aria-label="LinkedIn" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                        <a href="https://linkedin.com/in/zulkrnen" target="_blank" rel="noopener noreferrer" onclick="toggleMobileSocial()" aria-label="LinkedIn" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
                             <i class="fa-brands fa-linkedin-in text-xs"></i>
                         </a>
                     </div>
@@ -588,7 +896,6 @@
 
     </div>
 
-    <!-- Dynamic Canvas Background & Navigation Script -->
     <script>
         const canvas = document.getElementById('ambient-canvas');
         const ctx = canvas.getContext('2d');
@@ -627,7 +934,7 @@
         // View Switcher logic
         const views = ['home', 'projects', 'skills', 'education', 'research', 'experience', 'interests'];
         const viewThemes = {
-            'home': { r: 56, g: 85, b: 128 },       // Dynamic Multi-color Shifter
+            'home': { r: 56, g: 85, b: 128 },
             'projects': { r: 34, g: 211, b: 238 },   // Cyan
             'skills': { r: 52, g: 211, b: 153 },     // Emerald
             'education': { r: 168, g: 85, b: 247 },  // Purple
@@ -663,7 +970,7 @@
             const statusEl = document.getElementById('status-text');
             if (statusEl) {
                 if (viewName === 'home') {
-                    statusEl.innerText = 'Private Preview';
+                    statusEl.innerText = 'Home';
                 } else {
                     statusEl.innerText = viewName.toUpperCase();
                 }
@@ -703,7 +1010,6 @@
             const socialMenu = document.getElementById('mobile-social-menu');
             const creditMenu = document.getElementById('mobile-credit-menu');
             
-            // Close other drawers
             if (socialMenu && !socialMenu.classList.contains('collapsible-closed')) {
                 socialMenu.classList.add('collapsible-closed');
                 socialMenu.classList.remove('collapsible-open');
@@ -729,7 +1035,6 @@
             const socialMenu = document.getElementById('mobile-social-menu');
             const creditMenu = document.getElementById('mobile-credit-menu');
             
-            // Close other drawers
             if (navMenu && !navMenu.classList.contains('collapsible-closed')) {
                 navMenu.classList.add('collapsible-closed');
                 navMenu.classList.remove('collapsible-open');
@@ -755,7 +1060,6 @@
             const socialMenu = document.getElementById('mobile-social-menu');
             const creditMenu = document.getElementById('mobile-credit-menu');
 
-            // Close other drawers
             if (navMenu && !navMenu.classList.contains('collapsible-closed')) {
                 navMenu.classList.add('collapsible-closed');
                 navMenu.classList.remove('collapsible-open');
@@ -806,12 +1110,12 @@
                 ctx.fill();
             });
 
-            // Dynamic color calculation for home page vs section pages
+            // Dynamic color calculation
             let activeRGB = currentThemeColor;
             if (activeViewName === 'home') {
-                homeColorHue = (homeColorHue + 0.15) % 360; // Smooth continuous chromatic cycle
+                homeColorHue = (homeColorHue + 0.15) % 360;
                 const posXRatio = Math.min(Math.max(mouse.x / width, 0), 1);
-                const blendedHue = (homeColorHue + posXRatio * 120) % 360; // Shifts across screen width
+                const blendedHue = (homeColorHue + posXRatio * 120) % 360;
                 activeRGB = hslToRgb(blendedHue / 360, 0.7, 0.55);
             }
 
@@ -829,7 +1133,54 @@
             requestAnimationFrame(animate);
         }
 
-        animate();
+        window.onload = function () {
+            animate();
+        };
+
+
+        
+        // Mobile Typewriter Effect
+        
+const words = ["Designer", "Thinker", "Engineer"];
+let wordIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+const typingSpeed = 120;
+const deletingSpeed = 80;
+const pauseTime = 2000;
+
+function typeWriter() {
+    const currentWord = words[wordIndex];
+    const targetElement = document.getElementById('typewriter-text');
+    
+    if (!targetElement) return;
+
+    if (isDeleting) {
+        targetElement.textContent = currentWord.substring(0, charIndex - 1);
+        charIndex--;
+    } else {
+        targetElement.textContent = currentWord.substring(0, charIndex + 1);
+        charIndex++;
+    }
+
+    let typeSpeed = isDeleting ? deletingSpeed : typingSpeed;
+
+    if (!isDeleting && charIndex === currentWord.length) {
+        typeSpeed = pauseTime;
+        isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+        typeSpeed = 500;
+    }
+
+    setTimeout(typeWriter, typeSpeed);
+}
+
+// Start the typewriter loop when page loads
+window.addEventListener('DOMContentLoaded', () => {
+    typeWriter();
+});
     </script>
 </body>
 </html>
