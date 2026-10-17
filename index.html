@@ -145,14 +145,14 @@
             background: radial-gradient(
                 circle 350px at var(--x, 50%) var(--y, 50%), 
                 #ffffff 0%, 
-                #f1f5f9 40%, 
-                #cbd5e1 80%
+                #cbd5e1 45%, 
+                #64748b 100%
             );
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             /* Heavy drop shadow ensures absolute contrast against background orbs */
-            filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.95)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
+            filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.95)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.9));
         }
 
         /* Subtitle Idle & Hover Transition with Drop-Shadow for Readability */
@@ -851,7 +851,7 @@
             </button>
         </div>
 
-        <footer class="w-full flex items-center justify-between gap-4 pt-4 sm:pt-6 sm:border-t border-white/[0.05] relative z-20">
+        <footer class="w-full flex items-center justify-between gap-4 pt-4 sm:pt-6 relative z-20">
             <!-- Left Side Credit Link -->
             <div class="relative">
                 <!-- Mobile Expandable Credit Drawer Trigger & Container -->
@@ -937,18 +937,6 @@
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
-            // Keep initial load position in the top-right corner instead of forcing center
-            if (!mouse.hasMoved) {
-                mouse.targetX = width * 0.85;
-                mouse.targetY = height * 0.15;
-                mouse.x = width * 0.85;
-                mouse.y = height * 0.15;
-            }
-        }
-        */
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
             
             if (!mouse.hasMoved) {
                 mouse.targetX = width * 0.85;
@@ -963,6 +951,27 @@
                     const initialY = (height * 0.15) - rect.top;
                     heroTitle.style.setProperty('--x', `${initialX}px`);
                     heroTitle.style.setProperty('--y', `${initialY}px`);
+                }
+            }
+        }
+        */
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            
+            if (!mouse.hasMoved) {
+                const heroTitle = document.getElementById('hero-title');
+                if (heroTitle) {
+                    const rect = heroTitle.getBoundingClientRect();
+                    // Position precisely at the top-right corner inside the title box
+                    mouse.targetX = rect.left + rect.width - 40;
+                    mouse.targetY = rect.top + 30;
+                    mouse.x = rect.left + rect.width - 40;
+                    mouse.y = rect.top + 30;
+
+                    // Set initial text light position relative to the title
+                    heroTitle.style.setProperty('--x', `${rect.width - 40}px`);
+                    heroTitle.style.setProperty('--y', `30px`);
                 }
             }
         }
