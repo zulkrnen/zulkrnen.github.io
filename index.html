@@ -54,6 +54,42 @@
             animation: subtlePulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
+        /* Animated Mobile Collapsible Triggers & Drawer Containers */
+        .collapsible-container {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: top right;
+        }
+
+        .collapsible-bottom-right {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: bottom right;
+        }
+
+        .collapsible-bottom-left {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: bottom left;
+        }
+
+        .collapsible-closed {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.8) translateY(-10px);
+        }
+
+        .collapsible-bottom-right.collapsible-closed {
+            transform: scale(0.8) translateY(10px);
+        }
+
+        .collapsible-bottom-left.collapsible-closed {
+            transform: scale(0.8) translateX(-10px);
+        }
+
+        .collapsible-open {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1) translateY(0) translateX(0);
+        }
+
         /* Ultra-refined Glass Icon Buttons */
         .glass-btn {
             background: rgba(255, 255, 255, 0.025);
@@ -93,7 +129,7 @@
             transition: opacity 1s ease;
         }
 
-        /* Custom Scrollbar for inner view modals if needed */
+        /* Custom Scrollbar for inner view modals */
         .custom-scrollbar::-webkit-scrollbar {
             width: 4px;
         }
@@ -113,6 +149,14 @@
             from { opacity: 0; transform: translateY(10px) scale(0.99); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
+
+        /* Dynamic Nav Block Colors */
+        .nav-block-projects:hover, .nav-block-projects.active { border-color: rgba(34, 211, 238, 0.6); color: #22d3ee; }
+        .nav-block-skills:hover, .nav-block-skills.active { border-color: rgba(52, 211, 153, 0.6); color: #34d399; }
+        .nav-block-education:hover, .nav-block-education.active { border-color: rgba(168, 85, 247, 0.6); color: #a855f7; }
+        .nav-block-research:hover, .nav-block-research.active { border-color: rgba(244, 63, 94, 0.6); color: #f43f5e; }
+        .nav-block-experience:hover, .nav-block-experience.active { border-color: rgba(251, 146, 60, 0.6); color: #fb923c; }
+        .nav-block-interests:hover, .nav-block-interests.active { border-color: rgba(59, 130, 246, 0.6); color: #3b82f6; }
     </style>
 </head>
 <body class="h-full w-full overflow-hidden relative select-none selection:bg-slate-700 selection:text-white">
@@ -124,11 +168,11 @@
     <div class="fixed inset-0 vignette-overlay pointer-events-none -z-20"></div>
     <div class="fixed inset-0 grain-bg pointer-events-none -z-10"></div>
 
-    <!-- Fullscreen Minimal Content Wrapper -->
-    <div class="relative z-10 h-full w-full flex flex-col justify-between p-4 sm:p-6 md:p-8 lg:p-10">
+    <!-- Fullscreen Minimal Content Wrapper with relaxed top spacing for mobile -->
+    <div class="relative z-10 h-full w-full flex flex-col justify-between p-5 pt-8 sm:p-6 md:p-8 lg:p-10">
 
         <!-- Header Navigation -->
-        <header class="w-full flex items-center justify-between">
+        <header class="w-full flex items-center justify-between relative">
             <!-- Signature / Brand Logo on Top Left -->
             <a href="#" onclick="switchView('home')" class="group flex items-center space-x-2 text-white focus:outline-none" aria-label="Zulkrnen Home">
                 <span class="font-signature text-xs sm:text-sm md:text-base font-normal tracking-[0.25em] text-slate-300 group-hover:text-white transition-colors duration-500 uppercase">
@@ -137,29 +181,54 @@
                 <span class="w-1 h-1 rounded-full bg-slate-500 group-hover:bg-white group-hover:shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-500"></span>
             </a>
 
-            <!-- Top Right Navigation links (Desktop) -->
-            <nav class="hidden md:flex items-center space-x-6">
-                <button onclick="switchView('projects')" class="text-xs uppercase font-mono tracking-[0.2em] text-slate-400 hover:text-white transition-colors">Projects</button>
-                <button onclick="switchView('skills')" class="text-xs uppercase font-mono tracking-[0.2em] text-slate-400 hover:text-white transition-colors">Skills</button>
-                <button onclick="switchView('education')" class="text-xs uppercase font-mono tracking-[0.2em] text-slate-400 hover:text-white transition-colors">Education</button>
-                <button onclick="switchView('research')" class="text-xs uppercase font-mono tracking-[0.2em] text-slate-400 hover:text-white transition-colors">Research</button>
-                <button onclick="switchView('experience')" class="text-xs uppercase font-mono tracking-[0.2em] text-slate-400 hover:text-white transition-colors">Experience</button>
-                <button onclick="switchView('interests')" class="text-xs uppercase font-mono tracking-[0.2em] text-slate-400 hover:text-white transition-colors">Interests</button>
-            </nav>
+            <!-- Right Controls: Status + Mobile Collapsible Nav Button -->
+            <div class="flex items-center space-x-3">
+                <!-- Status Indicator (Hidden on Mobile) -->
+                <div class="hidden sm:flex items-center space-x-2 px-3 py-1 rounded-full glass-btn text-[11px] font-mono tracking-[0.2em] text-slate-400 uppercase">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)] animate-pulse"></span>
+                    <span id="status-text">Private Preview</span>
+                </div>
 
-            <!-- Subtle Minimalist Status Indicator -->
-            <div class="flex items-center space-x-2 px-3 py-1 rounded-full glass-btn text-[11px] font-mono tracking-[0.2em] text-slate-400 uppercase">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)] animate-pulse"></span>
-                <span id="status-text">Private Preview</span>
+                <!-- Mobile Navigation Toggle Wrapper (Overlapping Alignment) -->
+                <div class="relative md:hidden">
+                    <button id="mobile-nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Navigation" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white z-50 relative">
+                        <i id="mobile-nav-icon" class="fa-solid fa-compass text-xs transition-transform duration-300"></i>
+                    </button>
+
+                    <!-- Mobile Collapsible Navigation Dropdown -->
+                    <div id="mobile-nav-menu" class="collapsible-container collapsible-closed absolute top-0 right-0 pt-11 bg-[#0a0d14]/95 border border-white/10 rounded-xl p-2.5 shadow-2xl backdrop-blur-xl z-40 flex flex-col space-y-2">
+                        <button onclick="switchView('home'); toggleMobileNav();" class="nav-block-home glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-solid fa-house text-xs"></i>
+                        </button>
+                        <button onclick="switchView('projects'); toggleMobileNav();" class="nav-block-projects glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-solid fa-code text-xs"></i>
+                        </button>
+                        <button onclick="switchView('skills'); toggleMobileNav();" class="nav-block-skills glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-solid fa-microchip text-xs"></i>
+                        </button>
+                        <button onclick="switchView('education'); toggleMobileNav();" class="nav-block-education glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-solid fa-graduation-cap text-xs"></i>
+                        </button>
+                        <button onclick="switchView('research'); toggleMobileNav();" class="nav-block-research glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-solid fa-book-open text-xs"></i>
+                        </button>
+                        <button onclick="switchView('experience'); toggleMobileNav();" class="nav-block-experience glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-solid fa-briefcase text-xs"></i>
+                        </button>
+                        <button onclick="switchView('interests'); toggleMobileNav();" class="nav-block-interests glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-solid fa-compass text-xs"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         </header>
 
-        <!-- Main Viewport Area (No scroll, game-like single screen) -->
-        <main id="main-viewport" class="flex-1 flex flex-col items-center justify-center text-center px-1 sm:px-4 my-auto w-full relative overflow-hidden">
+        <!-- Main Viewport Area -->
+        <main id="main-viewport" class="flex-1 flex flex-col items-center justify-center text-center px-1 sm:px-4 my-auto w-full relative overflow-hidden pt-4 sm:pt-0">
             
             <!-- HOME VIEW -->
             <div id="view-home" class="w-full max-w-6xl mx-auto space-y-3 sm:space-y-6 page-transition">
-                <h1 class="font-light tracking-tight font-outfit uppercase title-gradient leading-[0.9] sm:leading-tight w-full">
+                <h1 class="font-light tracking-tight font-outfit uppercase title-gradient leading-[0.95] sm:leading-tight w-full">
                     <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light">Syed </span>
                     <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light">Zulqarnain </span>
                     <span class="block sm:inline text-[13.5vw] xs:text-[14vw] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light">Haider</span>
@@ -170,306 +239,306 @@
                         Soon...
                     </p>
                 </div>
-
-                <!-- Quick Navigation Pills for Mobile / Game Experience -->
-                <div class="flex flex-wrap justify-center gap-3 pt-6 md:hidden">
-                    <button onclick="switchView('projects')" class="glass-btn px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-wider text-slate-300">Projects</button>
-                    <button onclick="switchView('skills')" class="glass-btn px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-wider text-slate-300">Skills</button>
-                    <button onclick="switchView('education')" class="glass-btn px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-wider text-slate-300">Education</button>
-                    <button onclick="switchView('research')" class="glass-btn px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-wider text-slate-300">Research</button>
-                    <button onclick="switchView('experience')" class="glass-btn px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-wider text-slate-300">Experience</button>
-                    <button onclick="switchView('interests')" class="glass-btn px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-wider text-slate-300">Interests</button>
-                </div>
             </div>
 
             <!-- PROJECTS VIEW -->
-            <div id="view-projects" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[70vh] flex flex-col">
+            <div id="view-projects" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[68vh] flex flex-col">
                 <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
                     <div>
                         <h2 class="font-cinzel text-xl sm:text-2xl font-light tracking-widest text-white uppercase">Selected Projects</h2>
-                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">High-performance systems, architectures & applications.</p>
+                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">NeuroSense, Web applications, and Embedded Systems.</p>
                     </div>
-                    <button onclick="switchView('home')" class="glass-btn px-4 py-2 rounded-full text-xs font-mono uppercase tracking-widest text-slate-300 flex items-center gap-2">
-                        <i class="fa-solid fa-arrow-left"><span>Home</span></i>
-                    </button>
                 </div>
                 <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-white/30 transition-all">
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyan-400/30 transition-all">
                         <div class="flex justify-between items-start mb-3">
-                            <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">System Core</span>
-                            <span class="text-[10px] font-mono text-slate-500">2026</span>
+                            <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">FYDP / Deep Learning</span>
+                            <span class="text-[10px] font-mono text-slate-500">2024 - 2025</span>
                         </div>
-                        <h3 class="font-outfit text-lg font-medium text-white mb-2">Autonomous Neural Engine</h3>
-                        <p class="text-xs text-slate-400 font-light leading-relaxed">Real-time distributed computation framework optimized for ultra-low latency decision making in neural interfaces.</p>
+                        <h3 class="font-outfit text-lg font-medium text-white mb-2">NeuroSense: The Brain IMDb</h3>
+                        <p class="text-xs text-slate-400 font-light leading-relaxed">EEG-based cognitive and emotional signal analysis web app & deep learning pipeline evaluating auditory/visual responses in children.</p>
                     </div>
-                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-white/30 transition-all">
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyan-400/30 transition-all">
                         <div class="flex justify-between items-start mb-3">
-                            <span class="text-xs font-mono text-emerald-400 tracking-widest uppercase">Cryptography</span>
-                            <span class="text-[10px] font-mono text-slate-500">2025</span>
+                            <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">Software / Web</span>
+                            <span class="text-[10px] font-mono text-slate-500">2024</span>
                         </div>
-                        <h3 class="font-outfit text-lg font-medium text-white mb-2">Secure Quantum Protocol</h3>
-                        <p class="text-xs text-slate-400 font-light leading-relaxed">Post-quantum cryptography wrapper built for robust end-to-end encrypted messaging across decentralized nodes.</p>
+                        <h3 class="font-outfit text-lg font-medium text-white mb-2">Multi-Campus School Management System</h3>
+                        <p class="text-xs text-slate-400 font-light leading-relaxed">Full-stack web application constructed to simplify administrative and academic operations across multiple campus branches.</p>
                     </div>
-                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-white/30 transition-all">
+                    <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyan-400/30 transition-all">
                         <div class="flex justify-between items-start mb-3">
-                            <span class="text-xs font-mono text-indigo-400 tracking-widest uppercase">Immersive UI</span>
-                            <span class="text-[10px] font-mono text-slate-500">2025</span>
+                            <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">IoT & Hardware</span>
+                            <span class="text-[10px] font-mono text-slate-500">2023</span>
                         </div>
-                        <h3 class="font-outfit text-lg font-medium text-white mb-2">Kinetic Audio Visualizer</h3>
-                        <p class="text-xs text-slate-400 font-light leading-relaxed">WebGL-powered interactive soundscape simulator reacting to harmonic frequencies in real time.</p>
+                        <h3 class="font-outfit text-lg font-medium text-white mb-2">Air Quality Management System</h3>
+                        <p class="text-xs text-slate-400 font-light leading-relaxed">Industrial IoT 8051 & ESP-based hardware prototype integrating smoke sensors, Multisim simulation, and assembly language code.</p>
                     </div>
                 </div>
             </div>
 
             <!-- SKILLS VIEW -->
-            <div id="view-skills" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[70vh] flex flex-col">
+            <div id="view-skills" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[68vh] flex flex-col">
                 <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
                     <div>
                         <h2 class="font-cinzel text-xl sm:text-2xl font-light tracking-widest text-white uppercase">Technical Expertise</h2>
-                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Core proficiencies, languages & frameworks.</p>
+                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Core proficiencies, engineering & technical capabilities.</p>
                     </div>
-                    <button onclick="switchView('home')" class="glass-btn px-4 py-2 rounded-full text-xs font-mono uppercase tracking-widest text-slate-300 flex items-center gap-2">
-                        <i class="fa-solid fa-arrow-left"><span>Home</span></i>
-                    </button>
                 </div>
                 <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <h3 class="font-mono text-xs text-cyan-400 uppercase tracking-widest mb-3 pb-2 border-b border-white/5">Languages</h3>
+                        <h3 class="font-mono text-xs text-emerald-400 uppercase tracking-widest mb-3 pb-2 border-b border-white/5">Programming & Web</h3>
                         <ul class="space-y-2 text-xs text-slate-300 font-light">
-                            <li class="flex justify-between"><span>TypeScript / JavaScript</span><span class="text-slate-500 font-mono">Expert</span></li>
-                            <li class="flex justify-between"><span>Python / C++</span><span class="text-slate-500 font-mono">Advanced</span></li>
-                            <li class="flex justify-between"><span>Rust / Go</span><span class="text-slate-500 font-mono">Proficient</span></li>
+                            <li class="flex justify-between"><span>JavaScript / React</span><span class="text-slate-500 font-mono">Core</span></li>
+                            <li class="flex justify-between"><span>Python / Deep Learning</span><span class="text-slate-500 font-mono">Advanced</span></li>
+                            <li class="flex justify-between"><span>C++ / Assembly</span><span class="text-slate-500 font-mono">Proficient</span></li>
+                            <li class="flex justify-between"><span>TailwindCSS / Supabase</span><span class="text-slate-500 font-mono">Advanced</span></li>
                         </ul>
                     </div>
                     <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <h3 class="font-mono text-xs text-emerald-400 uppercase tracking-widest mb-3 pb-2 border-b border-white/5">Engineering</h3>
+                        <h3 class="font-mono text-xs text-emerald-400 uppercase tracking-widest mb-3 pb-2 border-b border-white/5">Circuit & Embedded</h3>
                         <ul class="space-y-2 text-xs text-slate-300 font-light">
-                            <li class="flex justify-between"><span>Distributed Systems</span><span class="text-slate-500 font-mono">Core</span></li>
-                            <li class="flex justify-between"><span>WebGL / Shaders</span><span class="text-slate-500 font-mono">Advanced</span></li>
-                            <li class="flex justify-between"><span>Cloud Architecture</span><span class="text-slate-500 font-mono">Expert</span></li>
+                            <li class="flex justify-between"><span>Multisim & Proteus</span><span class="text-slate-500 font-mono">Expert</span></li>
+                            <li class="flex justify-between"><span>MATLAB & Simulink</span><span class="text-slate-500 font-mono">Advanced</span></li>
+                            <li class="flex justify-between"><span>Arduino / ESP Hardware</span><span class="text-slate-500 font-mono">Core</span></li>
+                            <li class="flex justify-between"><span>AutoCAD / FreeCAD</span><span class="text-slate-500 font-mono">Basic</span></li>
                         </ul>
                     </div>
                     <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <h3 class="font-mono text-xs text-purple-400 uppercase tracking-widest mb-3 pb-2 border-b border-white/5">Methodologies</h3>
+                        <h3 class="font-mono text-xs text-emerald-400 uppercase tracking-widest mb-3 pb-2 border-b border-white/5">Networks & Mgmt</h3>
                         <ul class="space-y-2 text-xs text-slate-300 font-light">
-                            <li class="flex justify-between"><span>System Optimization</span><span class="text-slate-500 font-mono">Core</span></li>
-                            <li class="flex justify-between"><span>Algorithms & Logic</span><span class="text-slate-500 font-mono">Expert</span></li>
-                            <li class="flex justify-between"><span>Security & Auditing</span><span class="text-slate-500 font-mono">Advanced</span></li>
+                            <li class="flex justify-between"><span>Cisco Packet Tracer</span><span class="text-slate-500 font-mono">Advanced</span></li>
+                            <li class="flex justify-between"><span>Technical Writing / LaTeX</span><span class="text-slate-500 font-mono">Expert</span></li>
+                            <li class="flex justify-between"><span>PMI Agile / Predictive</span><span class="text-slate-500 font-mono">Certified</span></li>
+                            <li class="flex justify-between"><span>Product Strategy</span><span class="text-slate-500 font-mono">Certified</span></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             <!-- EDUCATION VIEW -->
-            <div id="view-education" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[70vh] flex flex-col">
+            <div id="view-education" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[68vh] flex flex-col">
                 <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
                     <div>
                         <h2 class="font-cinzel text-xl sm:text-2xl font-light tracking-widest text-white uppercase">Education & Credentials</h2>
-                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Academic background, certifications and continuous self-development.</p>
+                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Academics, micro-certifications and self-directed learning.</p>
                     </div>
-                    <button onclick="switchView('home')" class="glass-btn px-4 py-2 rounded-full text-xs font-mono uppercase tracking-widest text-slate-300 flex items-center gap-2">
-                        <i class="fa-solid fa-arrow-left"><span>Home</span></i>
-                    </button>
                 </div>
                 <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-4">
                     <div class="glass-card p-5 rounded-xl border border-white/10">
                         <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-outfit text-base font-medium text-white">B.S. in Computer Science & Systems Engineering</h3>
+                            <h3 class="font-outfit text-base font-medium text-white">BS Electrical Engineering</h3>
                             <span class="text-xs font-mono text-slate-400">2021 – 2025</span>
                         </div>
-                        <p class="text-xs text-slate-400 font-light">Specialized in high-performance computing, distributed algorithms, and intelligent systems design.</p>
+                        <p class="text-xs font-mono text-purple-400 mb-1">University of the Punjab (IEECE) | CGPA: 3.36/4.00</p>
+                        <p class="text-xs text-slate-400 font-light">Specialized in Control Systems, Brainwave Signal Analysis (NeuroSense), and Embedded Circuit Design.</p>
                     </div>
                     <div class="glass-card p-5 rounded-xl border border-white/10">
                         <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-outfit text-base font-medium text-white">Advanced Cryptographic Protocols Certification</h3>
+                            <h3 class="font-outfit text-base font-medium text-white">Product School Micro-Certifications</h3>
+                            <span class="text-xs font-mono text-slate-400">2026</span>
+                        </div>
+                        <p class="text-xs text-slate-400 font-light">Completed 7 Certifications in Product Strategy, Discovery, Roadmapping, Launches, Analytics & Prioritization.</p>
+                    </div>
+                    <div class="glass-card p-5 rounded-xl border border-white/10">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-outfit text-base font-medium text-white">PMI Kickoff™ Agile & Predictive Paths</h3>
                             <span class="text-xs font-mono text-slate-400">2025</span>
                         </div>
-                        <p class="text-xs text-slate-400 font-light">Comprehensive study and implementation of modern post-quantum cryptographic standards.</p>
-                    </div>
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-outfit text-base font-medium text-white">Self-Directed Learning: Neural Networks & Low-Level Kernels</h3>
-                            <span class="text-xs font-mono text-slate-400">Continuous</span>
-                        </div>
-                        <p class="text-xs text-slate-400 font-light">Ongoing research into hardware acceleration and custom memory management in C++.</p>
+                        <p class="text-xs text-slate-400 font-light">Project Management Institute accredited frameworks for agile sprint cycles and predictive project planning.</p>
                     </div>
                 </div>
             </div>
 
             <!-- RESEARCH VIEW -->
-            <div id="view-research" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[70vh] flex flex-col">
+            <div id="view-research" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[68vh] flex flex-col">
                 <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
                     <div>
-                        <h2 class="font-cinzel text-xl sm:text-2xl font-light tracking-widest text-white uppercase">Research Papers</h2>
-                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Investigations into distributed consensus and neural efficiency.</p>
+                        <h2 class="font-cinzel text-xl sm:text-2xl font-light tracking-widest text-white uppercase">Research & Publications</h2>
+                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Peer-reviewed publications and control studies.</p>
                     </div>
-                    <button onclick="switchView('home')" class="glass-btn px-4 py-2 rounded-full text-xs font-mono uppercase tracking-widest text-slate-300 flex items-center gap-2">
-                        <i class="fa-solid fa-arrow-left"><span>Home</span></i>
-                    </button>
                 </div>
                 <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-4">
                     <div class="glass-card p-5 rounded-xl border border-white/10">
                         <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-outfit text-base font-medium text-white">Fault-Tolerant Consensus in Asynchronous Edge Networks</h3>
-                            <span class="text-xs font-mono text-cyan-400">Published 2025</span>
+                            <h3 class="font-outfit text-base font-medium text-white">Design & Analog Implementation of Synchronization Controllers for Feedback Instruments' Servo Trainer Modules</h3>
+                            <span class="text-xs font-mono text-rose-400">IEEE ICIT 2024</span>
                         </div>
-                        <p class="text-xs text-slate-400 font-light leading-relaxed">Proposing a novel lightweight consensus mechanism achieving sub-millisecond synchronization across unreliable distributed topologies.</p>
-                    </div>
-                    <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-outfit text-base font-medium text-white">Optimizing Matrix Transformations for Edge AI Accelerators</h3>
-                            <span class="text-xs font-mono text-emerald-400">Ongoing</span>
-                        </div>
-                        <p class="text-xs text-slate-400 font-light leading-relaxed">Analyzing memory bandwidth limitations and cache efficiency in low-power inference hardware.</p>
+                        <p class="text-xs text-slate-400 font-light leading-relaxed mb-2">Investigated synchronization of dual servo systems using Op-Amp 741 analog state-feedback controllers. Contributed end-to-end MATLAB calculations, Multisim circuit design, breadboard testing, and LaTeX manuscript preparation.</p>
+                        <a href="https://doi.org/10.1109/ICIT63607.2024.10860018" target="_blank" rel="noopener noreferrer" class="text-[11px] font-mono text-rose-400 underline hover:text-white transition-colors">DOI: 10.1109/ICIT63607.2024.10860018</a>
                     </div>
                 </div>
             </div>
 
             <!-- EXPERIENCE VIEW -->
-            <div id="view-experience" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[70vh] flex flex-col">
+            <div id="view-experience" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[68vh] flex flex-col">
                 <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
                     <div>
                         <h2 class="font-cinzel text-xl sm:text-2xl font-light tracking-widest text-white uppercase">Work Experience</h2>
-                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Professional engagements and technical leadership.</p>
+                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Lab research and industry network operations.</p>
                     </div>
-                    <button onclick="switchView('home')" class="glass-btn px-4 py-2 rounded-full text-xs font-mono uppercase tracking-widest text-slate-300 flex items-center gap-2">
-                        <i class="fa-solid fa-arrow-left"><span>Home</span></i>
-                    </button>
                 </div>
                 <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-4">
                     <div class="glass-card p-5 rounded-xl border border-white/10">
                         <div class="flex justify-between items-start mb-2">
                             <div>
-                                <h3 class="font-outfit text-base font-medium text-white">Lead Systems Architect</h3>
-                                <p class="text-xs text-cyan-400 font-mono">Nexus Core Labs</p>
+                                <h3 class="font-outfit text-base font-medium text-white">Control System Researcher</h3>
+                                <p class="text-xs text-amber-400 font-mono">ISLAF - Intelligent Systems Lab, PU</p>
                             </div>
-                            <span class="text-xs font-mono text-slate-400">2025 – Present</span>
+                            <span class="text-xs font-mono text-slate-400">03/2024 – 07/2024</span>
                         </div>
-                        <p class="text-xs text-slate-400 font-light mt-2">Directing the architecture and deployment of high-throughput distributed microservices. Reduced system latency by 42% through custom protocol optimizations.</p>
+                        <p class="text-xs text-slate-400 font-light mt-2">Modeled state-feedback control in MATLAB, constructed analog op-amp circuits, conducted physical testing on servo trainers, and co-authored the IEEE paper.</p>
                     </div>
                     <div class="glass-card p-5 rounded-xl border border-white/10">
                         <div class="flex justify-between items-start mb-2">
                             <div>
-                                <h3 class="font-outfit text-base font-medium text-white">Software Engineer</h3>
-                                <p class="text-xs text-emerald-400 font-mono">Vanguard Tech Solutions</p>
+                                <h3 class="font-outfit text-base font-medium text-white">Network Testing Intern</h3>
+                                <p class="text-xs text-amber-400 font-mono">LCC Pakistan</p>
                             </div>
-                            <span class="text-xs font-mono text-slate-400">2023 – 2025</span>
+                            <span class="text-xs font-mono text-slate-400">06/2024 – 08/2024</span>
                         </div>
-                        <p class="text-xs text-slate-400 font-light mt-2">Developed real-time data ingestion pipelines handling millions of daily events. Spearheaded secure encryption standards implementation.</p>
+                        <p class="text-xs text-slate-400 font-light mt-2">Optimized drive-testing routes, operated network analysis software for voice/data performance, and diagnosed client-reported connectivity anomalies.</p>
                     </div>
                 </div>
             </div>
 
             <!-- INTERESTS VIEW -->
-            <div id="view-interests" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[70vh] flex flex-col">
+            <div id="view-interests" class="w-full max-w-5xl mx-auto hidden page-transition text-left h-[68vh] flex flex-col">
                 <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
                     <div>
                         <h2 class="font-cinzel text-xl sm:text-2xl font-light tracking-widest text-white uppercase">Interests & Pursuits</h2>
-                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Passions outside the terminal.</p>
+                        <p class="font-mono text-xs text-slate-400 tracking-wider mt-1">Passions, traits & personal pursuits.</p>
                     </div>
-                    <button onclick="switchView('home')" class="glass-btn px-4 py-2 rounded-full text-xs font-mono uppercase tracking-widest text-slate-300 flex items-center gap-2">
-                        <i class="fa-solid fa-arrow-left"><span>Home</span></i>
-                    </button>
                 </div>
                 <div class="flex-1 overflow-y-auto custom-scrollbar pr-2 grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="text-cyan-400 text-lg mb-2"><i class="fa-solid fa-mountain"></i></div>
-                        <h3 class="font-outfit text-sm font-medium text-white mb-1">Alpine Exploration</h3>
-                        <p class="text-xs text-slate-400 font-light">High-altitude trekking and exploring rugged mountain topographies.</p>
+                        <div class="text-blue-400 text-lg mb-2"><i class="fa-solid fa-lightbulb"></i></div>
+                        <h3 class="font-outfit text-sm font-medium text-white mb-1">Ideation & Philosophy</h3>
+                        <p class="text-xs text-slate-400 font-light">Connecting technical logic with practical design. Reading self-dev classics like <i>Laws of Success</i>.</p>
                     </div>
                     <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="text-emerald-400 text-lg mb-2"><i class="fa-solid fa-chess"></i></div>
-                        <h3 class="font-outfit text-sm font-medium text-white mb-1">Strategic Chess</h3>
-                        <p class="text-xs text-slate-400 font-light">Analyzing classical openings and complex endgame positional tactics.</p>
+                        <div class="text-blue-400 text-lg mb-2"><i class="fa-solid fa-dumbbell"></i></div>
+                        <h3 class="font-outfit text-sm font-medium text-white mb-1">Martial Arts & Piano</h3>
+                        <p class="text-xs text-slate-400 font-light">Physical conditioning, martial arts, and exploring musical notes on the piano.</p>
                     </div>
                     <div class="glass-card p-5 rounded-xl border border-white/10">
-                        <div class="text-purple-400 text-lg mb-2"><i class="fa-solid fa-headphones-simple"></i></div>
-                        <h3 class="font-outfit text-sm font-medium text-white mb-1">Ambient Soundscapes</h3>
-                        <p class="text-xs text-slate-400 font-light">Composing generative minimalist electronic music and dark ambient sound textures.</p>
+                        <div class="text-blue-400 text-lg mb-2"><i class="fa-solid fa-language"></i></div>
+                        <h3 class="font-outfit text-sm font-medium text-white mb-1">Languages</h3>
+                        <p class="text-xs text-slate-400 font-light">Multilingual proficiency in English, Urdu, Balti, and conversational Chinese.</p>
                     </div>
                 </div>
             </div>
-
         </main>
 
-        <!-- Vertical Square Blocks on the Right Side of Screen (Desktop Navigation) -->
-        <div class="hidden xl:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col space-y-3 z-30">
-            <button onclick="switchView('projects')" title="Projects" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white group relative">
+        <!-- Right Side Vertical Square Navigation Blocks (Desktop Sidebar) -->
+        <div class="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col space-y-3 z-30">
+            <button id="nav-home" onclick="switchView('home')" title="Home" class="nav-block-home glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white group relative active">
+                <i class="fa-solid fa-house text-xs"></i>
+                <span class="absolute right-full mr-3 px-2 py-1 bg-[#0c0f16] text-white text-[10px] font-mono uppercase tracking-widest rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">Home</span>
+            </button>
+            <button id="nav-projects" onclick="switchView('projects')" title="Projects" class="nav-block-projects glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white group relative">
                 <i class="fa-solid fa-code text-xs"></i>
                 <span class="absolute right-full mr-3 px-2 py-1 bg-[#0c0f16] text-white text-[10px] font-mono uppercase tracking-widest rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">Projects</span>
             </button>
-            <button onclick="switchView('skills')" title="Skills" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white group relative">
+            <button id="nav-skills" onclick="switchView('skills')" title="Skills" class="nav-block-skills glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white group relative">
                 <i class="fa-solid fa-microchip text-xs"></i>
                 <span class="absolute right-full mr-3 px-2 py-1 bg-[#0c0f16] text-white text-[10px] font-mono uppercase tracking-widest rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">Skills</span>
             </button>
-            <button onclick="switchView('education')" title="Education" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white group relative">
+            <button id="nav-education" onclick="switchView('education')" title="Education" class="nav-block-education glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white group relative">
                 <i class="fa-solid fa-graduation-cap text-xs"></i>
                 <span class="absolute right-full mr-3 px-2 py-1 bg-[#0c0f16] text-white text-[10px] font-mono uppercase tracking-widest rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">Education</span>
             </button>
-            <button onclick="switchView('research')" title="Research" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white group relative">
+            <button id="nav-research" onclick="switchView('research')" title="Research" class="nav-block-research glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white group relative">
                 <i class="fa-solid fa-book-open text-xs"></i>
                 <span class="absolute right-full mr-3 px-2 py-1 bg-[#0c0f16] text-white text-[10px] font-mono uppercase tracking-widest rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">Research</span>
             </button>
-            <button onclick="switchView('experience')" title="Experience" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white group relative">
+            <button id="nav-experience" onclick="switchView('experience')" title="Experience" class="nav-block-experience glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white group relative">
                 <i class="fa-solid fa-briefcase text-xs"></i>
                 <span class="absolute right-full mr-3 px-2 py-1 bg-[#0c0f16] text-white text-[10px] font-mono uppercase tracking-widest rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">Experience</span>
             </button>
-            <button onclick="switchView('interests')" title="Interests" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white group relative">
+            <button id="nav-interests" onclick="switchView('interests')" title="Interests" class="nav-block-interests glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white group relative">
                 <i class="fa-solid fa-compass text-xs"></i>
                 <span class="absolute right-full mr-3 px-2 py-1 bg-[#0c0f16] text-white text-[10px] font-mono uppercase tracking-widest rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">Interests</span>
             </button>
         </div>
 
-        <!-- Footer Bar with Social Links -->
-        <footer class="w-full flex items-end sm:items-center justify-between gap-4 pt-4 sm:pt-6 sm:border-t border-white/[0.05]">
-            <!-- Left Side Minimal Email Contact -->
-            <div class="origin-bottom-left -rotate-90 translate-y-[-100%] translate-x-3 sm:rotate-0 sm:translate-y-0 sm:translate-x-0 mb-6 sm:mb-0">
-                <a href="mailto:zulkrnenHaider@proton.me" class="text-[11px] sm:text-[11px] md:text-xs text-slate-400 hover:text-white font-mono tracking-wider transition-colors duration-300 flex items-center gap-2 group whitespace-nowrap">
-                    <span class="w-1.5 h-1.5 rounded-full bg-slate-500 group-hover:bg-cyan-400 group-hover:shadow-[0_0_8px_rgba(34,211,238,0.8)] transition-all duration-300"></span>
-                    <span>zulkrnenHaider@proton.me</span>
+        <!-- Footer Bar -->
+        <footer class="w-full flex items-center justify-between gap-4 pt-4 sm:pt-6 sm:border-t border-white/[0.05] relative z-20">
+            <!-- Left Side Credit Link -->
+            <div class="relative">
+                <!-- Mobile Expandable Credit Drawer Trigger & Container -->
+                <div class="sm:hidden relative">
+                    <button id="mobile-credit-toggle" onclick="toggleMobileCredit()" aria-label="Toggle Credits" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white relative z-50">
+                        <i id="mobile-credit-icon" class="fa-solid fa-wand-magic-sparkles text-xs transition-transform duration-300"></i>
+                    </button>
+                    <div id="mobile-credit-menu" class="collapsible-bottom-left collapsible-closed absolute bottom-0 left-0 pl-11 bg-[#0a0d14]/95 border border-white/10 rounded-xl px-3 py-2 shadow-2xl backdrop-blur-xl z-40 flex items-center whitespace-nowrap">
+                        <a href="https://instagram.com/exorios" target="_blank" rel="noopener noreferrer" class="text-[11px] font-mono text-slate-300 hover:text-white">
+                            Made w/ 🧠 and ✨ by ExOrios
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Desktop Full Text Credit Link -->
+                <a href="https://instagram.com/exorios" target="_blank" rel="noopener noreferrer" class="hidden sm:flex text-[11px] text-slate-400 hover:text-white font-mono tracking-wider transition-colors duration-300 items-center gap-1.5 whitespace-nowrap">
+                    <span>Made w/ 🧠 and ✨ by ExOrios</span>
                 </a>
             </div>
 
             <!-- Right Side Socials -->
-            <div class="flex flex-col sm:flex-row items-end sm:items-center space-y-2.5 sm:space-y-0 sm:space-x-6">
-                <!-- Instagram -->
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-                   class="group flex items-center">
-                    <span class="hidden sm:inline text-[11px] md:text-xs font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">Insta</span>
-                    <div class="sm:hidden glass-btn w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
-                        <i class="fa-brands fa-instagram text-[10px]"></i>
-                    </div>
-                </a>
+            <div class="relative flex items-center">
+                <!-- Desktop Social Links -->
+                <div class="hidden sm:flex items-center space-x-6">
+                    <a href="mailto:zulkrnenHaider@proton.me" class="group flex items-center">
+                        <span class="text-[11px] font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">Mail</span>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="group flex items-center">
+                        <span class="text-[11px] font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">Insta</span>
+                    </a>
+                    <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" class="group flex items-center">
+                        <span class="text-[11px] font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">Whatsapp</span>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="group flex items-center">
+                        <span class="text-[11px] font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">LinkedIn</span>
+                    </a>
+                </div>
 
-                <!-- WhatsApp -->
-                <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
-                   class="group flex items-center">
-                    <span class="hidden sm:inline text-[11px] md:text-xs font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">Whatsapp</span>
-                    <div class="sm:hidden glass-btn w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
-                        <i class="fa-brands fa-whatsapp text-[10px]"></i>
-                    </div>
-                </a>
+                <!-- Mobile Social Toggle Button & Overlapping Upward Drawer -->
+                <div class="sm:hidden relative">
+                    <button id="mobile-social-toggle" onclick="toggleMobileSocial()" aria-label="Toggle Social Links" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white relative z-50">
+                        <i id="mobile-social-icon" class="fa-solid fa-share-nodes text-xs transition-transform duration-300"></i>
+                    </button>
 
-                <!-- LinkedIn -->
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
-                   class="group flex items-center">
-                    <span class="hidden sm:inline text-[11px] md:text-xs font-mono tracking-[0.2em] text-slate-400 group-hover:text-white uppercase transition-colors duration-300">LinkedIn</span>
-                    <div class="sm:hidden glass-btn w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-white">
-                        <i class="fa-brands fa-linkedin-in text-[10px]"></i>
+                    <!-- Mobile Collapsible Social Dropdown -->
+                    <div id="mobile-social-menu" class="collapsible-bottom-right collapsible-closed absolute bottom-0 right-0 pb-11 bg-[#0a0d14]/95 border border-white/10 rounded-xl p-2.5 shadow-2xl backdrop-blur-xl z-40 flex flex-col space-y-2">
+                        <a href="mailto:zulkrnenHaider@proton.me" onclick="toggleMobileSocial()" aria-label="Email" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-solid fa-envelope text-xs"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" onclick="toggleMobileSocial()" aria-label="Instagram" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-brands fa-instagram text-xs"></i>
+                        </a>
+                        <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" onclick="toggleMobileSocial()" aria-label="WhatsApp" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-brands fa-whatsapp text-xs"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" onclick="toggleMobileSocial()" aria-label="LinkedIn" class="glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
+                            <i class="fa-brands fa-linkedin-in text-xs"></i>
+                        </a>
                     </div>
-                </a>
+                </div>
             </div>
         </footer>
 
     </div>
 
-    <!-- Smooth Interactive Ambient Glow Script & View Controller -->
+    <!-- Dynamic Canvas Background & Navigation Script -->
     <script>
         const canvas = document.getElementById('ambient-canvas');
         const ctx = canvas.getContext('2d');
 
         let width, height;
         let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+        let activeViewName = 'home';
+        let homeColorHue = 0; // Dynamic hue shifter for Home landing view
+
         let currentThemeColor = { r: 56, g: 85, b: 128 }; // Default blue-slate glow
 
         function resize() {
@@ -499,7 +568,7 @@
         // View Switcher logic
         const views = ['home', 'projects', 'skills', 'education', 'research', 'experience', 'interests'];
         const viewThemes = {
-            'home': { r: 56, g: 85, b: 128 },       // Blue Slate
+            'home': { r: 56, g: 85, b: 128 },       // Dynamic Multi-color Shifter
             'projects': { r: 34, g: 211, b: 238 },   // Cyan
             'skills': { r: 52, g: 211, b: 153 },     // Emerald
             'education': { r: 168, g: 85, b: 247 },  // Purple
@@ -509,6 +578,7 @@
         };
 
         function switchView(viewName) {
+            activeViewName = viewName;
             views.forEach(v => {
                 const el = document.getElementById(`view-${v}`);
                 if (el) {
@@ -518,14 +588,26 @@
                         el.classList.add('hidden');
                     }
                 }
+
+                // Update active state on sidebar blocks
+                const navBtn = document.getElementById(`nav-${v}`);
+                if (navBtn) {
+                    if (v === viewName) {
+                        navBtn.classList.add('active');
+                    } else {
+                        navBtn.classList.remove('active');
+                    }
+                }
             });
 
-            // Update status text and active theme
+            // Update status text and theme
             const statusEl = document.getElementById('status-text');
-            if (viewName === 'home') {
-                statusEl.innerText = 'Private Preview';
-            } else {
-                statusEl.innerText = viewName.toUpperCase();
+            if (statusEl) {
+                if (viewName === 'home') {
+                    statusEl.innerText = 'Private Preview';
+                } else {
+                    statusEl.innerText = viewName.toUpperCase();
+                }
             }
 
             if (viewThemes[viewName]) {
@@ -533,7 +615,108 @@
             }
         }
 
-        // Deep moody ambient color Orbs
+        // Helper to convert HSL to RGB for smooth screen-wide gradient transitions
+        function hslToRgb(h, s, l) {
+            let r, g, b;
+            if (s === 0) {
+                r = g = b = l;
+            } else {
+                const hue2rgb = (p, q, t) => {
+                    if (t < 0) t += 1;
+                    if (t > 1) t -= 1;
+                    if (t < 1/6) return p + (q - p) * 6 * t;
+                    if (t < 1/2) return q;
+                    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                    return p;
+                };
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                r = hue2rgb(p, q, h + 1/3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1/3);
+            }
+            return { r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255) };
+        }
+
+        // Toggle Exclusive Mobile Navigation Dropdown
+        function toggleMobileNav() {
+            const navMenu = document.getElementById('mobile-nav-menu');
+            const socialMenu = document.getElementById('mobile-social-menu');
+            const creditMenu = document.getElementById('mobile-credit-menu');
+            
+            // Close other drawers
+            if (socialMenu && !socialMenu.classList.contains('collapsible-closed')) {
+                socialMenu.classList.add('collapsible-closed');
+                socialMenu.classList.remove('collapsible-open');
+            }
+            if (creditMenu && !creditMenu.classList.contains('collapsible-closed')) {
+                creditMenu.classList.add('collapsible-closed');
+                creditMenu.classList.remove('collapsible-open');
+            }
+            
+            const isOpen = navMenu.classList.contains('collapsible-open');
+            if (isOpen) {
+                navMenu.classList.remove('collapsible-open');
+                navMenu.classList.add('collapsible-closed');
+            } else {
+                navMenu.classList.remove('collapsible-closed');
+                navMenu.classList.add('collapsible-open');
+            }
+        }
+
+        // Toggle Exclusive Mobile Social Dropdown
+        function toggleMobileSocial() {
+            const navMenu = document.getElementById('mobile-nav-menu');
+            const socialMenu = document.getElementById('mobile-social-menu');
+            const creditMenu = document.getElementById('mobile-credit-menu');
+            
+            // Close other drawers
+            if (navMenu && !navMenu.classList.contains('collapsible-closed')) {
+                navMenu.classList.add('collapsible-closed');
+                navMenu.classList.remove('collapsible-open');
+            }
+            if (creditMenu && !creditMenu.classList.contains('collapsible-closed')) {
+                creditMenu.classList.add('collapsible-closed');
+                creditMenu.classList.remove('collapsible-open');
+            }
+            
+            const isOpen = socialMenu.classList.contains('collapsible-open');
+            if (isOpen) {
+                socialMenu.classList.remove('collapsible-open');
+                socialMenu.classList.add('collapsible-closed');
+            } else {
+                socialMenu.classList.remove('collapsible-closed');
+                socialMenu.classList.add('collapsible-open');
+            }
+        }
+
+        // Toggle Mobile Credit Drawer
+        function toggleMobileCredit() {
+            const navMenu = document.getElementById('mobile-nav-menu');
+            const socialMenu = document.getElementById('mobile-social-menu');
+            const creditMenu = document.getElementById('mobile-credit-menu');
+
+            // Close other drawers
+            if (navMenu && !navMenu.classList.contains('collapsible-closed')) {
+                navMenu.classList.add('collapsible-closed');
+                navMenu.classList.remove('collapsible-open');
+            }
+            if (socialMenu && !socialMenu.classList.contains('collapsible-closed')) {
+                socialMenu.classList.add('collapsible-closed');
+                socialMenu.classList.remove('collapsible-open');
+            }
+
+            const isOpen = creditMenu.classList.contains('collapsible-open');
+            if (isOpen) {
+                creditMenu.classList.remove('collapsible-open');
+                creditMenu.classList.add('collapsible-closed');
+            } else {
+                creditMenu.classList.remove('collapsible-closed');
+                creditMenu.classList.add('collapsible-open');
+            }
+        }
+
+        // Deep ambient color Orbs
         const orbs = [
             { x: width * 0.3, y: height * 0.4, vx: 0.3, vy: 0.2, radius: 450, color: 'rgba(20, 28, 45, 0.9)' },
             { x: width * 0.7, y: height * 0.6, vx: -0.2, vy: 0.3, radius: 500, color: 'rgba(12, 35, 40, 0.7)' },
@@ -564,10 +747,19 @@
                 ctx.fill();
             });
 
-            // Dynamic mouse highlight changing color based on active view/theme
+            // Dynamic color calculation for home page vs section pages
+            let activeRGB = currentThemeColor;
+            if (activeViewName === 'home') {
+                homeColorHue = (homeColorHue + 0.15) % 360; // Smooth continuous chromatic cycle
+                const posXRatio = Math.min(Math.max(mouse.x / width, 0), 1);
+                const blendedHue = (homeColorHue + posXRatio * 120) % 360; // Shifts across screen width
+                activeRGB = hslToRgb(blendedHue / 360, 0.7, 0.55);
+            }
+
+            // Dynamic cursor radial spotlight
             const mouseGrad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 450);
-            mouseGrad.addColorStop(0, `rgba(${currentThemeColor.r}, ${currentThemeColor.g}, ${currentThemeColor.b}, 0.65)`);
-            mouseGrad.addColorStop(0.5, `rgba(${currentThemeColor.r}, ${currentThemeColor.g}, ${currentThemeColor.b}, 0.25)`);
+            mouseGrad.addColorStop(0, `rgba(${activeRGB.r}, ${activeRGB.g}, ${activeRGB.b}, 0.65)`);
+            mouseGrad.addColorStop(0.5, `rgba(${activeRGB.r}, ${activeRGB.g}, ${activeRGB.b}, 0.25)`);
             mouseGrad.addColorStop(1, 'rgba(5, 6, 8, 0)');
 
             ctx.fillStyle = mouseGrad;
