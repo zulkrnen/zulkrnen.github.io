@@ -1338,35 +1338,64 @@
 
 
         // Personal statament modal
-
         function toggleStatementModal() {
-            const modal = document.getElementById('statement-modal');
-            const card = document.getElementById('statement-card');
+    const modal = document.getElementById('statement-modal');
+    const card = document.getElementById('statement-card');
     
-            const isOpen = modal.classList.contains('opacity-100');
+    const isOpen = modal.classList.contains('opacity-100');
 
-            if (!isOpen) {
-                // Open Modal
-                modal.classList.remove('opacity-0', 'pointer-events-none');
-                modal.classList.add('opacity-100', 'pointer-events-auto');
-                card.classList.remove('scale-95');
-                card.classList.add('scale-100');
-            } else {
-                // Close Modal
-                modal.classList.remove('opacity-100', 'pointer-events-auto');
-                modal.classList.add('opacity-0', 'pointer-events-none');
-                card.classList.remove('scale-100');
-                card.classList.add('scale-95');
+    if (!isOpen) {
+        // Open Modal
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modal.classList.add('opacity-100', 'pointer-events-auto');
+        card.classList.remove('scale-95');
+        card.classList.add('scale-100');
+        
+        // Push history state so touchscreen/browser back button closes the modal
+        history.pushState({ modalOpen: true }, '');
+    } else {
+        // Close Modal
+        modal.classList.remove('opacity-100', 'pointer-events-auto');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        card.classList.remove('scale-100');
+        card.classList.add('scale-95');
+    }
+}
+
+// Close when clicking backdrop outside the text container
+document.getElementById('statement-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'statement-modal') {
+        toggleStatementModal();
+        if (history.state && history.state.modalOpen) {
+            history.back();
+        }
+    }
+});
+
+// Close with Escape key or Touchscreen Back button (Popstate)
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('statement-modal');
+        if (modal.classList.contains('opacity-100')) {
+            toggleStatementModal();
+            if (history.state && history.state.modalOpen) {
+                history.back();
             }
         }
+    }
+});
 
-
-        // Optional: Close modal when clicking outside the glass card on the backdrop blur
-        document.getElementById('statement-modal').addEventListener('click', (e) => {
-            if (e.target.id === 'statement-modal') {
-                toggleStatementModal();
-            }
-        }); 
+window.addEventListener('popstate', (e) => {
+    const modal = document.getElementById('statement-modal');
+    if (modal.classList.contains('opacity-100')) {
+        // Close modal without pushing another history state
+        modal.classList.remove('opacity-100', 'pointer-events-auto');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        const card = document.getElementById('statement-card');
+        card.classList.remove('scale-100');
+        card.classList.add('scale-95');
+    }
+});
 
         
 
@@ -1416,18 +1445,18 @@
     </script>
 
     <!-- Personal Statement Full-Screen Glass Modal (Single Box Solution) -->
-<div id="statement-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-neutral-950/80 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-500 ease-out">
+    <div id="statement-modal" class="fixed inset-0 z-50 bg-[#050608]/85 backdrop-blur-2xl opacity-0 pointer-events-none transition-all duration-500 ease-out flex flex-col justify-center items-center p-6 sm:p-12 md:p-16">
     
-    <!-- This IS the card and the modal combined -->
-    <div id="statement-card" class="max-w-3xl w-full max-h-[75vh] overflow-y-auto custom-scrollbar text-left transform scale-95 transition-transform duration-500 ease-out pr-3">
-                                    
-        <!-- Pinned Top-Right Close Button -->
-        <button onclick="toggleStatementModal()" aria-label="Close Statement" class="absolute top-6 right-6 rounded-full opacity-0 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all duration-300 z-60">
-            <i class="fa-solid fa-xmark text-sm"></i>
-        </button>
+    <!-- Pinned Top-Right Close Button (Safely anchored to the viewport layer) -->
+    <button onclick="toggleStatementModal()" aria-label="Close Statement" class="absolute top-6 right-6 sm:top-8 sm:right-8 w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all duration-300 z-[60]">
+        <i class="fa-solid fa-xmark text-base"></i>
+    </button>
 
+    <!-- Pure Text Container -->
+    <div id="statement-card" class="relative max-w-2xl w-full max-h-[75vh] overflow-y-auto custom-scrollbar text-left transform scale-95 transition-transform duration-500 ease-out pr-3">
+        
         <!-- Header / Badge -->
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-slate-300 mb-4">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-slate-300 mb-6">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
             A little about me
         </div>
