@@ -23,8 +23,14 @@
             color: #f1f5f9;
         }
 
+        @font-face {
+            font-family: 'Briquete';
+            src: url('Briquete.otf') format('opentype');
+            font-display: swap;
+        }
+
         .font-signature {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Briquete', cursive;
         }
 
         .font-cinzel {
@@ -177,7 +183,7 @@
             <!-- Signature / Brand Logo on Top Left -->
             <a href="#" onclick="switchView('home')" class="group flex items-center space-x-2 text-white focus:outline-none" aria-label="Zulkrnen Home">
                 <span class="font-signature text-xs sm:text-sm md:text-base font-normal tracking-[0.25em] text-slate-300 group-hover:text-white transition-colors duration-500 uppercase">
-                    Zulkrnen
+                    haider
                 </span>
                 <span class="w-1 h-1 rounded-full bg-slate-500 group-hover:bg-white group-hover:shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-500"></span>
             </a>
@@ -197,7 +203,10 @@
                     </button>
 
                     <!-- Mobile Collapsible Navigation Dropdown -->
-                    <div id="mobile-nav-menu" class="collapsible-container collapsible-closed absolute top-0 right-0 pt-11 bg-[#0a0d14]/95 border border-white/10 rounded-xl p-2.5 shadow-2xl backdrop-blur-xl z-40 flex flex-col space-y-2">
+                    <!--<div id="mobile-nav-menu" class="collapsible-container collapsible-closed absolute top-0 right-0 pt-11 bg-[#0a0d14]/95 border border-white/10 rounded-xl p-2.5 shadow-2xl backdrop-blur-xl z-40 flex flex-col space-y-2">
+-->
+                    <div id="mobile-nav-menu" class="collapsible-container collapsible-closed absolute top-0 right-0 border-white/10 rounded-xl z-40 flex flex-col space-y-2">                      
+                        
                         <button onclick="switchView('home'); toggleMobileNav();" class="nav-block-home glass-btn w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-white">
                             <i class="fa-solid fa-house text-xs"></i>
                         </button>
