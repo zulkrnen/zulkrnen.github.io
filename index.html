@@ -1543,6 +1543,10 @@
         /* MODAL, CAROUSEL & OUTRO LOGIC                              */
 
 
+        /* ========================================================== */
+        /* MODAL, CAROUSEL & OUTRO LOGIC (BULLETPROOF STATE RESET)    */
+        /* ========================================================== */
+
         const sectionThemes = [
             { r: 34, g: 211, b: 238 },   // Cyan (About Me)
             { r: 52, g: 211, b: 153 },   // Emerald (My Approach)
@@ -1629,9 +1633,10 @@
 
             if (!isOpen) {
                 goToSlide(0);
+                // Force open state & enable pointer events instantly
                 modal.classList.remove('opacity-0', 'pointer-events-none');
                 modal.classList.add('opacity-100', 'pointer-events-auto');
-                card.classList.remove('scale-95', 'opacity-0');
+                card.classList.remove('scale-90', 'opacity-0');
                 card.classList.add('scale-100', 'opacity-100');
                 history.pushState({ modalOpen: true }, '');
             } else {
@@ -1644,15 +1649,19 @@
             const card = document.getElementById('statement-card');
             if (!modal || !card) return;
 
-            // Editorial Outro fade & scale down
-            card.classList.remove('scale-100');
-            card.classList.add('scale-90', 'opacity-0');
+            // 1. Instantly kill click interactions so elements underneath work immediately
+            modal.classList.remove('pointer-events-auto');
+            modal.classList.add('pointer-events-none');
+
+            // 2. Trigger fade and scale down animations
             modal.classList.remove('opacity-100');
             modal.classList.add('opacity-0');
+            card.classList.remove('scale-100');
+            card.classList.add('scale-90', 'opacity-0');
 
+            // 3. Clean up classes safely after animation completes
             setTimeout(() => {
-                modal.classList.add('pointer-events-none');
-                card.classList.remove('scale-90', 'opacity-0');
+                card.classList.remove('scale-90');
                 card.classList.add('scale-95', 'opacity-100');
             }, 700);
         }
@@ -1676,11 +1685,16 @@
 
         window.addEventListener('popstate', (e) => {
             const modal = document.getElementById('statement-modal');
+            // If the modal was open and history popped back, ensure it closes cleanly without locking
             if (modal && modal.classList.contains('opacity-100')) {
                 closeModalWithOutro();
             }
         });
 
+
+
+
+        
 
         
     </script>
