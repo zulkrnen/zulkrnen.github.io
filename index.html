@@ -1017,25 +1017,33 @@
 
     <!-- REFINED EDITORIAL PERSONAL STATEMENT MODAL -->
     <div id="statement-modal" class="fixed inset-0 z-50 bg-[#050608]/30 backdrop-blur-lg opacity-0 pointer-events-none transition-all duration-700 ease-out flex flex-col justify-center items-center p-6 sm:p-12 md:p-16">
-
-        <!-- Signature Again -->
-        <a href="#" onclick="event.preventDefault(); switchView('home'); toggleStatementModal();" class="group flex items-center space-x-2 text-white focus:outline-none" aria-label="Zulkrnen Home">
-            <span class="font-signature text-xs sm:text-sm md:text-base font-normal tracking-[0.25em] text-slate-300 group-hover:text-white transition-colors duration-500">
-                haider
-            </span>
-            <span class="w-1 h-1 rounded-full bg-slate-500 group-hover:bg-white group-hover:shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-500"></span>
-        </a>
+        <header class="w-full flex items-center justify-between relative">
         
-        <!-- Clean Floating Close Button -->
-        <button onclick="toggleStatementModal()" aria-label="Close Statement" class="sm:hidden absolute top-6 right-6 sm:top-8 sm:right-8 text-slate-400 hover:text-white text-xl transition-all duration-300 z-[75] cursor-pointer p-2">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-        <!-- Modal Top Header bar containing the desktop status badge -->
-        <div class="absolute top-6 right-6 sm:top-8 sm:right-12 hidden sm:flex items-center space-x-2 px-3 py-1 rounded-full glass-btn text-[11px] font-mono tracking-[0.2em] text-slate-400 uppercase z-[75]">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)] animate-pulse"></span>
-            <span>Introduction</span>
-        </div>      
-
+            <!-- Signature Again -->
+            <a href="#" onclick="event.preventDefault(); switchView('home'); toggleStatementModal();" class="group flex items-center space-x-2 text-white focus:outline-none" aria-label="Zulkrnen Home">
+                <span class="font-signature text-xs sm:text-sm md:text-base font-normal tracking-[0.25em] text-slate-300 group-hover:text-white transition-colors duration-500">
+                    haider
+                </span>                
+                <span class="w-1 h-1 rounded-full bg-slate-500 group-hover:bg-white group-hover:shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-500"></span>
+            </a>
+        
+        
+            <!-- Clean Floating Close Button -->
+    
+            <button onclick="toggleStatementModal()" aria-label="Close Statement" class="sm:hidden absolute top-6 right-6 sm:top-8 sm:right-8 text-slate-400 hover:text-white text-xl transition-all duration-300 z-[75] cursor-pointer p-2">            
+                <i class="fa-solid fa-xmark"></i>        
+            </button>
+        
+            <!-- Modal Top Header bar containing the desktop status badge -->        
+            <div class="absolute top-6 right-6 sm:top-8 sm:right-12 hidden sm:flex items-center space-x-2 px-3 py-1 rounded-full glass-btn text-[11px] font-mono tracking-[0.2em] text-slate-400 uppercase z-[75]">            
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)] animate-pulse"></span>            
+                <span>Introduction</span>        
+            </div>                  
+        </header>
+        
+        
+            
+        
         <!-- Modal Inner Content Wrapper (Expanded height & width for larger, un-caged text) -->
         <div id="statement-card" class="relative max-w-5xl w-full flex flex-col justify-between items-center h-[85vh] sm:h-[80vh] text-left transform scale-95 transition-all duration-500 ease-out px-3 sm:px-6">
             
