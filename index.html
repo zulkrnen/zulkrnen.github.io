@@ -1013,17 +1013,16 @@
 
 
 
-    <!-- REFINED EDITORIAL PERSONAL STATEMENT MODAL                 -->
 
-    
-    <div id="statement-modal" class="fixed inset-0 z-50 bg-[#050608]/30 backdrop-blur-2xl opacity-0 pointer-events-none transition-all duration-700 ease-out flex flex-col justify-center items-center p-6 sm:p-12 md:p-16">
+    <!-- REFINED EDITORIAL PERSONAL STATEMENT MODAL -->
+    <div id="statement-modal" class="fixed inset-0 z-50 bg-[#050608]/40 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-700 ease-out flex flex-col justify-center items-center p-6 sm:p-12 md:p-16">
         
-        <!-- Out-of-Nowhere Minimal Cross Close Button -->
-        <button onclick="toggleStatementModal()" aria-label="Close Statement" class="absolute top-6 right-6 sm:top-8 sm:right-8 w-11 h-11 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all duration-300 z-[70]">
-            <i class="fa-solid fa-xmark text-base"></i>
+        <!-- Clean Floating Close Button (No background/borders) -->
+        <button onclick="toggleStatementModal()" aria-label="Close Statement" class="absolute top-6 right-6 sm:top-8 sm:right-8 text-slate-400 hover:text-white text-xl transition-all duration-300 z-[75] cursor-pointer p-2">
+            <i class="fa-solid fa-xmark"></i>
         </button>
 
-        <!-- Modal Inner Content Wrapper (Spacious max-w-3xl for un-caged comfortable reading) -->
+        <!-- Modal Inner Content Wrapper -->
         <div id="statement-card" class="relative max-w-3xl w-full flex flex-col justify-between items-center h-[70vh] sm:h-[65vh] text-left transform scale-95 transition-all duration-500 ease-out px-4 sm:px-0">
             
             <!-- Sections Stack (Slide & Fade Carousel) -->
@@ -1066,36 +1065,44 @@
                     </p>
                 </div>
 
+                <!-- Section 5: Outro Sequence -->
+                <div class="statement-slide absolute inset-0 flex flex-col justify-center opacity-0 pointer-events-none transition-all duration-500 transform translate-x-full">
+                    <h3 class="font-syne text-xs sm:text-sm tracking-[0.25em] text-amber-400 uppercase mb-4">The Journey Continues</h3>
+                    <p class="text-slate-200 font-sans text-base sm:text-xl leading-relaxed sm:leading-loose font-light mb-6">
+                        Thank you for exploring my background and vision. Whether you're building intelligent systems, looking for a dedicated engineer, or want to exchange ideas—let's connect.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <a href="mailto:zulkrnenHaider@proton.me" class="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-mono text-xs tracking-wider transition-all border border-white/20">Get in Touch</a>
+                        <button onclick="closeModalWithOutro()" class="px-5 py-2.5 rounded-full bg-transparent hover:bg-white/5 text-slate-400 hover:text-white font-mono text-xs tracking-wider transition-all border border-white/10">Close Window</button>
+                    </div>
+                </div>
+
             </div>
 
-            <!-- Beads-on-a-String Pagination Footer (~60% desktop width, ~80% mobile width) -->
-            <div class="w-[80%] sm:w-[60%] pt-6 border-t border-white/10 flex items-center justify-between text-xs font-mono text-slate-400 mx-auto">
+            <!-- Beads-on-a-String Pagination Footer (Wider, no line above) -->
+            <div class="w-full sm:w-[90%] pt-4 flex items-center justify-between text-xs font-mono text-slate-400 mx-auto">
                 
                 <!-- Left Outer Vibrating Control Bead (Desktop only) -->
-                <button onclick="navigateSlide(-1)" aria-label="Previous Section" class="hidden sm:flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10 transition-all animate-nudge-left cursor-pointer">
-                    <i class="fa-solid fa-chevron-left text-xs"></i>
-                </button>
+                <button onclick="navigateSlide(-1)" aria-label="Previous Section" class="hidden sm:flex items-center justify-center w-3 h-3 rounded-full bg-white/40 hover:bg-white transition-all animate-nudge-left cursor-pointer shadow-[0_0_8px_rgba(255,255,255,0.5)]"></button>
 
                 <div class="flex-1 flex justify-center">
-                    <!-- Beads Tracer -->
-                    <div id="pagination-beads" class="flex items-center space-x-3">
-                        <button onclick="goToSlide(0)" class="w-3 h-3 rounded-full bg-white transition-all duration-300 transform scale-125 shadow-[0_0_10px_rgba(255,255,255,0.8)]" aria-label="Slide 1"></button>
-                        <button onclick="goToSlide(1)" class="w-2.5 h-2.5 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300" aria-label="Slide 2"></button>
-                        <button onclick="goToSlide(2)" class="w-2.5 h-2.5 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300" aria-label="Slide 3"></button>
-                        <button onclick="goToSlide(3)" class="w-2.5 h-2.5 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300" aria-label="Slide 4"></button>
+                    <!-- Beads Tracer (5 beads now including outro) -->
+                    <div id="pagination-beads" class="flex items-center space-x-4">
+                        <button onclick="goToSlide(0)" class="w-3.5 h-3.5 rounded-full bg-white transition-all duration-300 transform scale-125 shadow-[0_0_12px_rgba(255,255,255,0.9)] cursor-pointer" aria-label="Slide 1"></button>
+                        <button onclick="goToSlide(1)" class="w-2.5 h-2.5 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300 cursor-pointer" aria-label="Slide 2"></button>
+                        <button onclick="goToSlide(2)" class="w-2.5 h-2.5 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300 cursor-pointer" aria-label="Slide 3"></button>
+                        <button onclick="goToSlide(3)" class="w-2.5 h-2.5 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300 cursor-pointer" aria-label="Slide 4"></button>
+                        <button onclick="goToSlide(4)" class="w-2.5 h-2.5 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300 cursor-pointer" aria-label="Slide 5"></button>
                     </div>
                 </div>
 
                 <!-- Right Outer Vibrating Control Bead (Desktop only) -->
-                <button onclick="navigateSlide(1)" aria-label="Next Section" class="hidden sm:flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10 transition-all animate-nudge-right cursor-pointer">
-                    <i class="fa-solid fa-chevron-right text-xs"></i>
-                </button>
+                <button onclick="navigateSlide(1)" aria-label="Next Section" class="hidden sm:flex items-center justify-center w-3 h-3 rounded-full bg-white/40 hover:bg-white transition-all animate-nudge-right cursor-pointer shadow-[0_0_8px_rgba(255,255,255,0.5)]"></button>
 
             </div>
 
         </div>
     </div>
-
 
 
 
@@ -1535,15 +1542,17 @@
 
         /* MODAL, CAROUSEL & OUTRO LOGIC                              */
 
+
         const sectionThemes = [
             { r: 34, g: 211, b: 238 },   // Cyan (About Me)
             { r: 52, g: 211, b: 153 },   // Emerald (My Approach)
             { r: 168, g: 85, b: 247 },   // Purple (Bridging Tech & Strategy)
-            { r: 244, g: 63, b: 94 }     // Rose (Current Focus)
+            { r: 244, g: 63, b: 94 },    // Rose (Current Focus)
+            { r: 251, g: 191, b: 36 }    // Amber (Outro)
         ];
 
         let currentSlideIndex = 0;
-        const totalSlides = 4;
+        const totalSlides = 5;
 
         // Touch Swipe Gestures for Mobile Modal Carousel
         let touchStartX = 0;
@@ -1563,10 +1572,10 @@
 
         function handleSwipeGesture() {
             if (touchEndX < touchStartX - 50) {
-                navigateSlide(1); // Swiped Left -> Next
+                navigateSlide(1);
             }
             if (touchEndX > touchStartX + 50) {
-                navigateSlide(-1); // Swiped Right -> Prev
+                navigateSlide(-1);
             }
         }
 
@@ -1597,9 +1606,10 @@
                 }
             });
 
+            // Update Active Bead size, color and glow
             Array.from(beads).forEach((bead, i) => {
                 if (i === index) {
-                    bead.className = "w-3 h-3 rounded-full bg-white transition-all duration-300 transform scale-125 shadow-[0_0_10px_rgba(255,255,255,0.8)] cursor-pointer";
+                    bead.className = "w-3.5 h-3.5 rounded-full bg-white transition-all duration-300 transform scale-125 shadow-[0_0_12px_rgba(255,255,255,0.9)] cursor-pointer";
                 } else {
                     bead.className = "w-2.5 h-2.5 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300 cursor-pointer";
                 }
@@ -1618,11 +1628,11 @@
             const isOpen = modal.classList.contains('opacity-100');
 
             if (!isOpen) {
-                goToSlide(0); // Reset to first slide
+                goToSlide(0);
                 modal.classList.remove('opacity-0', 'pointer-events-none');
                 modal.classList.add('opacity-100', 'pointer-events-auto');
-                card.classList.remove('scale-95');
-                card.classList.add('scale-100');
+                card.classList.remove('scale-95', 'opacity-0');
+                card.classList.add('scale-100', 'opacity-100');
                 history.pushState({ modalOpen: true }, '');
             } else {
                 closeModalWithOutro();
@@ -1634,7 +1644,7 @@
             const card = document.getElementById('statement-card');
             if (!modal || !card) return;
 
-            // 1-second editorial outro fade & scale down
+            // Editorial Outro fade & scale down
             card.classList.remove('scale-100');
             card.classList.add('scale-90', 'opacity-0');
             modal.classList.remove('opacity-100');
@@ -1642,7 +1652,7 @@
 
             setTimeout(() => {
                 modal.classList.add('pointer-events-none');
-                card.classList.remove('scale-90');
+                card.classList.remove('scale-90', 'opacity-0');
                 card.classList.add('scale-95', 'opacity-100');
             }, 700);
         }
@@ -1670,7 +1680,6 @@
                 closeModalWithOutro();
             }
         });
-
 
 
         
