@@ -1044,24 +1044,18 @@
     </header>
 
 
-    <!-- INVISIBLE SIDE NAVIGATION ZONES WITH HOVER GLOW HINTS -->
-        <!-- Left Side Previous Zone -->
-        <div onclick="navigateSlide(-1)" aria-label="Previous Slide"
-             class="absolute left-0 top-0 bottom-0 w-1/5 z-[70] cursor-pointer group flex items-center justify-start pl-2 sm:pl-4">
-            <!-- Barely visible pulsating glow bead hint on hover -->
-            <div class="w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-white/5 backdrop-blur-sm border border-white/10 shadow-[0_0_12px_rgba(255,255,255,0.15)] animate-pulse">
-                <i class="fa-solid fa-chevron-left text-slate-300 text-xs"></i>
-            </div>
-        </div>
 
-        <!-- Right Side Next Zone -->
-        <div onclick="navigateSlide(1)" aria-label="Next Slide"
-             class="absolute right-0 top-0 bottom-0 w-1/5 z-[70] cursor-pointer group flex items-center justify-end pr-2 sm:pr-4">
-            <!-- Barely visible pulsating glow bead hint on hover -->
-            <div class="w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-white/5 backdrop-blur-sm border border-white/10 shadow-[0_0_12px_rgba(255,255,255,0.15)] animate-pulse">
-                <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
-            </div>
-        </div>
+    <!-- Left Side Previous Zone (Desktop Only) -->
+<div onclick="navigateSlide(-1)" aria-label="Previous Slide"
+     class="absolute left-0 top-0 bottom-0 w-1/5 z-[70] cursor-pointer group hidden sm:flex items-center justify-start pl-6">
+    <i class="fa-solid fa-chevron-left text-slate-300 text-lg sm:text-xl opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-all duration-300"></i>
+</div>
+
+<!-- Right Side Next Zone (Desktop Only) -->
+<div onclick="navigateSlide(1)" aria-label="Next Slide"
+     class="absolute right-0 top-0 bottom-0 w-1/5 z-[70] cursor-pointer group hidden sm:flex items-center justify-end pr-6">
+    <i class="fa-solid fa-chevron-right text-slate-300 text-lg sm:text-xl opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-all duration-300"></i>
+</div>
     
     
     
