@@ -1022,22 +1022,22 @@
     <header class="w-full flex items-center justify-between relative">
         <!-- Signature -->
         <a href="#" onclick="event.preventDefault(); switchView('home'); toggleStatementModal();" class="group flex items-center space-x-2 text-white focus:outline-none" aria-label="Zulkrnen Home">
-            <span class="font-signature text-sm sm:text-base md:text-lg font-normal tracking-[0.25em] text-slate-300 group-hover:text-white transition-colors duration-500">
+            <span class="font-signature text-xs sm:text-sm md:text-base font-normal tracking-[0.25em] text-slate-300 group-hover:text-white transition-colors duration-500">
                 haider
             </span>
-            <span class="w-1 h-1 rounded-full bg-slate-500 group-hover:bg-white group-hover:shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-500"></span>
+            <span class="w-1 h-1 rounded-full bg-slate-500 group-hover:bg-white group-hover:shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-500 animate-pulse"></span>
         </a>
 
         <!-- Right Controls Container -->
         <div class="flex items-center space-x-3">
             <!-- Desktop Status Badge -->
-            <div class="hidden sm:flex items-center space-x-2 px-3.5 py-1.5 rounded-full glass-btn text-xs font-mono tracking-[0.2em] text-slate-400 uppercase">
+            <div class="sm:top-8 sm:right-12 hidden sm:flex items-center space-x-2 px-3 py-1 rounded-full glass-btn text-[11px] font-mono tracking-[0.2em] text-slate-400 uppercase">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)] animate-pulse"></span>
                 <span>Introduction</span>
             </div>
 
             <!-- Mobile Close Button -->
-            <button onclick="toggleStatementModal()" aria-label="Close Statement" class="sm:hidden text-slate-400 hover:text-white text-2xl transition-all duration-300 cursor-pointer p-2">
+            <button onclick="toggleStatementModal()" aria-label="Close Statement" class="m:hidden sm:top-8 sm:right-8 text-slate-400 hover:text-white text-xl transition-all duration-300 cursor-pointer p-2">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
